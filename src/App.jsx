@@ -1,12 +1,24 @@
 import { useState } from 'react'
-import './App.css'
+
+
+
+import Header from './components/Header/Header'
+import DesktopNavbar from './components/Navbar/DesktopNavbar/DesktopNavbar'
+import MobileNavbar from './components/Navbar/MobileNavbar/MobileNavbar'
+import Home from './components/Home/Home'
+
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className='text-red-600'>
-     Jai Shree Karishna
+    <div>
+      <Header/>
+      <main className='grid sm:grid-cols-12'>
+          <DesktopNavbar/>
+          <MobileNavbar/>
+          <Home/>
+      </main>
     </div>
   )
 }

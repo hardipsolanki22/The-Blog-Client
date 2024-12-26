@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserPlus, faSignInAlt, faPlus, faSearch,faExchange } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faUserPlus, faSignInAlt, faPlus, faSearch, faExchange } from '@fortawesome/free-solid-svg-icons'
 
 function DesktopNavbar() {
 
@@ -38,21 +38,32 @@ function DesktopNavbar() {
         {
             name: "Change Password",
             slug: "change-password",
-            Icon: <FontAwesomeIcon icon={faExchange}/>,
+            Icon: <FontAwesomeIcon icon={faExchange} />,
             active: true
-          }
+        }
     ]
 
     return (
         <>
             <aside className='sm:col-span-3 hidden sm:block h-screen bg-slate-900 '>
+                <div className='flex items-center justify-center my-6'>
+                    <div className='flex flex-col items-center'>
+                        <div>
+                            <img src="" alt="Profile" />
+                        </div>
+                        <div className='flex justify-between items-center'>
+                            <p>Followers</p>
+                            <p>Followings</p>
+                        </div>
+                    </div>
+                </div>
                 <nav>
                     <ul className='gap-6 flex flex-col items-center align-middle justify-center my-4'>
                         {navItems.map((item) => (
                             item.active ? (
                                 <li key={item.name}>
-                                    <button onClick={() => navigate(item.slug)} 
-                                    className='border-none font-normal
+                                    <button onClick={() => navigate(item.slug)}
+                                        className='border-none font-normal
                           bg-slate-900 text-gray-300 hover:bg-slate-600 p-2 rounded-md active:border-none
                            hover:w-30 text-center'>
                                         <span className='mr-2'>{item.Icon}</span>

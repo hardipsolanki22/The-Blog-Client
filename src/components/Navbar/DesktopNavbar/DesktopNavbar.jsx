@@ -45,7 +45,7 @@ function DesktopNavbar() {
 
     return (
         <>
-            <aside className='sm:col-span-3 hidden sm:block h-screen bg-slate-900 '>
+            <aside className='sm:col-span-3 top-0 hidden sm:block h-screen bg-slate-900 '>
                 <div className='flex items-center justify-center my-6'>
                     <div className='flex flex-col items-center'>
                         <div>

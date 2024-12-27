@@ -31,7 +31,7 @@ function Header({ activeItem }) {
     return (
         <div>
             <header >
-                <div className='w-full h-14 bg-gray-500 text-black  flex items-center justify-around'>
+                <div className='w-full h-14 bg-gray-500 sm:sticky fixed text-black  flex items-center justify-around'>
                     {/*TODO:: HANDLE ACTIVE ROUTE  */}
                     <div className='sm:hidden' onClick={() => setIsOpen((prevValue) => !prevValue)}>
                         <img src="" alt="UserAvatar" />
@@ -45,7 +45,7 @@ function Header({ activeItem }) {
                 </div>
             </header>
             {isOpen ? (
-                <aside className='duration-300  absolute flex h-screen w-50 flex-col  gap-4 p-4 bg-slate-900'>
+                <aside className='duration-300 fixed flex h-screen w-50 flex-col  gap-4 p-4 bg-slate-900'>
                 <div className='flex items-center justify-center'>
                     <div className='flex flex-col items-center'>
                         <div>

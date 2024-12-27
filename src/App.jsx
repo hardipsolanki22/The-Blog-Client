@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {Outlet} from 'react-router-dom'
 
 
 
@@ -16,8 +17,8 @@ function App() {
       <Header/>
       <main className='grid sm:grid-cols-12'>
           <DesktopNavbar/>
+          <Outlet/>
           <MobileNavbar/>
-          <Home/>
       </main>
     </div>
   )

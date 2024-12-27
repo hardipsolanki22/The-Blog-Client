@@ -7,7 +7,7 @@ function Home() {
     const [feed, setFeed] = useState("ForYou")
 
     return (
-        <div className='sm:col-span-9'>
+        <div className='sm:col-span-9 '>
             <div className=' w-full flex justify-around items-center'>
                 <button className="p-0 " onClick={() => setFeed("ForYou")}>
                     ForYou
@@ -17,9 +17,7 @@ function Home() {
                 </button>
             </div>
             {feed === "ForYou" ? (
-                <div>
-                    <ForYouFeed />
-                </div>
+                <ForYouFeed />
             ) : <FollowingFeed />
             }
         </div>

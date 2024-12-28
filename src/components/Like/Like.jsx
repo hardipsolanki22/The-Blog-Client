@@ -9,7 +9,7 @@ function Like() {
     // Add more users as needed
   ]
   return (
-    <div className='border-slate-400 bg-white mt-4 p-6 duration-300'>
+    <div className='border-slate-400 bg-white text-black mt-4 p-6 duration-300'>
       {
         users.map((user) => (
           <div className='flex justify-around items-center my-4 ' key={user.name}>

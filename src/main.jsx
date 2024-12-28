@@ -7,7 +7,8 @@ import App from './App.jsx'
 import './index.css'
 import Protected from './components/auth/AuthLayout.jsx'
 import Home from './components/Home/Home.jsx'
-
+import Search from './components/RightAside/Search.jsx'
+import Profile from './components/Profile/Profile.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,13 +17,26 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: (
-          <Protected authentication={true}>
+          <Protected authentication>
             <Home/>
           </Protected>
         )
       },
       {
-        path: "/login"
+        path: "/search-user",
+        element: (
+          <Protected authentication>
+            <Search/>
+          </Protected>
+        )
+      },
+      {
+        path: "/profile",
+        element: (
+          <Protected authentication>
+            <Profile/>
+          </Protected>
+        )
       }
     ]
   }

@@ -1,10 +1,14 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserPlus, faSignInAlt, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
+import Button from '../../Atom/Button'
 
 
 
 function MobileNavbar() {
+
+    const navigate = useNavigate()
 
     const navItems = [
         {
@@ -40,16 +44,18 @@ function MobileNavbar() {
     ]
 
     return (
-        <nav className=' w-full fixed bottom-0 sm:hidden bg-slate-950 h-14'>
+        <nav className=' w-full fixed bottom-0 sm:hidden bg-black text-white h-14'>
                 <ul className='flex justify-between mx-4 items-center h-full'>
                     {navItems.map((item) => (
                         item.active ? (
                             <li key={item.name}>
-                                <button onClick={() => navigate(item.slug)}
-                                    className='p-2 border-none bg-slate-950 text-slate-300 '
+                                <Button onClick={() => navigate(item.slug)}
+                                    className='p-2 border-none'
+                                    bgColor='bg-black'
+                                    textColor='text-white'
                                 >
                                     {item.Icon}
-                                </button>
+                                </Button>
                             </li>
                         ) : null
                     ))

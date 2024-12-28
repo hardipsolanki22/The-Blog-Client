@@ -1,51 +1,56 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserPlus, faSignInAlt, faPlus, faSearch, faExchange } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faLeftLong, faPlus, faSearch, faExchange, faUser } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
+
+import Button from '../../Atom/Button'
 
 function DesktopNavbar() {
+    const navigate = useNavigate()
 
     const navItems = [
         {
             name: "Home",
             slug: "/",
-            Icon: <FontAwesomeIcon icon={faHome} />,
-            active: true
-        },
-        {
-            name: "Signup",
-            slug: "/signup",
-            Icon: <FontAwesomeIcon icon={faUserPlus} />,
-            active: true
-        },
-        {
-            name: "Login",
-            slug: "/login",
-            Icon: <FontAwesomeIcon icon={faSignInAlt} />,
+            icon: <FontAwesomeIcon icon={faHome} />,
             active: true
         },
         {
             name: "AddPost",
             slug: "/add-post",
-            Icon: <FontAwesomeIcon icon={faPlus} />,
+            icon: <FontAwesomeIcon icon={faPlus} />,
             active: true
         },
         {
             name: "Search",
             slug: "/search-user",
-            Icon: <FontAwesomeIcon icon={faSearch} />,
+            icon: <FontAwesomeIcon icon={faSearch} />,
+            active: true
+        },
+        {
+            name: "Profile",
+            slug: "/profile",
+            icon: <FontAwesomeIcon icon={faUser}/>,
             active: true
         },
         {
             name: "Change Password",
             slug: "change-password",
-            Icon: <FontAwesomeIcon icon={faExchange} />,
+            icon: <FontAwesomeIcon icon={faExchange} />,
             active: true
-        }
+        },
+        {
+            name: "Logout",
+            slug: "/logout",
+            icon: <FontAwesomeIcon icon={faLeftLong} />,
+            active: true
+        },
     ]
 
     return (
         <>
-            <aside className='sm:col-span-3 top-0 hidden sm:block h-screen bg-slate-900 '>
+            <aside className='md:col-span-3 hidden md:block min-h-screen border
+             border-slate-600 bg-black text-white '>
                 <div className='flex items-center justify-center my-6'>
                     <div className='flex flex-col items-center'>
                         <div>
@@ -58,22 +63,41 @@ function DesktopNavbar() {
                     </div>
                 </div>
                 <nav>
-                    <ul className='gap-6 flex flex-col items-center align-middle justify-center my-4'>
+                    <ul className='gap-6 flex flex-col items-center justify-center my-4'>
                         {navItems.map((item) => (
                             item.active ? (
                                 <li key={item.name}>
-                                    <button onClick={() => navigate(item.slug)}
+                                    <Button onClick={() => navigate(item.slug)}
                                         className='border-none font-normal
-                          bg-slate-900 text-gray-300 hover:bg-slate-600 p-2 rounded-md active:border-none
-                           hover:w-30 text-center'>
-                                        <span className='mr-2'>{item.Icon}</span>
+                                        hover:bg-slate-400
+                                        p-2 rounded-md active:border-none
+                                        hover:w-30 text-center' bgColor='bg-black' textColor='text-white'>
+                                        <span className='mr-2'>{item.icon}</span>
                                         <span>{item.name}</span>
-                                    </button>
+                                    </Button>
                                 </li>
                             ) : null
                         ))
 
                         }
+                    </ul>
+                </nav>
+            </aside>
+            <aside className='sm:col-span-1 hidden sm:block md:hidden min-h-screen border border-slate-600 bg-black text-white '>
+                <nav className=''>
+                    <ul className='gap-9 flex flex-col items-center justify-center my-4'>
+                        {navItems.map((item) => (
+                            item.active ? (
+                                <li>
+                                     <Button onClick={() => navigate(item.slug)}
+                                        className='border-none font-normal
+                                        hover:bg-slate-600 p-2 rounded-md active:border-none
+                                        hover:w-30 text-center' bgColor='bg-black' textColor='text-white'>
+                                        <span className='mr-2'>{item.icon}</span>
+                                    </Button>
+                                </li>
+                            ) : null
+                        ))}
                     </ul>
                 </nav>
             </aside>

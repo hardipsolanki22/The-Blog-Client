@@ -40,28 +40,29 @@ function MobileNavbar() {
             slug: "/search-user",
             Icon: <FontAwesomeIcon icon={faSearch} />,
             active: true
-        }
+        },
+       
     ]
 
     return (
-        <nav className=' w-full fixed bottom-0 sm:hidden bg-black text-white h-14'>
-                <ul className='flex justify-between mx-4 items-center h-full'>
-                    {navItems.map((item) => (
-                        item.active ? (
-                            <li key={item.name}>
-                                <Button onClick={() => navigate(item.slug)}
-                                    className='p-2 border-none'
-                                    bgColor='bg-black'
-                                    textColor='text-white'
-                                >
-                                    {item.Icon}
-                                </Button>
-                            </li>
-                        ) : null
-                    ))
+        <nav className='border border-slate-600 w-full fixed bottom-0 sm:hidden bg-black text-white h-14'>
+            <ul className='flex justify-around mx-4 items-center h-full'>
+                {navItems.map((item) => (
+                    item.active ? (
+                        <li key={item.name}>
+                            <Button onClick={() => navigate(item.slug)}
+                                className='p-2 border-none'
+                                bgColor='bg-black'
+                                textColor='text-white'
+                            >
+                                {item.Icon}
+                            </Button>
+                        </li>
+                    ) : null
+                ))
 
-                    }
-                </ul>
+                }
+            </ul>
         </nav>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faLongArrowAltRight, faExchange } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faExchange, faUserPlus, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import Button from '../Atom/Button'
 import { useNavigate } from 'react-router-dom'
 
@@ -26,7 +26,20 @@ function Header({ activeItem }) {
         {
             name: "Logout",
             slug: "/logout",
-            icon: <FontAwesomeIcon icon={faLongArrowAltRight} />,
+            icon: <FontAwesomeIcon icon={faSignOut} />,
+            active: true
+        },
+        {
+            name: "Login",
+            slug: "/login",
+            icon: <FontAwesomeIcon icon={faSignIn} />,
+            active: true
+        },
+
+        {
+            name: "Signip",
+            slug: "/signup",
+            icon: <FontAwesomeIcon icon={faUserPlus} />,
             active: true
         },
     ]
@@ -67,7 +80,7 @@ function Header({ activeItem }) {
                                 item.active ? (
                                     <li>
                                         <Button onClick={() => navigate(item.slug)}
-                                         className='border-none font-normal p-2 text-center'
+                                            className='border-none font-normal p-2 text-center'
                                             bgColor='bg-black'
                                             textColor='text-white'
                                         >

@@ -1,8 +1,8 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
-function Protected({children, authentication = true}) {
+function Protected({ children, authentication = true }) {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
 
@@ -12,13 +12,13 @@ function Protected({children, authentication = true}) {
     useEffect(() => {
         if (authentication && authStatus !== authentication) {
             navigate('/login')
-        } else if(!authentication && authStatus !== authentication) {
+        } else if (!authentication && authStatus !== authentication) {
             navigate('/')
         }
         setLoading(false)
     }, [authStatus, navigate, authentication])
 
-  return !loading ? (children) : <><h1>Loading...</h1></>
+    return !loading ? (children) : <><h1>Loading...</h1></>
 }
 
 export default Protected

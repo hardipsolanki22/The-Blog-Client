@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faLeftLong, faPlus, faSearch, faExchange, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faPlus, faSearch, faExchange, faUser, faUserPlus, faSignIn, faSignOut} from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 
 import Button from '../../Atom/Button'
@@ -42,7 +42,19 @@ function DesktopNavbar() {
         {
             name: "Logout",
             slug: "/logout",
-            icon: <FontAwesomeIcon icon={faLeftLong} />,
+            icon: <FontAwesomeIcon icon={faSignOut} />,
+            active: true
+        },
+        {
+            name: "Login",
+            slug: "/login",
+            icon: <FontAwesomeIcon icon={faSignIn} />,
+            active: true
+        },
+        {
+            name: "Signip",
+            slug: "/signup",
+            icon: <FontAwesomeIcon icon={faUserPlus} />,
             active: true
         },
     ]

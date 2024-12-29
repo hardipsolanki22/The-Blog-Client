@@ -3,52 +3,57 @@ import {faComment, faHeart} from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-import Comment from '../Comment/Comment'
+import PostCart from '../Post/PostCart'
 import Like from '../Like/Like'
-import Button from '../Atom/Button';
-
+import Comment from '../Comment/Comment'
+import Button from '../Atom/Button'
 
 function ForYouFeed() {
 
-  const [isCommentOpen, setIsCommentOpen] = useState(false)
   const [isLikeOpen, setIsLikeOpen] = useState(false)
+  const [isCommentOpen, setIsCommentOpen] = useState(false)
 
+  const posts = [
+    {
+      title: "i am root",
+      content: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem, quibusdam!",
+      image: "https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg",
+      time: "2 mounth ago",
+      totalComment: 10,
+      totalLike: 98,
+      owner: {
+        avatar: "https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500",
+        username: "hardip22",
+      }
+    },
+    {
+      title: "hello developer",
+      content: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.Obcaecati neque molestias sunt corrupti? Hic voluptas illum corporis, unde beatae fuga.",
+      image: "https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500",
+      time: "2 minut ago",
+      totalComment: 3,
+      totalLike: 34,
+      owner: {
+        avatar: "https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg",
+        username: "renish01",
+      }
+    }
+  ]
   return (
-   <div className='sm:max-h-[90vh] z-0 sm:overflow-y-auto'>
-    <div className='flex justify-center items-center border border-slate-600'>
-      <div className='flex-col justify-center items-center p-8 text-white bg-black'>
-        <div className='flex flex-col'>
-          <div className='flex items-center'>
-            <div className='w-14 h-4'>
-              <img src='https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500'
-                alt="hardip"
-                className='rounded-2xl'
-              />
-            </div>
-            <p className='mr-2'>Krishna</p>
-            <p className='text-gray-500 text-[13px]'>2 minitu ago</p>
-          </div>
-          <div className='m-2 flex flex-col justify-center items-center'>
-            <div className='p-2 rounded-md'>
-              <img src="https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg" alt="post" />
-            </div>
-            <div className='flex flex-col justify-cente gap-4 m-2'>
-              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque, dolor!</p>
-              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Iusto doloremque ab perferendis quos tempore sint similique, aliquam illum voluptatem ut!
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className='flex items-center'>
+    <div className='sm:max-h-[90vh] z-0 sm:overflow-y-auto'>
+      {posts?.map((post) => (
+        <div key={post.title}
+          className='flex flex-col justify-center border-y border-slate-600 p-5 text-white bg-black'>
+          <PostCart {...post} />
+          <div className='flex items-center gap-2 m-4'>
           <Button className='p-1 hover:text-red-500' onClick={() => setIsLikeOpen(!isLikeOpen)}>
             <FontAwesomeIcon icon={faHeart} />
           </Button>
-            <span className='text-[13px] mr-2'>10</span>
+            <span className='text-[13px] '>{post.totalLike}</span>
           <Button className='p-1' onClick={() => setIsCommentOpen(!isCommentOpen)}>
             <FontAwesomeIcon icon={faComment} />
           </Button>
-          <span className='text-[13px]'>10</span>
+          <span className='text-[13px]'>{post.totalComment}</span>
         </div>
         {isLikeOpen && 
           <div>
@@ -60,12 +65,12 @@ function ForYouFeed() {
             <Comment/>
           </div>
         }
-      </div>
+        </div>
+      ))
+
+      }
     </div>
 
-   
-   </div>
-    
   )
 }
 

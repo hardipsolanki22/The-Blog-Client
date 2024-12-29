@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import { faComment, faHeart, faEdit, } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,6 +10,9 @@ import Comment from '../Comment/Comment';
 import { faRemove } from '@fortawesome/free-solid-svg-icons/faRemove';
 
 function Profile() {
+
+    const navigate = useNavigate()
+
     const [isCommentOpen, setIsCommentOpen] = useState(false)
     const [isLikeOpen, setIsLikeOpen] = useState(false)
     const [isDotOpen, setIsDotOpen] = useState(false)
@@ -16,7 +20,7 @@ function Profile() {
 
     return (
         <div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto gap-4
-         bg-black text-white border-b border-slate-600'>
+         bg-black text-white border-y border-slate-600'>
             <div className='relative'>
                 <img
                     src="https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg"
@@ -30,8 +34,8 @@ function Profile() {
                 />
             </div>
             <div className='flex justify-end p-4'>
-                <Button className=''>
-                    Follow
+                <Button className='' onClick={() =>navigate("/edit-profile") }>
+                    Edit
                 </Button>
             </div>
             <div className='p-4'>
@@ -55,7 +59,7 @@ function Profile() {
                     </Button>
                 </div>
             </div>
-            <div className='flex justify-center items-center border border-slate-600'>
+            <div className='flex justify-center items-center border-y border-slate-600'>
                 <div className='flex-col justify-center items-center p-8 text-white bg-black'>
                     <div className='flex justify-end items-end mr-4'>
                         <p className={`text-[2rem] text-slate-300 ${isDotOpen && "hidden"} cursor-pointer`} 
@@ -96,7 +100,7 @@ function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className='flex items-center'>
+                    <div className='flex items-center ml-4'>
                         <Button className='p-1 hover:text-red-500' onClick={() => setIsLikeOpen(!isLikeOpen)}>
                             <FontAwesomeIcon icon={faHeart} />
                         </Button>

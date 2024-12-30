@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faPlus, faSearch, faExchange, faUser, faUserPlus, faSignIn, faSignOut} from '@fortawesome/free-solid-svg-icons'
+import { faHome, faPlus, faSearch, faExchange, faUser, faUserPlus, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 
 import Button from '../../Atom/Button'
@@ -30,7 +30,7 @@ function DesktopNavbar() {
         {
             name: "Profile",
             slug: "/profile",
-            icon: <FontAwesomeIcon icon={faUser}/>,
+            icon: <FontAwesomeIcon icon={faUser} />,
             active: true
         },
         {
@@ -61,8 +61,7 @@ function DesktopNavbar() {
 
     return (
         <>
-            <aside className='md:col-span-3 hidden md:block min-h-screen border
-             border-slate-600 bg-black text-white '>
+            <aside className='md:col-span-3 hidden md:block min-h-screen border'>
                 <div className='flex items-center justify-center my-6'>
                     <div className='flex flex-col items-center'>
                         <div>
@@ -95,13 +94,13 @@ function DesktopNavbar() {
                     </ul>
                 </nav>
             </aside>
-            <aside className='sm:col-span-1 hidden sm:block md:hidden min-h-screen border border-slate-600 bg-black text-white '>
+            <aside className='sm:col-span-1 hidden sm:block md:hidden min-h-screen border'>
                 <nav className=''>
                     <ul className='gap-9 flex flex-col items-center justify-center my-4'>
                         {navItems.map((item) => (
                             item.active ? (
                                 <li>
-                                     <Button onClick={() => navigate(item.slug)}
+                                    <Button onClick={() => navigate(item.slug)}
                                         className='border-none font-normal
                                         hover:bg-slate-600 p-2 rounded-md active:border-none
                                         hover:w-30 text-center' bgColor='bg-black' textColor='text-white'>

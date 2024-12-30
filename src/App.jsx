@@ -15,7 +15,7 @@ function App() {
   return (
     <div className=''>
       <Header/>
-      <main className='grid sm:grid-cols-12'>
+      <main className='grid sm:grid-cols-12 bg-black text-white'>
           <DesktopNavbar/>
           <Outlet/>
           <RightAside/>

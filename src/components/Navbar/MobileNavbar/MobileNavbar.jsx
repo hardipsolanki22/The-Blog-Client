@@ -45,7 +45,7 @@ function MobileNavbar() {
     ]
 
     return (
-        <nav className='border border-slate-600 w-full fixed bottom-0 sm:hidden bg-black text-white h-14'>
+        <nav className='borde w-full fixed bottom-0 sm:hidden bg-black text-white h-14'>
             <ul className='flex justify-around mx-4 items-center h-full'>
                 {navItems.map((item) => (
                     item.active ? (

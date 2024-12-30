@@ -11,7 +11,7 @@ function Users() {
     ]
 
     return (
-        <div className='text-white p-3 duration-300 rounded-md border border-slate-400'>
+        <div className='text-white p-3 duration-300 rounded-md border'>
             <h2 className='text-2xl'>You might like</h2>
             {
                 users.map((user) => (

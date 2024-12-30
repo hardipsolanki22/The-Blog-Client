@@ -10,9 +10,9 @@ function EditProfile() {
     return (
         <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
-         bg-black text-white border-y border-slate-600'>
+         border-y'>
             <div className='gap-4 flex flex-col justify-center items-center
-        w-auto h-auto bg-white text-black rounded-md p-5'>
+        min-w-[70%]  h-auto bg-white text-black rounded-md p-10'>
                 <form onSubmit={handleSubmit}>
                     <Input
                         type="text"

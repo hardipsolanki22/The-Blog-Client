@@ -12,7 +12,7 @@ function PostForm({post = true}) {
   return (
     <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
-         bg-black text-white border-y border-slate-600'>
+        border-y '>
        <div className='flex flex-col justify-center items-center
          h-auto w-auto  sm:max-w-[75%]  min-w-[70%]  bg-white text-black rounded-md p-5'>
        <h1>Post</h1>

@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import { faThumbsDown, faThumbsUp, faComment } from '@fortawesome/free-regular-svg-icons';
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import Button from '../Atom/Button';
+import { faClose } from '@fortawesome/free-solid-svg-icons/faClose';
 
-function Comment() {
+
+function Comment({commentState}) {
 
   const comments = [
     {
@@ -26,7 +29,14 @@ function Comment() {
   ]
 
   return (
-    <div className="mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black">
+    <div className="absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
+        mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black">
+          <Button className='p-1 font-bold' onClick={() => commentState(false)}>
+          <FontAwesomeIcon icon={faClose} />
+        </Button>
+        <div className='flex justify-center items-center mb-6'>
+          <h1 className=''>Comments</h1>
+        </div>
       <div className='flex gap-4'>
         <div className='w-12 h-12 rounded-2xl'>
           <img src={comments[0].avatar} alt="logo" />
@@ -43,31 +53,31 @@ function Comment() {
       {
         comments.map((comment) => (
           <div className='flex justify-center mt-6 m-4' key={comment.name}>
-          <div className="mr-4 w-12 h-12 rounded-2xl">
-            <img src={comment.avatar} alt="Avatar"  />
-          </div>
-          <div className="flex-1">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-semibold">{comment.name}</span>
-                <span className="text-gray-500 text-[13px] ml-2">2 month ago</span>
+            <div className="mr-4 w-12 h-12 rounded-2xl">
+              <img src={comment.avatar} alt="Avatar" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="font-semibold">{comment.name}</span>
+                  <span className="text-gray-500 text-[13px] ml-2">2 month ago</span>
+                </div>
+              </div>
+              <div className="">
+                <p>{comment.content}</p>
+              </div>
+              <div className="flex mt-[3px] items-center text-gray-500">
+                <button className="hover:text-blue-500 p-2">
+                  <FontAwesomeIcon icon={faThumbsUp} />
+                </button>
+                <span className='text-[13px]'>3</span>
+                <button className="hover:text-red-500 p-2">
+                  <FontAwesomeIcon icon={faThumbsDown} />
+                </button>
+                <span className='text-[13px]'>5</span>
               </div>
             </div>
-            <div className="">
-              <p>{comment.content}</p>
-            </div>
-            <div className="flex mt-[3px] items-center text-gray-500">
-              <button className="hover:text-blue-500 p-2">
-                <FontAwesomeIcon icon={faThumbsUp} />
-              </button>
-              <span className='text-[13px]'>3</span>
-              <button className="hover:text-red-500 p-2">
-                <FontAwesomeIcon icon={faThumbsDown} />
-              </button>
-              <span className='text-[13px]'>5</span>
-            </div>
           </div>
-        </div>
         ))
 
       }

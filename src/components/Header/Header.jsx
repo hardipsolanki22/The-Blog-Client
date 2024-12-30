@@ -47,7 +47,7 @@ function Header({ activeItem }) {
     return (
         <div>
             <header >
-                <div className='w-full h-14 sm:hidden bg-black text-white  flex items-center justify-around'>
+                <div className='w-full h-14 sm:hidden text-white bg-black z-10 flex items-center justify-around'>
                     {/*TODO:: HANDLE ACTIVE ROUTE  */}
                     <div className='sm:hidden' onClick={() => setIsOpen((prevValue) => !prevValue)}>
                         <img src="" alt="UserAvatar" />
@@ -61,8 +61,8 @@ function Header({ activeItem }) {
                 </div>
             </header>
             {isOpen ? (
-                <aside className='duration-300 fixed z-10 top-0 bottom-14 flex w-72 flex-col gap-4
-                border border-slate-600 p-4 bg-black text-white '>
+                <aside className='backdrop-blur-md bg-opacity-50 duration-300 fixed z-10 top-0 bottom-14 flex w-72 flex-col gap-4
+                border p-4 bg-black text-white '>
                     <div className='flex items-center justify-center'>
                         <div className='flex flex-col items-center'>
                             <div>
@@ -74,7 +74,7 @@ function Header({ activeItem }) {
                             </div>
                         </div>
                     </div>
-                    <ul>
+                    <ul className='flex flex-col gap-4 h-auto'>
                         {
                             navItems.map((item) => (
                                 item.active ? (

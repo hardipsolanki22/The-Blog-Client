@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { faComment, faHeart, faEdit, } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -20,7 +20,7 @@ function Profile() {
 
     return (
         <div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto gap-4
-         bg-black text-white border-y border-slate-600'>
+         border-y '>
             <div className='relative'>
                 <img
                     src="https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg"
@@ -34,7 +34,7 @@ function Profile() {
                 />
             </div>
             <div className='flex justify-end p-4'>
-                <Button className='' onClick={() =>navigate("/edit-profile") }>
+                <Button className='' onClick={() => navigate("/edit-profile")}>
                     Edit
                 </Button>
             </div>
@@ -62,30 +62,30 @@ function Profile() {
             <div className='flex justify-center items-center border-y border-slate-600'>
                 <div className='flex-col justify-center items-center p-8 text-white bg-black'>
                     <div className='flex justify-end items-end mr-4'>
-                        <p className={`text-[2rem] text-slate-300 ${isDotOpen && "hidden"} cursor-pointer`} 
+                        <p className={`text-[2rem] text-slate-300 ${isDotOpen && "hidden"} cursor-pointer`}
                             onClick={() => setIsDotOpen((prevValue) => !prevValue)}>
-                        ...
+                            ...
                         </p>
-                       {isDotOpen && 
-                        <div className='flex flex-col justify-center items-center gap-5
+                        {isDotOpen &&
+                            <div className='flex flex-col justify-center items-center gap-5
                         top-3 border relative rounded-lg border-slate-600 p-5 mb-2'>
-                        <Button 
-                        className='p-2'
-                        bgColor='bg-black'
-                        textColor='text-white'
-                        >
-                            <FontAwesomeIcon icon={faEdit}/>
-                            <span className='ml-2'>Edit</span>
-                        </Button>
-                        <Button  
-                        className='p-2'
-                        bgColor='bg-black'
-                        textColor='text-white'>
-                            <FontAwesomeIcon icon={faRemove}/>
-                            <span className='ml-2'>Delete</span>
-                        </Button>
-                    </div>
-                    }
+                                <Button
+                                    className='p-2'
+                                    bgColor='bg-black'
+                                    textColor='text-white'
+                                >
+                                    <FontAwesomeIcon icon={faEdit} />
+                                    <span className='ml-2'>Edit</span>
+                                </Button>
+                                <Button
+                                    className='p-2'
+                                    bgColor='bg-black'
+                                    textColor='text-white'>
+                                    <FontAwesomeIcon icon={faRemove} />
+                                    <span className='ml-2'>Delete</span>
+                                </Button>
+                            </div>
+                        }
                     </div>
                     <div className='flex flex-col'>
                         <div className='m-2 flex flex-col justify-center items-center'>

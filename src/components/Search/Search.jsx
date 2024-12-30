@@ -12,7 +12,7 @@ function Search() {
   return (
     <div  className='flex justify-center
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
-         bg-black text-white border-y border-slate-600'>
+         bg-black text-white border-y'>
       <form onSubmit={handleSubmit}>
         {/* TODO serach without clicking btn */}
         <Input

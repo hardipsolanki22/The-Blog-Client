@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {faComment, faHeart} from '@fortawesome/free-regular-svg-icons';
+import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -12,6 +12,13 @@ function ForYouFeed() {
 
   const [isLikeOpen, setIsLikeOpen] = useState(false)
   const [isCommentOpen, setIsCommentOpen] = useState(false)
+
+  const handleLikeState = (data) => {
+    setIsLikeOpen(data)
+  }
+  const handleCommentSate = (data) => {
+    setIsCommentOpen(data)
+  }
 
   const posts = [
     {
@@ -40,36 +47,39 @@ function ForYouFeed() {
     }
   ]
   return (
-    <div className='sm:max-h-[90vh] z-0 sm:overflow-y-auto'>
+    <div className='sm:max-h-[91.7vh] z-0 sm:overflow-y-auto bg-black text-white'>
       {posts?.map((post) => (
         <div key={post.title}
-          className='flex flex-col justify-center border-y border-slate-600 p-5 text-white bg-black'>
+          className='flex flex-col justify-center border-y p-5'>
           <PostCart {...post} />
           <div className='flex items-center gap-2 m-4'>
-          <Button className='p-1 hover:text-red-500' onClick={() => setIsLikeOpen(!isLikeOpen)}>
-            <FontAwesomeIcon icon={faHeart} />
-          </Button>
-            <span className='text-[13px] '>{post.totalLike}</span>
-          <Button className='p-1' onClick={() => setIsCommentOpen(!isCommentOpen)}>
-            <FontAwesomeIcon icon={faComment} />
-          </Button>
-          <span className='text-[13px]'>{post.totalComment}</span>
-        </div>
-        {isLikeOpen && 
-          <div>
-            <Like/>
+            <Button className='p-1 hover:text-red-500'>
+              <FontAwesomeIcon icon={faHeart} />
+            </Button>
+            <span className='text-[13px] cursor-pointer' onClick={() => setIsLikeOpen(!isLikeOpen)}>
+              {post.totalLike}
+            </span>
+            <Button className='p-1'>
+              <FontAwesomeIcon icon={faComment} />
+            </Button>
+            <span className='text-[13px] cursor-pointer' onClick={() => setIsCommentOpen(!isCommentOpen)}>
+              {post.totalComment}
+            </span>
           </div>
-        }
-        {isCommentOpen && 
-          <div>
-            <Comment/>
-          </div>
-        }
+          {isLikeOpen &&
+            <div className='flex justify-center items-center'>
+              <Like likeState={handleLikeState} />
+            </div>
+          }
+          {isCommentOpen &&
+           <div  className='flex justify-center items-center'>
+             <Comment commentState={handleCommentSate} />
+           </div>
+          }
         </div>
-      ))
-
-      }
+      ))}
     </div>
+
 
   )
 }

@@ -61,7 +61,8 @@ function Header({ activeItem }) {
                 </div>
             </header>
             {isOpen ? (
-                <aside className='backdrop-blur-md bg-opacity-50 duration-300 fixed z-10 top-0 bottom-14 flex w-72 flex-col gap-4
+                <aside className='transition-all ease-linear delay-0 duration-500 backdrop-blur-md bg-opacity-50 
+                fixed z-10 top-0 bottom-14 flex w-72 flex-col gap-6
                 border p-4 bg-black text-white '>
                     <div className='flex items-center justify-center'>
                         <div className='flex flex-col items-center'>
@@ -74,15 +75,15 @@ function Header({ activeItem }) {
                             </div>
                         </div>
                     </div>
-                    <ul className='flex flex-col gap-4 h-auto'>
+                    <ul className='flex flex-col gap-8 h-auto'>
                         {
                             navItems.map((item) => (
                                 item.active ? (
                                     <li>
                                         <Button onClick={() => navigate(item.slug)}
                                             className='border-none font-normal p-2 text-center'
-                                            bgColor='bg-black'
-                                            textColor='text-white'
+                                            bgColor='bg-white'
+                                            textColor='text-black'
                                         >
                                             <span className='mr-2'>{item.Icon}</span>
                                             <span>{item.name}</span>

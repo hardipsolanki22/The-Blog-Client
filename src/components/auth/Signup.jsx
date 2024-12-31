@@ -1,12 +1,16 @@
 import React from 'react'
-import Input from '../Atom/Input'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { setToast } from '../Helper/toast'
+
+import Input from '../Atom/Input'
 import Button from '../Atom/Button'
 
 function Signup() {
 
     const { register, handleSubmit } = useForm()
+
+   
 
     return (
         <div className='flex flex-col items-center justify-center 
@@ -24,7 +28,7 @@ function Signup() {
                         </Link>
                     </p>
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit()}>
                     <Input
                         type="text"
                         label="Name: "

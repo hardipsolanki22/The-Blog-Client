@@ -67,7 +67,7 @@ function ForYouFeed() {
             </span>
           </div>
           {isLikeOpen &&
-            <div className='flex justify-center items-center'>
+            <div className='transition-all ease-linear delay-0 duration-500 flex justify-center items-center'>
               <Like likeState={handleLikeState} />
             </div>
           }

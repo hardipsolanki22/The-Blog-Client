@@ -7,6 +7,7 @@ import Header from './components/Header/Header'
 import DesktopNavbar from './components/Navbar/DesktopNavbar/DesktopNavbar'
 import MobileNavbar from './components/Navbar/MobileNavbar/MobileNavbar'
 import RightAside from './components/RightAside/RightAside'
+import { ToastContainer } from 'react-toastify'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Outlet/>
           <RightAside/>
           <MobileNavbar/>
+          <ToastContainer />
       </main>
     </div>
   )

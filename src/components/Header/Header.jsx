@@ -82,7 +82,7 @@ function Header({ activeItem }) {
                                     <li>
                                         <Button onClick={() => navigate(item.slug)}
                                             className='border-none font-normal p-2 text-center'
-                                            bgColor='bg-white'
+                                            bgColor='bg-slate-200'
                                             textColor='text-black'
                                         >
                                             <span className='mr-2'>{item.Icon}</span>

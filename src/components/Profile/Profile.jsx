@@ -18,6 +18,14 @@ function Profile() {
     const [isDotOpen, setIsDotOpen] = useState(false)
 
 
+    const handleLikeState = (data) => {
+        setIsLikeOpen(data)
+    }
+    const handleCommentSate = (data) => {
+        setIsCommentOpen(data)
+    }
+
+
     return (
         <div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto gap-4
          border-y '>
@@ -44,11 +52,11 @@ function Profile() {
             </div>
             <div className='flex p-4 border-b gap-4 border-slate-600'>
                 <div className='text-center'>
-                    <p className='font-bold'>100</p>
+                    <p className='font-bold cursor-pointer'>100</p>
                     <p className='text-gray-400'>Followers</p>
                 </div>
                 <div className='text-center'>
-                    <p className='font-bold'>200</p>
+                    <p className='font-bold cursor-pointer'>200</p>
                     <p className='text-gray-400'>Following</p>
                 </div>
             </div>
@@ -101,23 +109,29 @@ function Profile() {
                         </div>
                     </div>
                     <div className='flex items-center ml-4'>
-                        <Button className='p-1 hover:text-red-500' onClick={() => setIsLikeOpen(!isLikeOpen)}>
+                        <Button className='p-1 hover:text-red-500'>
                             <FontAwesomeIcon icon={faHeart} />
                         </Button>
-                        <span className='text-[13px] mr-2'>10</span>
-                        <Button className='p-1' onClick={() => setIsCommentOpen(!isCommentOpen)}>
+                        <span className='text-[13px] mr-2 cursor-pointer'
+                            onClick={() => setIsLikeOpen(!isLikeOpen)}>
+                            10
+                        </span>
+                        <Button className='p-1'>
                             <FontAwesomeIcon icon={faComment} />
                         </Button>
-                        <span className='text-[13px]'>10</span>
+                        <span className='text-[13px] cursor-pointer'
+                            onClick={() => setIsCommentOpen(!isCommentOpen)}>
+                            10
+                        </span>
                     </div>
                     {isLikeOpen &&
                         <div>
-                            <Like />
+                            <Like likeState={handleLikeState} />
                         </div>
                     }
                     {isCommentOpen &&
                         <div>
-                            <Comment />
+                            <Comment commentState={handleCommentSate} />
                         </div>
                     }
                 </div>

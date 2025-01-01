@@ -1,16 +1,52 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { setToast } from '../Helper/toast'
 
 import Input from '../Atom/Input'
 import Button from '../Atom/Button'
+import { useQuery } from '../../hook/useQuery'
+import { axiosInstance } from '../../Helper/axiosService'
+import { useToast } from '../../Helper/toast'
+import { parseErrorMesaage } from '../../Helper/parseErrMsg'
 
 function Signup() {
-
     const { register, handleSubmit } = useForm()
+    const navigate = useNavigate()
 
-   
+    const signupHandler = async (data) => {
+         refetch(data)
+         const formData = new FormData()
+
+        for (const key in data) {
+            formData.append(key, data[key])
+        }
+
+        formData.append("avatar", data.avatar[0])
+
+        if (data.coverImage) {
+            formData.append("coverImage", data.coverImage[0])
+        }
+        await axiosInstance.post('/user/register', formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+         })
+         
+    }
+
+    const { error, isLoading, data, refetch } = useQuery(signupHandler, [])
+
+    console.log(`data: ${JSON.stringify(data)}`);
+    console.log(`isLoading: ${isLoading}`);
+
+    if (data) {
+        useToast.successToast("signup successdully")
+        navigate('/login')
+    }
+
+    if (error) {
+        useToast.errorToast(parseErrorMesaage(error))
+    }
 
     return (
         <div className='flex flex-col items-center justify-center 
@@ -28,7 +64,7 @@ function Signup() {
                         </Link>
                     </p>
                 </div>
-                <form onSubmit={handleSubmit()}>
+                <form onSubmit={handleSubmit(signupHandler)}>
                     <Input
                         type="text"
                         label="Name: "
@@ -75,17 +111,17 @@ function Signup() {
                     <Input
                         type="file"
                         label="Cover Image: "
-                        {...register("coverImage", {
-                            required: true
-                        })}
+                        {...register("coverImage")}
                     />
                     <div className='flex m-2 justify-center items-center'>
                         <Button
                             className=''
                             bgColor='bg-black'
                             textColor='text-white'
+                            type='submit'
+                            disabled={isLoading}
                         >
-                            Submit
+                            {isLoading ? "Loading..." : "Signup"}
                         </Button>
                     </div>
                 </form>
@@ -95,3 +131,5 @@ function Signup() {
 }
 
 export default Signup
+
+

@@ -16,7 +16,7 @@ function DesktopNavbar() {
             name: "Home",
             slug: "/",
             icon: <FontAwesomeIcon icon={faHome} />,
-            active: authStatus
+            active: true
         },
         {
             name: "AddPost",
@@ -32,7 +32,7 @@ function DesktopNavbar() {
         },
         {
             name: "Profile",
-            slug:  `/profile/${userData?.usernane}`,
+            slug:  `/profile/${userData?.data?.usernane}`,
             icon: <FontAwesomeIcon icon={faUser} />,
             active: authStatus
         },

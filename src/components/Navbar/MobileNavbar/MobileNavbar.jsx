@@ -2,12 +2,14 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserPlus, faSignInAlt, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import {useSelector} from 'react-redux'
+
 import Button from '../../Atom/Button'
 
 
 
 function MobileNavbar() {
-
+    const authStatus = useSelector((state) => state.auth.status)
     const navigate = useNavigate()
 
     const navItems = [
@@ -15,31 +17,19 @@ function MobileNavbar() {
             name: "Home",
             slug: "/",
             Icon: <FontAwesomeIcon icon={faHome} />,
-            active: true
-        },
-        {
-            name: "Signup",
-            slug: "/signup",
-            Icon: <FontAwesomeIcon icon={faUserPlus} />,
-            active: false
-        },
-        {
-            name: "Login",
-            slug: "/login",
-            Icon: <FontAwesomeIcon icon={faSignInAlt} />,
-            active: false
+            active: authStatus
         },
         {
             name: "AddPost",
             slug: "/add-post",
             Icon: <FontAwesomeIcon icon={faPlus} />,
-            active: true
+            active: authStatus
         },
         {
             name: "Search",
             slug: "/search-user",
             Icon: <FontAwesomeIcon icon={faSearch} />,
-            active: true
+            active: authStatus
         },
        
     ]

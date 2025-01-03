@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faExchange, faUserPlus, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons'
-import Button from '../Atom/Button'
+import { faHome, faExchange, faUserPlus, faSignIn, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
+import Button from '../Atom/Button'
 
 function Header({ activeItem }) {
-
+    const authStatus = useSelector((state) => state.auth.status)
+    const userData = useSelector(state => state.auth.userData)
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -15,33 +17,40 @@ function Header({ activeItem }) {
             name: "Home",
             slug: "/",
             Icon: <FontAwesomeIcon icon={faHome} />,
-            active: true
+            active: authStatus
         },
         {
             name: "Change Password",
             slug: "change-password",
             Icon: <FontAwesomeIcon icon={faExchange} />,
-            active: true
+            active: authStatus
         },
         {
             name: "Logout",
             slug: "/logout",
             icon: <FontAwesomeIcon icon={faSignOut} />,
-            active: true
+            active: authStatus
+        },
+        {
+            name: "Profile",
+            slug: `/profile/${userData?.usernane}`,
+            icon: <FontAwesomeIcon icon={faUser} />,
+            active: authStatus
         },
         {
             name: "Login",
             slug: "/login",
             icon: <FontAwesomeIcon icon={faSignIn} />,
-            active: true
+            active: !authStatus
         },
 
         {
             name: "Signip",
             slug: "/signup",
             icon: <FontAwesomeIcon icon={faUserPlus} />,
-            active: true
+            active: !authStatus
         },
+
     ]
 
     return (

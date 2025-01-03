@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import {createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Provider, useSelector } from 'react-redux'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 
 
 import App from './App.jsx'
@@ -16,18 +18,19 @@ import ResetPassword from './components/Auth/ResetPassword.jsx'
 import PostForm from './components/Post/PostForm.jsx'
 import EditProfile from './components/Profile/EditProfile.jsx'
 import ChangePassword from './components/Auth/ChangePassword.jsx'
+import { store } from './store/store.js'
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: "/",
         element: (
           <Protected authentication>
-            <Home/>
+            <Home />
           </Protected>
         )
       },
@@ -35,7 +38,7 @@ const router = createBrowserRouter([
         path: "/signup",
         element: (
           <Protected authentication>
-            <Signup/>
+            <Signup />
           </Protected>
         )
       },
@@ -43,7 +46,7 @@ const router = createBrowserRouter([
         path: "/login",
         element: (
           <Protected authentication>
-            <Login/>
+            <Login />
           </Protected>
         )
       },
@@ -51,7 +54,7 @@ const router = createBrowserRouter([
         path: "/forget-password",
         element: (
           <Protected authentication>
-            <ForgetPassword/>
+            <ForgetPassword />
           </Protected>
         )
       },
@@ -59,7 +62,7 @@ const router = createBrowserRouter([
         path: "/reset-password",
         element: (
           <Protected authentication>
-            <ResetPassword/>
+            <ResetPassword />
           </Protected>
         )
       },
@@ -67,7 +70,7 @@ const router = createBrowserRouter([
         path: "/change-password",
         element: (
           <Protected authentication>
-            <ChangePassword/>
+            <ChangePassword />
           </Protected>
         )
       },
@@ -75,15 +78,15 @@ const router = createBrowserRouter([
         path: "/search-user",
         element: (
           <Protected authentication>
-            <Search/>
+            <Search />
           </Protected>
         )
       },
       {
-        path: "/profile",
+        path: "/profile/:username",
         element: (
           <Protected authentication>
-            <Profile/>
+            <Profile />
           </Protected>
         )
       },
@@ -91,7 +94,7 @@ const router = createBrowserRouter([
         path: "/edit-profile",
         element: (
           <Protected authentication>
-            <EditProfile/>
+            <EditProfile />
           </Protected>
         )
       },
@@ -99,7 +102,7 @@ const router = createBrowserRouter([
         path: "/add-post",
         element: (
           <Protected authentication>
-            <PostForm/>
+            <PostForm />
           </Protected>
         )
       }
@@ -107,8 +110,16 @@ const router = createBrowserRouter([
   }
 ])
 
+const queryClient = new QueryClient()
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </QueryClientProvider>
   </StrictMode>,
 )
+
+

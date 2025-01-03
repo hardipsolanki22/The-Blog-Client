@@ -2,10 +2,13 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faPlus, faSearch, faExchange, faUser, faUserPlus, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import Button from '../../Atom/Button'
 
 function DesktopNavbar() {
+    const authStatus = useSelector((state) => state.auth.status)
+    const userData = useSelector(state => state.auth.userData)
     const navigate = useNavigate()
 
     const navItems = [
@@ -13,49 +16,49 @@ function DesktopNavbar() {
             name: "Home",
             slug: "/",
             icon: <FontAwesomeIcon icon={faHome} />,
-            active: true
+            active: authStatus
         },
         {
             name: "AddPost",
             slug: "/add-post",
             icon: <FontAwesomeIcon icon={faPlus} />,
-            active: true
+            active: authStatus
         },
         {
             name: "Search",
             slug: "/search-user",
             icon: <FontAwesomeIcon icon={faSearch} />,
-            active: true
+            active: authStatus
         },
         {
             name: "Profile",
-            slug: "/profile",
+            slug:  `/profile/${userData?.usernane}`,
             icon: <FontAwesomeIcon icon={faUser} />,
-            active: true
+            active: authStatus
         },
         {
             name: "Change Password",
             slug: "change-password",
             icon: <FontAwesomeIcon icon={faExchange} />,
-            active: true
+            active: authStatus
         },
         {
             name: "Logout",
             slug: "/logout",
             icon: <FontAwesomeIcon icon={faSignOut} />,
-            active: true
+            active: authStatus
         },
         {
             name: "Login",
             slug: "/login",
             icon: <FontAwesomeIcon icon={faSignIn} />,
-            active: true
+            active: !authStatus
         },
         {
             name: "Signip",
             slug: "/signup",
             icon: <FontAwesomeIcon icon={faUserPlus} />,
-            active: true
+            active: !authStatus
         },
     ]
 

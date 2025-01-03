@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { faComment, faHeart, faEdit, } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -8,10 +8,15 @@ import Button from '../Atom/Button'
 import Like from '../Like/Like';
 import Comment from '../Comment/Comment';
 import { faRemove } from '@fortawesome/free-solid-svg-icons/faRemove';
+import { axiosInstance } from '../../Helper/axiosService';
+import { useQuery } from '@tanstack/react-query';
+import { useToast } from '../../Helper/toast';
+import fetchUserProfile from '../Api/fetchProfile'
 
 function Profile() {
 
     const navigate = useNavigate()
+    const { username } = useParams()
 
     const [isCommentOpen, setIsCommentOpen] = useState(false)
     const [isLikeOpen, setIsLikeOpen] = useState(false)
@@ -25,18 +30,28 @@ function Profile() {
         setIsCommentOpen(data)
     }
 
+    const { data: user, isLoading, isError } = useQuery({
+        queryFn: () => fetchUserProfile(username),
+        queryKey: ["users", { username }]
+    })
+
+    if (isError) {
+        useToast.errorToast(isError)
+    }
+
+
 
     return (
-        <div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto gap-4
-         border-y '>
+        !isLoading ? (<div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto gap-4
+            border-y '>
             <div className='relative'>
                 <img
-                    src="https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg"
+                    src={user.data.coverImage}
                     alt="coverImage"
                     className='w-full sm:h-48 h-40 object-cover bg-slate-700'
                 />
                 <img
-                    src="https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500"
+                    src={user.data.avatar}
                     alt="avatar"
                     className='sm:w-36 sm:h-36 h-28 w-28 rounded-full absolute left-8 bottom-0 transform translate-y-1/2 border-4 border-black'
                 />
@@ -47,16 +62,16 @@ function Profile() {
                 </Button>
             </div>
             <div className='p-4'>
-                <h1 className='text-xl font-bold'>Hardip Solanki</h1>
-                <p className='text-gray-400'>@devhardip22</p>
+                <h1 className='text-xl font-bold'>{user.data.name}</h1>
+                <p className='text-gray-400'>{user.data.username}</p>
             </div>
             <div className='flex p-4 border-b gap-4 border-slate-600'>
                 <div className='text-center'>
-                    <p className='font-bold cursor-pointer'>100</p>
+                    <p className='font-bold cursor-pointer'>{user.data.followersCount}</p>
                     <p className='text-gray-400'>Followers</p>
                 </div>
                 <div className='text-center'>
-                    <p className='font-bold cursor-pointer'>200</p>
+                    <p className='font-bold cursor-pointer'>{user.data.followingsCount}</p>
                     <p className='text-gray-400'>Following</p>
                 </div>
             </div>
@@ -76,7 +91,7 @@ function Profile() {
                         </p>
                         {isDotOpen &&
                             <div className='flex flex-col justify-center items-center gap-5
-                        top-3 border relative rounded-lg border-slate-600 p-5 mb-2'>
+                           top-3 border relative rounded-lg border-slate-600 p-5 mb-2'>
                                 <Button
                                     className='p-2'
                                     bgColor='bg-black'
@@ -138,9 +153,11 @@ function Profile() {
             </div>
 
             {/* <div className='flex justify-center items-center w-full p-6'>
-                <p>No Posts</p>
-            </div> */}
-        </div>
+                   <p>No Posts</p>
+               </div> */}
+        </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen'>
+            <h1>Loading... </h1>
+        </div>)
     )
 }
 

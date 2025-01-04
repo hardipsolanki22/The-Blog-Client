@@ -8,8 +8,8 @@ import { useToast } from '../../Helper/toast'
 import Input from '../Atom/Input'
 import Button from '../Atom/Button'
 import { login } from '../../featured/authSlice'
-import signInUser from '../Api/signin'
-import getCurrentUser from '../Api/getCurrentUser'
+import signInUser from '../Api/AuthApi/signIn'
+import getCurrentUser from '../Api/UserApi/getCurrentUser'
 
 function Login() {
 
@@ -27,7 +27,7 @@ function Login() {
            
             const currentUser = await getCurrentUser()
     
-            dispatch(login( {type: "currentUser", payload: currentUser.data} ))
+            dispatch(login( {userData: currentUser.data} ))
             useToast.successToast("Login successfully")
             navigate(`/profile/${currentUser.data.username}`)
         },

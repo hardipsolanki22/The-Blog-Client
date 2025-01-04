@@ -5,11 +5,16 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Button from '../../Atom/Button'
+import LogoutBtn from '../../auth/LogoutBtn'
 
 function DesktopNavbar() {
     const authStatus = useSelector((state) => state.auth.status)
     const userData = useSelector(state => state.auth.userData)
     const navigate = useNavigate()
+
+    console.log(`userData: ${JSON.stringify(userData?.username)}`);
+    console.log(`status: ${JSON.stringify(authStatus)}`);
+    
 
     const navItems = [
         {
@@ -32,7 +37,7 @@ function DesktopNavbar() {
         },
         {
             name: "Profile",
-            slug:  `/profile/${userData?.data?.usernane}`,
+            slug:  `/profile/${userData?.username}`,
             icon: <FontAwesomeIcon icon={faUser} />,
             active: authStatus
         },
@@ -43,19 +48,13 @@ function DesktopNavbar() {
             active: authStatus
         },
         {
-            name: "Logout",
-            slug: "/logout",
-            icon: <FontAwesomeIcon icon={faSignOut} />,
-            active: authStatus
-        },
-        {
             name: "Login",
             slug: "/login",
             icon: <FontAwesomeIcon icon={faSignIn} />,
             active: !authStatus
         },
         {
-            name: "Signip",
+            name: "Signup",
             slug: "/signup",
             icon: <FontAwesomeIcon icon={faUserPlus} />,
             active: !authStatus
@@ -91,9 +90,12 @@ function DesktopNavbar() {
                                     </Button>
                                 </li>
                             ) : null
-                        ))
-
-                        }
+                        ))}
+                        {authStatus && (
+                            <li key="logout">
+                                <LogoutBtn/>
+                            </li>
+                        )}
                     </ul>
                 </nav>
             </aside>
@@ -112,6 +114,11 @@ function DesktopNavbar() {
                                 </li>
                             ) : null
                         ))}
+                        {authStatus && (
+                            <li key="logout">
+                                <LogoutBtn/>
+                            </li>
+                        )}
                     </ul>
                 </nav>
             </aside>

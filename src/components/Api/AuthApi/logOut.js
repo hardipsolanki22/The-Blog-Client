@@ -1,9 +1,9 @@
 
-import {axiosInstance} from "../../Api";    
+import { axiosInstance } from "../../../Helper/axiosService";   
 
 const logOutUser = async () => {
-    const response = await axiosInstance.post("/user/logout", {
-        header: {
+    const response = await axiosInstance.post("/user/logout",{}, {
+        headers: {
             "Content-Type": "application/json"
         }
     });

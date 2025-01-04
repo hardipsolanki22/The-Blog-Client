@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { faComment, faHeart, faEdit, } from '@fortawesome/free-regular-svg-icons';
+import { faRemove } from '@fortawesome/free-solid-svg-icons/faRemove';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 
 import Button from '../Atom/Button'
 import Like from '../Like/Like';
 import Comment from '../Comment/Comment';
-import { faRemove } from '@fortawesome/free-solid-svg-icons/faRemove';
 import { axiosInstance } from '../../Helper/axiosService';
-import { useQuery } from '@tanstack/react-query';
 import { useToast } from '../../Helper/toast';
-import fetchUserProfile from '../Api/fetchProfile'
+import fetchUserProfile from '../Api/UserApi/fetchProfile'
 
 function Profile() {
 
@@ -22,6 +22,15 @@ function Profile() {
     const [isLikeOpen, setIsLikeOpen] = useState(false)
     const [isDotOpen, setIsDotOpen] = useState(false)
 
+    const userData = useSelector(state => state.auth.userData)
+
+    const { data: user, isLoading, isError } = useQuery({
+        queryFn: () => fetchUserProfile(username),
+        queryKey: ["users", { username }]
+    })
+
+    const isAuth = user && userData ? user.data._id === userData._id : false
+
 
     const handleLikeState = (data) => {
         setIsLikeOpen(data)
@@ -29,11 +38,6 @@ function Profile() {
     const handleCommentSate = (data) => {
         setIsCommentOpen(data)
     }
-
-    const { data: user, isLoading, isError } = useQuery({
-        queryFn: () => fetchUserProfile(username),
-        queryKey: ["users", { username }]
-    })
 
     if (isError) {
         useToast.errorToast(isError)
@@ -56,11 +60,14 @@ function Profile() {
                     className='sm:w-36 sm:h-36 h-28 w-28 rounded-full absolute left-8 bottom-0 transform translate-y-1/2 border-4 border-black'
                 />
             </div>
-            <div className='flex justify-end p-4'>
+            {isAuth ? (<div className='flex justify-end p-4'>
                 <Button className='' onClick={() => navigate("/edit-profile")}>
                     Edit
-                </Button>
-            </div>
+                </Button> </div>) : (<div className='flex justify-end p-4'>
+                    <Button className='' onClick={() => navigate("/edit-profile")}>
+                        Follow
+                    </Button>
+                </div>)}
             <div className='p-4'>
                 <h1 className='text-xl font-bold'>{user.data.name}</h1>
                 <p className='text-gray-400'>{user.data.username}</p>

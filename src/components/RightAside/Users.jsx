@@ -1,29 +1,43 @@
 import React from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { Link, useNavigate } from 'react-router-dom'
+
+
 import Button from '../Atom/Button'
+import { useToast } from '../../Helper/toast'
+import getAllUsers from '../Api/UserApi/getAllUsers'
 
 function Users() {
 
-    const users = [
-        { name: 'User1', avatar: 'https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500' },
-        { name: 'User2', avatar: 'https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500' },
-        { name: 'User3', avatar: 'https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500' },
-        // Add more users as needed
-    ]
+    const { data: users, isError } = useQuery({
+        queryFn: getAllUsers,
+        queryKey: ["users"],
+        staleTime: 3000,
+        refetchOnWindowFocus: false
+    })
+
+    if (isError) {
+        useToast.errorToast(isError.message)
+        
+    }
 
     return (
         <div className='text-white p-3 duration-300 rounded-md border'>
             <h2 className='text-2xl'>You might like</h2>
             {
-                users.map((user) => (
-                    <div className='flex justify-around items-center my-4 ' key={user.name}>
-                        <div className='flex flex-col items-center justify-center '>
-                            <div className='w-9 rounded-2xl'>
-                                <img src={user.avatar}
-                                    alt="avatar"
-                                />
+                users?.data?.map((user) => (
+                    <div className='flex justify-around items-center my-4 ' key={user._id}>
+                        <Link to={`/profile/${user.username}`} className='text-white'>
+                            <div className='flex flex-col items-center justify-center '>
+                                <div className='w-9 '>
+                                    <img src={user.avatar}
+                                        alt="avatar"
+                                        className='rounded-full'
+                                    />
+                                </div>
+                                <p className=''>{user.name}</p>
                             </div>
-                            <p className=''>{user.name}</p>
-                        </div>
+                        </Link>
                         <Button
                             className='p-2 rounded-full'>
                             Follow
@@ -36,4 +50,3 @@ function Users() {
 }
 
 export default Users
-Users

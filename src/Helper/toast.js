@@ -31,21 +31,3 @@ class Toast {
 const useToast = new Toast()
 
 export {useToast}
-
-
-
-// const useToast = (message) => {
-//         toast.success(message, {
-//             position: "top-center",
-//             autoClose: 2000,
-//             hideProgressBar: false,
-//             closeOnClick: false,
-//             pauseOnHover: true,
-//             draggable: true,
-//             progress: undefined,
-//             theme: "light",
-//             transition: Bounce,
-//             });
-// }
-
-// export {useToast}

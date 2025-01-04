@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Button from '../Atom/Button'
+import LogoutBtn from '../auth/LogoutBtn'
 
 function Header({ activeItem }) {
     const authStatus = useSelector((state) => state.auth.status)
@@ -17,18 +18,12 @@ function Header({ activeItem }) {
             name: "Home",
             slug: "/",
             Icon: <FontAwesomeIcon icon={faHome} />,
-            active: authStatus
+            active: true
         },
         {
             name: "Change Password",
             slug: "change-password",
             Icon: <FontAwesomeIcon icon={faExchange} />,
-            active: authStatus
-        },
-        {
-            name: "Logout",
-            slug: "/logout",
-            icon: <FontAwesomeIcon icon={faSignOut} />,
             active: authStatus
         },
         {
@@ -99,8 +94,14 @@ function Header({ activeItem }) {
                                         </Button>
                                     </li>
                                 ) : null
-                            ))
-                        }
+                            ))}
+                            {authStatus && (
+                                <li>
+                                    <LogoutBtn/>
+                                </li>
+                            )
+
+                            }
                     </ul>
                 </aside>) : null
             }

@@ -28,16 +28,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <Protected authentication>
-            <Home />
-          </Protected>
-        )
+        element: <Home />
       },
       {
         path: "/signup",
         element: (
-          <Protected authentication>
+          <Protected authentication={false}>
             <Signup />
           </Protected>
         )
@@ -45,7 +41,7 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: (
-          <Protected authentication>
+          <Protected authentication={false}>
             <Login />
           </Protected>
         )
@@ -53,7 +49,7 @@ const router = createBrowserRouter([
       {
         path: "/forget-password",
         element: (
-          <Protected authentication>
+          <Protected authentication={false}>
             <ForgetPassword />
           </Protected>
         )
@@ -61,7 +57,7 @@ const router = createBrowserRouter([
       {
         path: "/reset-password",
         element: (
-          <Protected authentication>
+          <Protected authentication={false}>
             <ResetPassword />
           </Protected>
         )

@@ -1,10 +1,10 @@
-import { axiosInstance } from "../../Helper/axiosService"
+import { axiosInstance } from "../../../Helper/axiosService"
 
 const fetchUserProfile = async (username) => {
     const response = await axiosInstance.get(`/user/profile/${username}`, {
         headers: {
             "Content-Type": "application/json"
-     }
+        }
     })
 
     return response.data

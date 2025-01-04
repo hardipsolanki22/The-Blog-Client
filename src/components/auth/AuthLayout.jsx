@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import {useSelector} from 'react-redux'
 
 
 function Protected({ children, authentication = true }) {
+
+    const authStatus = useSelector(state => state.auth.status)
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
-
-    // const authStatus = useSelector(state => state.auth.status)
-    const authStatus = true
 
     useEffect(() => {
         if (authentication && authStatus !== authentication) {

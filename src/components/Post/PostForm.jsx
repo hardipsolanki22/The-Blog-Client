@@ -10,22 +10,27 @@ import addPost from '../Api/PostApi/addPost'
 import { useToast } from '../../Helper/toast'
 import updatePost from '../Api/PostApi/updatePost'
 
-function PostForm({post}) {
+function PostForm({ post }) {
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
-            title: post.title,
-            content: post.content, 
-            status: post.status
+            title: post ? post.title : "",
+            content: post ? post.content : "",
+            status: post ? post.status : "active"
         }
     })
     const navigate = useNavigate()
 
     const { mutateAsync, isPending } = useMutation({
-        mutationFn: addPost,
-        onSuccess: () => {
-            useToast.successToast("Post add succefully")
-            navigate("/")
+        mutationFn: post ? updatePost : addPost,
+        onSuccess: (postData) => {
+            post ? (
+                useToast.successToast("Update post succefully"),
+                navigate(`/profile/${post.data.owner.username}`)
+            ) : (
+                useToast.successToast("Post add succefully"),
+                navigate("/")
+            )
         },
         onError: (error) => {
             useToast.errorToast(error.message)
@@ -33,6 +38,11 @@ function PostForm({post}) {
     })
 
     const postHandler = async (data) => {
+
+        if (post) {
+            await mutateAsync(post._id, data)
+        }
+
 
         const formData = new FormData()
         for (const key in data) {
@@ -81,13 +91,15 @@ function PostForm({post}) {
                     </div>
 
                     }
-                    <Input
+                    {!post && <Input
                         type="file"
                         label="Post: "
                         {...register("post", {
                             required: true
                         })}
                     />
+
+                    }
                     <Select
                         label={"Status: "}
                         options={["active", "inactive"]}

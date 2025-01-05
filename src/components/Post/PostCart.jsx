@@ -6,8 +6,6 @@ function PostCart({
     owner,
     time,
     image,
-    totalLike,
-    totalComment
 }) {
   return (
       <div className='flex-col justify-center items-center'>

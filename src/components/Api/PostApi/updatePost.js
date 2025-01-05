@@ -1,7 +1,7 @@
 import {axiosInstance} from '../../../Helper/axiosService'
 
-const updatePost = async (data) => {
-    const response = await axiosInstance.post(`/post/edit-post/:id`, data, {
+const updatePost = async (postId, data) => {
+    const response = await axiosInstance.patch(`/post/update-posts/${postId}`, data, {
         headers: {
             "Content-Type": "application/json"
         }

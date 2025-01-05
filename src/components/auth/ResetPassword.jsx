@@ -1,21 +1,42 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+
+import { useMutation } from '@tanstack/react-query'
 
 import Input from '../Atom/Input'
-import { useForm } from 'react-hook-form'
 import Button from '../Atom/Button'
+import { useToast } from '../../Helper/toast'
+import resetPassword from '../Api/AuthApi/resetPassword'
 
 function ResetPassword() {
 
+  const navigate = useNavigate()
   const locaiton = useLocation()
   const queryParams = new URLSearchParams(locaiton.search)
   const token = queryParams.get("token")
 
-  const { register, handleSubmit } = useForm()
-
   console.log(`location: ${JSON.stringify(locaiton)}`);
   console.log(`queryParams: ${JSON.stringify(queryParams)}`);
-  console.log(`register: ${JSON.stringify({ ...register })}`);
+
+
+  const { register, handleSubmit } = useForm()
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: resetPassword,
+    onSuccess: () => {
+        useToast.successToast("Password reset successfully")
+        navigate("/login")
+    },
+    onError: (error) => {
+        useToast.errorToast(error.message)
+    }
+})
+
+  const resetPasswordHandler = async (data) => {
+    const requestData = {token, data}
+    await mutateAsync(requestData)
+  }
 
   return (
     <div className='flex flex-col items-center justify-center 
@@ -24,7 +45,7 @@ function ResetPassword() {
       <div className='gap-4 flex flex-col justify-center items-center
         min-w-[60%] h-auto bg-white text-black rounded-md p-10'>
         <h1>Reset Password</h1>
-        <form onSubmit={handleSubmit} className='w-full'>
+        <form onSubmit={handleSubmit(resetPasswordHandler)} className='w-full'>
           <Input
             type="password"
             label="New Password: "
@@ -48,8 +69,9 @@ function ResetPassword() {
               className=''
               bgColor='bg-black'
               textColor='text-white'
+              disabled={isPending}
             >
-              Submit
+               {isPending ? "Loading" : "Submit"}
             </Button>
           </div>
         </form>

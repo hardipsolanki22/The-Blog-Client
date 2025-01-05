@@ -1,12 +1,29 @@
 import React from 'react'
-import Input from '../Atom/Input'
-import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
+
 import Button from '../Atom/Button'
+import Input from '../Atom/Input'
+import { useToast } from '../../Helper/toast'
+import forgetPassword from '../Api/AuthApi/forgetPassword'
 
 function ForgetPassword() {
 
   const { register, handleSubmit } = useForm()
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: forgetPassword,
+    onSuccess: () => {
+      useToast.successToast("Email send successfully")
+    },
+    onError: (error) => {
+      useToast.errorToast(error.message)
+    }
+  })
+
+  const sendEmailHandler = async (data) => {
+    await mutateAsync(data)
+  }
 
   return (
     <div className='flex flex-col items-center justify-center 
@@ -14,7 +31,7 @@ function ForgetPassword() {
          border-y'>
       <div className='gap-4 flex flex-col justify-center items-center
         min-w-[70%] h-auto bg-white text-black rounded-md p-10'>
-        <form onSubmit={handleSubmit} className='w-full'>
+        <form onSubmit={handleSubmit(sendEmailHandler)} className='w-full'>
           <Input
             type="email"
             label="Email: "
@@ -29,8 +46,9 @@ function ForgetPassword() {
               className=''
               bgColor='bg-black'
               textColor='text-white'
+              disabled={isPending}
             >
-              Submit
+              {isPending ? "Loading" : "Submit"}
             </Button>
           </div>
         </form>

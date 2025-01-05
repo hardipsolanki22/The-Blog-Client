@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 
 import Button from '../Atom/Button'
@@ -15,7 +15,9 @@ function EditProfile() {
 
     const userData = useSelector(state => state.auth.userData)
     const [isLoading, setIsLoading] = useState(false)
+    const [user, setUser] = useState({})
     const navigate = useNavigate()
+    const queryClient = useQueryClient();
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
@@ -28,7 +30,11 @@ function EditProfile() {
     const updateAvatar = async (data) => {
         try {
             setIsLoading(true)
-            const response = await axiosInstance.patch('/user/update-avatar', data)
+            const response = await axiosInstance.patch('/user/update-avatar', data, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
         } catch (error) {
             useToast.errorToast(error.message)
         } finally {
@@ -40,10 +46,11 @@ function EditProfile() {
     const updateCoverImage = async (data) => {
         try {
             setIsLoading(true)
-            const response = await axiosInstance.patch('/user/update-cover-image', data)
-            if (response) {
-                navigate(`/profile/${response.data.username}`)
-            }
+            const response = await axiosInstance.patch('/user/update-cover-image', data, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
         } catch (error) {
             useToast.errorToast(error.message)
         } finally {
@@ -52,11 +59,12 @@ function EditProfile() {
 
     }
 
-    const { mutateAsync, isPending, } = useMutation({
+    const { mutateAsync, isPending, isSuccess} = useMutation({
         mutationFn: updateProfile,
-        onSuccess: (user) => {
-            useToast.successToast("Profile update successfully")
-            navigate(`/profile/${user.data.username}`)
+        onSuccess: (response) => {
+            queryClient.invalidateQueries(["currentUser"]) 
+            queryClient.invalidateQueries(["users", {username: response.data.username}])           
+            setUser(response.data)
 
         },
         onError: (error) => {
@@ -64,6 +72,7 @@ function EditProfile() {
         }
     })
 
+    
     const updateProfileHandler = async (data) => {
         const formData = new FormData()
         for (const key in data) {
@@ -78,7 +87,7 @@ function EditProfile() {
             formData.append("avatar", data.avatar[0])
             updateAvatar(formData)
         }
-        if (data?.coverImage && coverImage[0]) {
+        if (data?.coverImage && data.coverImage[0]) {
             const formData = new FormData()
             formData.append("coverImage", data.coverImage[0])
             updateCoverImage(formData)
@@ -86,6 +95,11 @@ function EditProfile() {
 
 
     }
+
+     if (isSuccess && !isLoading) {
+        useToast.successToast("Profile update successfully")
+        navigate(`/profile/${user.username}`)
+     }
 
     return (
         <div className='flex flex-col items-center justify-center 
@@ -130,7 +144,7 @@ function EditProfile() {
                             className=''
                             bgColor='bg-black'
                             textColor='text-white'
-                            disabled={isPending}
+                            disabled={isPending || isLoading}
                         >
                             {isLoading || isPending ? 'Loading' : 'Submit'}
                         </Button>

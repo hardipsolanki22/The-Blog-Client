@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import PostForm from '../components/Post/PostForm'
 import getPost from '../components/Api/PostApi/getPost'
 
-function editPost() {
+function EditPost() {
     
     const {postId} = useParams()
 
@@ -18,4 +18,4 @@ function editPost() {
   )
 }
 
-export default editPost
+export default EditPost

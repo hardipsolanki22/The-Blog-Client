@@ -19,6 +19,7 @@ import PostForm from './components/Post/PostForm.jsx'
 import EditProfile from './components/Profile/EditProfile.jsx'
 import ChangePassword from './components/Auth/ChangePassword.jsx'
 import { store } from './store/store.js'
+import EditPost from './pages/editPost.jsx'
 
 
 const router = createBrowserRouter([
@@ -99,6 +100,14 @@ const router = createBrowserRouter([
         element: (
           <Protected authentication>
             <PostForm />
+          </Protected>
+        )
+      },
+      {
+        path: "/edit-posts/:postId",
+        element: (
+          <Protected authentication>
+            <EditPost/>
           </Protected>
         )
       }

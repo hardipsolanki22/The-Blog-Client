@@ -1,12 +1,33 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 
 import Input from '../Atom/Input'
 import Button from '../Atom/Button'
+import changePassword from '../Api/AuthApi/changePassword'
+import { useToast } from '../../Helper/toast'
 
 function ChangePassword() {
 
     const { register, handleSubmit } = useForm()
+    const navigate = useNavigate()
+
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: changePassword,
+        onSuccess: () => {
+            useToast.successToast("Update password successfully")
+            navigate("/")
+        },
+        onError: (error) => {
+            useToast.errorToast(error.message)
+        }
+    })
+
+    const changePasswordHandler = async (data) => {
+        await mutateAsync(data)
+    }
+
     return (
         <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
@@ -14,7 +35,7 @@ function ChangePassword() {
             <div className='gap-4 flex flex-col justify-center items-center
         min-w-[70%]  h-auto bg-white text-black rounded-md p-10'>
                 <h1>Reset Password</h1>
-                <form onSubmit={handleSubmit} className='w-full'>
+                <form onSubmit={handleSubmit(changePasswordHandler)} className='w-full'>
                     <Input
                         type="password"
                         label="Old Password: "
@@ -38,8 +59,9 @@ function ChangePassword() {
                             className=''
                             bgColor='bg-black'
                             textColor='text-white'
+                            disabled={isPending}
                         >
-                            Submit
+                            {isPending ? "Loading" : "Submit"}
                         </Button>
                     </div>
                 </form>

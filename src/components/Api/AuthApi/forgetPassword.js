@@ -1,7 +1,7 @@
 import { axiosInstance } from "../../../Helper/axiosService"
 
-const signInUser = async (data) => {
-    const response = await axiosInstance.post('/user/login', data, {
+const forgetPassword = async (data) => {    
+    const response = await axiosInstance.post('/user/forger-password', data, {
          headers: {
              "Content-Type": "application/json"
          }
@@ -9,4 +9,4 @@ const signInUser = async (data) => {
      return response.data
  }
 
- export default signInUser
+ export default forgetPassword

@@ -20,6 +20,8 @@ import EditProfile from './components/Profile/EditProfile.jsx'
 import ChangePassword from './components/Auth/ChangePassword.jsx'
 import { store } from './store/store.js'
 import EditPost from './pages/editPost.jsx'
+import Followers from './components/Follows/followers.jsx'
+import Following from './components/Follows/Following.jsx'
 
 
 const router = createBrowserRouter([
@@ -88,10 +90,26 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/edit-profile",
+        path: "/edit-profile/:postId",
         element: (
           <Protected authentication>
             <EditProfile />
+          </Protected>
+        )
+      },
+      {
+        path: "/:username/followers",
+        element: (
+          <Protected authentication>
+            <Followers />
+          </Protected>
+        )
+      },
+      {
+        path: "/:username/following",
+        element: (
+          <Protected authentication>
+            <Following />
           </Protected>
         )
       },

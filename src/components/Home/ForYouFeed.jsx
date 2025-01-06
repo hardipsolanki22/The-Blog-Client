@@ -9,6 +9,7 @@ import Comment from '../Comment/Comment'
 import Button from '../Atom/Button'
 import { useInfiniteQuery } from '@tanstack/react-query';
 import fetchAllPosts from '../Api/PostApi/fetchAllPosts';
+import { useNavigate } from 'react-router-dom';
 
 function ForYouFeed() {
 
@@ -49,37 +50,11 @@ function ForYouFeed() {
     setIsCommentOpen(data)
   }
 
-  // const posts = [
-  //   {
-  //     title: "i am root",
-  //     content: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem, quibusdam!",
-  //     image: "https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg",
-  //     time: "2 mounth ago",
-  //     totalComment: 10,
-  //     totalLike: 98,
-  //     owner: {
-  //       avatar: "https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500",
-  //       username: "hardip22",
-  //     }
-  //   },
-  //   {
-  //     title: "hello developer",
-  //     content: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.Obcaecati neque molestias sunt corrupti? Hic voluptas illum corporis, unde beatae fuga.",
-  //     image: "https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500",
-  //     time: "2 minut ago",
-  //     totalComment: 3,
-  //     totalLike: 34,
-  //     owner: {
-  //       avatar: "https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg",
-  //       username: "renish01",
-  //     }
-  //   }
-  // ]
   return (
     <div className='sm:max-h-[91.7vh] z-0 sm:overflow-y-auto bg-black text-white'>
       {posts?.pages.map((page) => (
         page.data?.map((post) => (<div key={post.title}
-          className='flex flex-col justify-center border-y p-5'>
+          className='flex flex-col justify-center border-y p-5 h-auto '>
           <PostCart {...post} />
           <div className='flex items-center gap-2 m-4'>
             <Button className='p-1 hover:text-red-500'>
@@ -96,7 +71,7 @@ function ForYouFeed() {
             </span>
           </div>
           {isLikeOpen &&
-            <div className='transition-all ease-linear delay-0 duration-500 flex justify-center items-center'>
+            <div className=''>
               <Like likeState={handleLikeState} />
             </div>
           }
@@ -107,7 +82,7 @@ function ForYouFeed() {
           }
         </div>))
       ))}
-      <div ref={ref} className='p-4 rounded-3xl bg-slate-700'>
+      <div ref={ref} className='p-4 rounded-3xl bg-slate-700 m-4 '>
         {isFetchingNextPage ?
           "Loading More" :
           hasNextPage ?

@@ -1,21 +1,19 @@
-import React,{useId} from 'react'
+import React,{useId, forwardRef} from 'react'
 
 function Select({
-    options = [],
-    label,
-    className = ""
-
-}, ref) {
-
-    const id = useId()
+  options,
+  label,
+  className = ""
+}, ref){
+  const id = useId()
 
   return (
     <div className='m-4'>
       {label && <label htmlFor={id}>
         {label}
-        </label>
+        </label>  
     }
-    <select id={id}>
+    <select ref={ref} id={id}>
         {options?.map((option) => (
             <option value={option} key={option}>
                 {option}
@@ -25,5 +23,4 @@ function Select({
     </div>
   )
 }
-
-export default Select
+export default forwardRef(Select)

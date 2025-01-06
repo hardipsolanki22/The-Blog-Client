@@ -12,11 +12,14 @@ import updatePost from '../Api/PostApi/updatePost'
 
 function PostForm({ post }) {
 
+    console.log(`post: ${JSON.stringify(post)}`);
+    
+
     const { register, handleSubmit } = useForm({
         defaultValues: {
             title: post ? post.title : "",
             content: post ? post.content : "",
-            status: post ? post.status : "active"
+            status: post ? post.status : ""
         }
     })
     const navigate = useNavigate()
@@ -26,7 +29,7 @@ function PostForm({ post }) {
         onSuccess: (postData) => {
             post ? (
                 useToast.successToast("Update post succefully"),
-                navigate(`/profile/${post.data.owner.username}`)
+                navigate(`/profile/${postData.data.owner.username}`)
             ) : (
                 useToast.successToast("Post add succefully"),
                 navigate("/")
@@ -39,8 +42,15 @@ function PostForm({ post }) {
 
     const postHandler = async (data) => {
 
+        console.log(`data: ${JSON.stringify(data)}`);
+        
+
         if (post) {
-            await mutateAsync(post._id, data)
+            const formData = {
+                _id: post._id,
+                data
+            }
+            await mutateAsync(formData)
         }
 
 
@@ -84,7 +94,7 @@ function PostForm({ post }) {
                     />
                     {post && <div className='flex justify-center items-start'>
                         <img
-                            src="https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg"
+                            src={post.image}
                             alt="post"
                             className='rounded-md border border-slate-600'
                         />

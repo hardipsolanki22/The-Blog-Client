@@ -1,12 +1,16 @@
-
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faClose } from '@fortawesome/free-solid-svg-icons'
 import Button from '../Atom/Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons/faClose';
+import Follow from './follow';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
-function Like({ likeState }) {
+function Followers() {
+  const navigate = useNavigate()
+  const {username} = useParams()
 
+    
   const users = [
     { name: 'User1', avatar: 'https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500' },
     { name: 'User2', avatar: 'https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500' },
@@ -22,14 +26,14 @@ function Like({ likeState }) {
     { name: 'User3', avatar: 'https://idolkart.com/cdn/shop/articles/Krishna_ke_Naam.jpg?v=1700290012&width=1500' },
     // Add more users as needed
   ]
+
   return (
-    <div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto rounded-md
-    border-x border-slate-400 bg-white text-black sm:mt-4 p-2 duration-300'>
-        <Button className='p-1 font-bold' onClick={() => likeState(false)}>
+    <div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto border-y'>
+        <Button className=' mt-2 ml-4 p-1 font-bold' onClick={() => navigate(`/profile/${username}`)}>
           <FontAwesomeIcon icon={faClose} />
         </Button>
         <div className='flex justify-center items-center'>
-          <h1 className=''>Likes</h1>
+          <h1 className=''>Followers</h1>
         </div>
       {
         users.map((user) => (
@@ -53,9 +57,6 @@ function Like({ likeState }) {
       }
     </div>
   )
-  
 }
 
-export default Like
-
-
+export default Followers

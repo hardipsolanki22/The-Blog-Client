@@ -10,10 +10,10 @@ function PostCart({
   return (
       <div className='flex-col justify-center items-center'>
           <div className='flex items-center'>
-            <div className='w-14 h-4 mx-2 flex justify-center items-center'>
+            <div className=' mx-2 flex justify-center items-center'>
               <img src={owner.avatar}
                 alt="hardip"
-                className='rounded-full'
+                className='rounded-full w-10 h-10'
               />
             </div>
             <p className='mr-2'>{owner.username}</p>
@@ -21,11 +21,13 @@ function PostCart({
           </div>
           <div className='flex flex-col justify-center items-center'>
             <div className='p-2 rounded-md'>
-              <img src="https://live.staticflickr.com/4021/4254050437_0d1baf4858_h.jpg" alt="post" />
+              <img 
+              src={image}
+               alt="post" />
             </div>
-            <div className='flex flex-col w-full gap-4 mt-2 ml-4'>
-              <p>{title}</p>
-              <p>{content}</p>
+            <div className='flex flex-col w-full h-auto gap-4 mt-2 ml-4 overflow-hidden'>
+              <p className='break-words'>{title}</p>
+              <p className='break-words'>{content}</p>
             </div>
           </div>
         </div>

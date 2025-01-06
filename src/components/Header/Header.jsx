@@ -13,6 +13,9 @@ function Header({ activeItem }) {
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
 
+    console.log(`userDta: ${JSON.stringify(userData)}`);
+    
+
     const navItems = [
         {
             name: "Home",
@@ -28,7 +31,7 @@ function Header({ activeItem }) {
         },
         {
             name: "Profile",
-            slug: `/profile/${userData?.usernane}`,
+            slug: `/profile/${userData?.username}`,
             icon: <FontAwesomeIcon icon={faUser} />,
             active: authStatus
         },

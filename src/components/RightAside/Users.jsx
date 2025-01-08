@@ -10,10 +10,9 @@ import getAllUsers from '../Api/UserApi/getAllUsers'
 function Users() {
 
     const { data: users, isError } = useQuery({
-        queryFn: getAllUsers,
         queryKey: ["users"],
+        queryFn: getAllUsers,
         staleTime: 3000,
-        refetchOnWindowFocus: false
     })
 
     if (isError) {

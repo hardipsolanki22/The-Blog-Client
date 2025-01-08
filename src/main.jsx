@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider, useSelector } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -20,9 +20,8 @@ import EditProfile from './components/Profile/EditProfile.jsx'
 import ChangePassword from './components/Auth/ChangePassword.jsx'
 import { store } from './store/store.js'
 import EditPost from './pages/editPost.jsx'
-import Followers from './components/Follows/followers.jsx'
+import Followers from './components/Follows/Followers.jsx'
 import Following from './components/Follows/Following.jsx'
-
 
 const router = createBrowserRouter([
   {
@@ -85,7 +84,7 @@ const router = createBrowserRouter([
         path: "/profile/:username",
         element: (
           <Protected authentication>
-            <Profile />
+              <Profile />
           </Protected>
         )
       },
@@ -98,18 +97,18 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/:username/followers",
+        path: "/:username/:userId/followers",
         element: (
           <Protected authentication>
-            <Followers />
+              <Followers />
           </Protected>
         )
       },
       {
-        path: "/:username/following",
+        path: "/:username/:userId/following",
         element: (
           <Protected authentication>
-            <Following />
+              <Following />
           </Protected>
         )
       },
@@ -125,7 +124,7 @@ const router = createBrowserRouter([
         path: "/edit-posts/:postId",
         element: (
           <Protected authentication>
-            <EditPost/>
+            <EditPost />
           </Protected>
         )
       }

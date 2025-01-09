@@ -60,6 +60,8 @@ function PostForm({ post }) {
         }
 
         formData.append("post", data.post[0])
+        console.log(`formData: ${JSON.stringify(formData)}`);
+        
 
         await mutateAsync(formData)
 

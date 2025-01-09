@@ -89,7 +89,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/edit-profile/:postId",
+        path: "/edit-profile",
         element: (
           <Protected authentication>
             <EditProfile />

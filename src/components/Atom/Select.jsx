@@ -13,7 +13,8 @@ function Select({
         {label}
         </label>  
     }
-    <select ref={ref} id={id}>
+    <select ref={ref} id={id} 
+    className={className}>
         {options?.map((option) => (
             <option value={option} key={option}>
                 {option}

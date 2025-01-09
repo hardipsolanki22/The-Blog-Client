@@ -92,13 +92,14 @@ function PostCart({
       </div>
       <div className='flex items-center gap-2 mt-3 ml-2'>
         <Button onClick={() => hanldePostLike(_id)}
-          className={` p-1 
-               ${isPostLike ?
-                "bg-green-500 text-white" : 
-                "bg-white hover:text-white  hover:bg-red-500"} `}
+          bgColor='bg-black'
+          textColor='text-white'
+          className='border-none p-1'
                 disabled={isLoading}
         >
-          <FontAwesomeIcon icon={faHeart} />
+          <FontAwesomeIcon icon={faHeart} className={` text-lg  ${isPostLike ?
+                "bg-red-500 text-black" : 
+                "bg-white hover:text-white  hover:bg-red-500"}`} />
         </Button>
         <span  onClick={() => setIsLikeOpen(!isLikeOpen)}
         className='text-[13px] cursor-pointer'
@@ -106,7 +107,7 @@ function PostCart({
           {totalLike}
         </span>
         <Button  onClick={() => setIsCommentOpen(!isCommentOpen)}
-        className='p-1'>
+        className='p-1 border-none'>
           <FontAwesomeIcon icon={faComment} />
         </Button>
         <span className='text-[13px]' >
@@ -115,7 +116,7 @@ function PostCart({
       </div>
       {isLikeOpen &&
         <div className='flex justify-center items-center'>
-          <Like likeState={handleLikeState} id={_id} />
+          <Like likeState={handleLikeState} postId={_id} />
         </div>
       }
       {isCommentOpen &&

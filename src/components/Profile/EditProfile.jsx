@@ -97,7 +97,7 @@ function EditProfile() {
     }
 
      if (isSuccess && !isLoading) {
-        useToast.successToast("Profile update successfully")
+         useToast.successToast("Profile update successfully")
         navigate(`/profile/${user.username}`)
      }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -17,8 +17,9 @@ function Like({ likeState, postId}) {
   const [isFollowedLoading, setIsFollowedLoading] = useState(false)
   const userData = useSelector((state) => state.auth.userData)
 
+  const  queryClient = useQueryClient()
 
-  // Infinite Scrolling
+  // Fetch User Who Like Posts (Infinite Scrolling)
   const MAX_PAGE_POST = 5
   const { data: likes, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
@@ -51,6 +52,7 @@ function Like({ likeState, postId}) {
       } else {
         useToast.successToast("Unfollow Successfully")
       }
+      queryClient.invalidateQueries(["like", { postId }])
     } catch (error) {
       throw console.error(error.message)
     } finally {
@@ -106,7 +108,7 @@ function Like({ likeState, postId}) {
         "Loading More" :
         hasNextPage ?
           "Scroll down to load more" :
-          "No more Posts"
+          "No more user"
       }
     </div>
   </div>) : (<div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto rounded-md

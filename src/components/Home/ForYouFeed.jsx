@@ -8,11 +8,11 @@ import fetchAllPosts from '../Api/PostApi/fetchAllPosts';
 
 function ForYouFeed() {
   
-  // Infinite Scrolling
+  // Fetch All Posts (Infinite Scrolling)
   const MAX_PAGE_POST = 2
   const { data: posts, hasNextPage, fetchNextPage, isFetchingNextPage , isLoading} =
     useInfiniteQuery({
-      queryKey: ["posts"],
+      queryKey: ["for-you-posts"],
       queryFn: fetchAllPosts,
       // refetchOnWindowFocus: false,0
       staleTime: 3000,

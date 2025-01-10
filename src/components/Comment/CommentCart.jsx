@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons'
@@ -8,40 +8,32 @@ import { useMutation } from '@tanstack/react-query';
 
 import Button from '../Atom/Button';
 import deleteComment from '../Api/Comment/deleteComment';
-import {useToast} from '../../Helper/toast'
+import { useToast } from '../../Helper/toast'
 import { useQueryClient } from '@tanstack/react-query';
 import likeDislikeComment from '../Api/LikeApi/likeDislikeComment';
 
-function CommentCart({ 
+function CommentCart({
     _id,
     content,
     owner,
     commentlikesCount,
-    commentDislikesCount
+    commentDislikesCount,
+    isCommentLike,
+    isCommentDisLike
 
- }) {
-    console.log(`is: ${_id}`);
-    
+}) {
+
     const [isDotOpen, setIsDotOpen] = useState(false)
-    const [isCommentLike, setIsCommentLike] = useState(null)
-    const [isCommentDisLike, setIsCommentDisLike] = useState(null)
     const userData = useSelector(state => state.auth.userData)
     const queryClient = useQueryClient()
 
     const isAuth = userData && owner ? userData._id === owner._id : false
 
-    // Like Comment
-    const { mutateAsync} = useMutation({
+    // Like-Dislike Comment
+    const { mutateAsync } = useMutation({
         mutationFn: likeDislikeComment,
         onSuccess: (response) => {
-            if (response.data.commentLike) {
-                setIsCommentLike(response.data.commentLike)
-                useToast.successToast("Like successfully")                
-            }
-            if (response.data.commentDisLike) {
-                setIsCommentDisLike(response.data.commentDisLike)
-                useToast.successToast("Dislike successfully")                
-            }
+            queryClient.invalidateQueries(["comments"])
         },
         onError: (error) => {
             useToast.errorToast(error.message)
@@ -50,7 +42,7 @@ function CommentCart({
 
     // Delete Comment
     const handleCommentDelete = async (commentId) => {
-        const response = await deleteComment(commentId) 
+        const response = await deleteComment(commentId)
         if (response) {
             setIsDotOpen(false)
             queryClient.invalidateQueries(["comments"])
@@ -59,13 +51,14 @@ function CommentCart({
     }
 
 
+
     return (
         <div className='flex justify-around w-full'>
             <Link to={`/profile/${owner.username}`}
                 className=" mt-1 mr-4  no-underline">
                 <img src={owner.avatar}
                     alt="Avatar"
-                    className='w-12 h-12 rounded-full'
+                    className='w-10 h-10 rounded-full'
                 />
             </Link>
             <div className="flex-1">
@@ -79,20 +72,15 @@ function CommentCart({
                     <p>{content}</p>
                 </div>
                 <div className="flex mt-[3px] items-center text-gray-500">
-                    <button onClick={async() => await mutateAsync({commentId: _id, type: "LIKE"})} 
-                    className="hover:text-blue-500 p-2">
-                        <FontAwesomeIcon 
-                        icon={faThumbsUp} 
-                        className={`${isCommentLike && "bg-black"}`}
-                        />
+                    <button onClick={async () => await mutateAsync({ commentId: _id, type: "LIKE" })}
+                        className={`hover:text-blue-500 p-2 ${isCommentLike ? 'text-black' : ''} border-none focus:outline-none`}>
+                        <FontAwesomeIcon icon={faThumbsUp} />
                     </button>
+
                     <span className='text-[13px]'>{commentlikesCount}</span>
-                    <button onClick={async() => await mutateAsync({commentId: _id, type: "DISLIKE"})} 
-                    className="hover:text-red-500 p-2">
-                        <FontAwesomeIcon 
-                        icon={faThumbsDown}
-                        className={`${isCommentDisLike && "bg-black"}`}
-                         />
+                    <button onClick={async () => await mutateAsync({ commentId: _id, type: "DISLIKE" })}
+                        className={`hover:text-red-500 p-2 ${isCommentDisLike ? 'text-black' : ''} border-none focus:outline-none`}>
+                        <FontAwesomeIcon icon={faThumbsDown} />
                     </button>
                     <span className='text-[13px]'>{commentDislikesCount}</span>
                 </div>
@@ -111,7 +99,7 @@ function CommentCart({
                            top-3 border relative rounded-lg mb-2'>
                     <Button
                         onClick={() => handleCommentDelete(_id)}
-                        className='border-none p-2'
+                        className=' p-3 border-none'
                         bgColor=' bg-slate-300'
                         textColor='text-black'>
                         <FontAwesomeIcon icon={faRemove} />

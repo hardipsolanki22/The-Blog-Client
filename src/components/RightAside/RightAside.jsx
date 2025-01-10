@@ -8,7 +8,6 @@ function RightAside() {
 
   const { register, handleSubmit } = useForm()
 
-
   return (
     <aside className='md:col-span-3 md:block hidden border'>
       <div className='flex flex-col gap-4 p-4'>

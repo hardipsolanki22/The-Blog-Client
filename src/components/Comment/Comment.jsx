@@ -73,34 +73,33 @@ function Comment({ commentState, postId }) {
       <p className='text-3xl'>Comments</p>
     </div>
     <div className='flex gap-4'>
-      <div className='w-12 h-12 '>
+      <div className=''>
         <img src={userData.avatar}
           alt="logo"
-          className='rounded-full'
+          className=' w-12 h-12 rounded-full'
         />
       </div>
       <form onSubmit={handleSubmit(commentHandler)}
-        className='w-full border-b-[1.5px] border-slate-300'>
+        className='w-full border-b-2 border-slate-300 pb-2'>
         <input
           type="text"
           placeholder='Add a comment...'
-          className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+          className="border rounded-lg text-base w-full px-3 py-2 focus:outline-none focus:border-blue-600 transition duration-200"
           {...register("content", {
             required: true
           })}
         />
-        <div className='flex justify-center m-2'>
-          <Button
-            className=''
-            bgColor='bg-black'
-            textColor='text-white'
+        <div className='flex justify-end mt-2'>
+          <button
+            className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 focus:outline-none'
             type='submit'
             disabled={isCommentLoading}
           >
             Submit
-          </Button>
+          </button>
         </div>
       </form>
+
     </div>
     {!isLoading ? (comments.pages?.map((page) => (
       page.data.length > 0 ? (page.data?.map((comment) => (
@@ -112,9 +111,9 @@ function Comment({ commentState, postId }) {
         mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black'>
           <p className='text-2xl'>No comments found</p>
         </div>)
-    
+
     ))
-      ) : (<div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
+    ) : (<div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
     mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black'>
       <p className='text-2xl'>Loading</p>
     </div>

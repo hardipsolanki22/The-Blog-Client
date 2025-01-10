@@ -1,42 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { faComment, faHeart, faEdit, } from '@fortawesome/free-regular-svg-icons';
-import { faRemove } from '@fortawesome/free-solid-svg-icons/faRemove';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
-import { useQuery, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer'
 
 import Button from '../Atom/Button'
-import Like from '../Like/Like';
-import Comment from '../Comment/Comment';
 import { useToast } from '../../Helper/toast';
 import fetchUserProfile from '../Api/UserApi/fetchProfile'
-import deletePost from '../Api/PostApi/deletePost';
 import fetchUserPosts from '../Api/PostApi/fetchUserPosts';
 import { axiosInstance } from '../../Helper/axiosService';
+import ProfilePostCart from '../Post/ProfilePostCart';
 
 function Profile() {
 
     const navigate = useNavigate()
     const { username } = useParams()
 
-    const [isCommentOpen, setIsCommentOpen] = useState(false)
-    const [isLikeOpen, setIsLikeOpen] = useState(false)
-    const [isDotOpen, setIsDotOpen] = useState(false)
     const [isFollowed, setIsFollowed] = useState(null)
     const [isFollowedLoading, setIsFollowedLoading] = useState(false)
-    const queryClient = useQueryClient()
 
     const userData = useSelector(state => state.auth.userData)
 
     // Fetch User Profile
-    const { data: user, isLoading, isError } = useQuery({
+    const { data: user, isLoading} = useQuery({
         queryFn: () => fetchUserProfile(username),
         queryKey: ["users", { username }],
     })
-   
+    
     const isAuth = user && userData ? user?.data._id === userData._id : false
 
     useEffect(() => {
@@ -50,7 +42,7 @@ function Profile() {
     const MAX_PAGE_POST = 2
     const { data: posts, hasNextPage, fetchNextPage, isFetchingNextPage } =
         useInfiniteQuery({
-            queryKey: ["posts", { username: user?.data.username }],
+            queryKey: ["posts", { username: user?.data._id }],
             queryFn: ({ pageParam }) => fetchUserPosts({ pageParam }, userId),
             refetchOnWindowFocus: false,
             enabled: !!user,
@@ -76,11 +68,12 @@ function Profile() {
     const handleFollowUnfollow = async (userId) => {
         try {
             setIsFollowedLoading(true)
-            const response = await axiosInstance.post(`/subcriptions/${userId}/following`)        
-            console.log(`response: ${JSON.stringify(response)}`);
-            if (response) {
-                setIsFollowed(response.data.data.following)
-                
+            const response = await axiosInstance.post(`/subcriptions/${userId}/following`)
+            setIsFollowed(response.data.data.following)
+            if (response.data.data.following) {
+                useToast.successToast("Follow successfully")
+            } else {
+                useToast.successToast("Unfollow successfully")
             }
         } catch (error) {
             throw console.error(error.message)
@@ -88,36 +81,6 @@ function Profile() {
             setIsFollowedLoading(false)
         }
     }
-
-    // Post Delete Handler
-    const handlePostDelete = async (postId) => {
-        try {
-            const respose = await deletePost(postId)
-            if (respose) {
-                useToast.successToast("Post delete successfully")
-                navigate(`/profile/${username}`)
-                queryClient.invalidateQueries(["posts", { username }]);
-            }
-        } catch (error) {
-            useToast.errorToast(error.message)
-        }
-    }
-
-    // Toggle Like 
-    const handleLikeState = (data) => {
-        setIsLikeOpen(data)
-    }
-
-    // Toggale Comment
-    const handleCommentSate = (data) => {
-        setIsCommentOpen(data)
-    }
-
-    if (isError) {
-        useToast.errorToast(isError)
-    }
-
-
 
     return (
         !isLoading ? (<div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto gap-4
@@ -148,11 +111,11 @@ function Profile() {
                 <Button className='' onClick={() => navigate("/edit-profile")}>
                     Edit
                 </Button> </div>) : (<div className='flex justify-end p-4'>
-                    <Button className='' 
-                    onClick={() => handleFollowUnfollow(userId)}
-                    disabled={isFollowedLoading}
+                    <Button className=''
+                        onClick={() => handleFollowUnfollow(userId)}
+                        disabled={isFollowedLoading}
                     >
-                       {isFollowed ? "Unfollow" : "Follow"}
+                        {isFollowed ? "Unfollow" : "Follow"}
                     </Button>
                 </div>)}
             <div className='p-4'>
@@ -180,76 +143,9 @@ function Profile() {
             </div>
             {posts?.pages.map((page) => (
                 page.data?.map((post) => (
-                    <div className='flex justify-center items-center border-y border-slate-600'>
-                        <div className='flex-col justify-center items-center p-8 text-white bg-black'>
-                            {isAuth && <div className='flex justify-end items-end mr-4'>
-                                <p className={`text-[2rem] text-slate-300 block cursor-pointer
-                                 ${isDotOpen === post._id && "hidden"}`}
-                                    onClick={() => setIsDotOpen(post._id)}>
-                                    ...
-                                </p>
-                                {isDotOpen == post._id &&
-                                    <div className='flex flex-col justify-center items-center gap-5
-                           top-3 border relative rounded-lg border-slate-600 p-5 mb-2'>
-                                        <Link
-                                            to={`/edit-posts/${post._id}`}
-                                            className='p-2 text-white no-underline'
-                                        >
-                                            <FontAwesomeIcon icon={faEdit} />
-                                            <span className='ml-2'>Edit</span>
-                                        </Link>
-                                        <Button
-                                            onClick={() => handlePostDelete(post._id)}
-                                            className='p-2'
-                                            bgColor='bg-black'
-                                            textColor='text-white'>
-                                            <FontAwesomeIcon icon={faRemove} />
-                                            <span className='ml-2'>Delete</span>
-                                        </Button>
-                                    </div>
-                                }
-                            </div>}
-                            <div className='flex flex-col overflow-hidden'>
-                                <div className='m-2 flex flex-col justify-center items-center'>
-                                    <div className='p-2 rounded-md'>
-                                        <img src={post.image}
-                                            alt="post"
-                                        />
-                                    </div>
-                                    <div className='w-full pl-2 flex flex-col justify-cente gap-4 m-2 overflow-x-hidden'>
-                                        <p className='break-words'>{post.title}</p>
-                                        <p className='break-words'>{post.content}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='flex items-center ml-4'>
-                                <Button className='p-1 hover:text-red-500'>
-                                    <FontAwesomeIcon icon={faHeart} />
-                                </Button>
-                                <span className='text-[13px] mr-2 cursor-pointer'
-                                    onClick={() => setIsLikeOpen(!isLikeOpen)}>
-                                    {post.likesCount}
-                                </span>
-                                <Button className='p-1'>
-                                    <FontAwesomeIcon icon={faComment} />
-                                </Button>
-                                <span className='text-[13px] cursor-pointer'
-                                    onClick={() => setIsCommentOpen(!isCommentOpen)}>
-                                    {post.commentsCount}
-                                </span>
-                            </div>
-                            {isLikeOpen &&
-                                <div className='w-full h-full flex justify-center items-center'>
-                                    <Like likeState={handleLikeState} />
-                                </div>
-                            }
-                            {isCommentOpen &&
-                                <div className='w-full flex justify-center items-center'>
-                                    <Comment commentState={handleCommentSate} />
-                                </div>
-                            }
-                        </div>
-                    </div>
+                  <div className='bg-black text-white h-auto'  key={post._id}>
+                      <ProfilePostCart {...post}/>
+                  </div>
                 ))
             ))}
             <div ref={ref} className='p-4 rounded-3xl bg-slate-700'>

@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -24,13 +24,13 @@ function PostCart({
 
   const [isPostLike, setIsPostLike] = useState(isLike)
   const [totalLike, setTotalLike] = useState(likesCount)
+  const [isLoading, setIsLoading] = useState(false)
   const [isLikeOpen, setIsLikeOpen] = useState(false)
   const [isCommentOpen, setIsCommentOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-   setIsPostLike(isLike) 
-   setTotalLike(likesCount)   
+    setIsPostLike(isLike)
+    setTotalLike(likesCount)
   }, [isLike])
 
   // PostLikeHandler
@@ -46,24 +46,24 @@ function PostCart({
         setTotalLike((prevLike) => prevLike - 1)
         useToast.successToast("Unliked Successfully")
       }
-  } catch (error) {
+    } catch (error) {
       useToast.errorToast(error.message)
-      
-  } finally {
-    setIsLoading(false)
-  }   
-  }
-    
 
-    // Toggle Like
-    const handleLikeState = (data) => {
-      setIsLikeOpen(data)
+    } finally {
+      setIsLoading(false)
     }
-  
-    // Toggle Comment
-    const handleCommentSate = (data) => {
-      setIsCommentOpen(data)
-    }
+  }
+
+
+  // Toggle Like
+  const handleLikeState = (data) => {
+    setIsLikeOpen(data)
+  }
+
+  // Toggle Comment
+  const handleCommentSate = (data) => {
+    setIsCommentOpen(data)
+  }
 
   return (
     <div className='flex-col justify-center items-center'>
@@ -92,22 +92,25 @@ function PostCart({
       </div>
       <div className='flex items-center gap-2 mt-3 ml-2'>
         <Button onClick={() => hanldePostLike(_id)}
-          bgColor='bg-black'
-          textColor='text-white'
-          className='border-none p-1'
-                disabled={isLoading}
+          className={` ${isPostLike ? "bg-red-500 text-white" : "bg-white text-black"}
+            border-none p-1 rounded-full focus:outline-none`}
+          bgColor=""
+          textColor=''
+          disabled={isLoading}
         >
-          <FontAwesomeIcon icon={faHeart} className={` text-lg  ${isPostLike ?
-                "bg-red-500 text-black" : 
-                "bg-white hover:text-white  hover:bg-red-500"}`} />
+          <FontAwesomeIcon
+            icon={faHeart}
+            className={`text-lg hover:text-red-500 transition-all duration-200 `}
+          />
         </Button>
-        <span  onClick={() => setIsLikeOpen(!isLikeOpen)}
-        className='text-[13px] cursor-pointer'
+
+        <span onClick={() => setIsLikeOpen(!isLikeOpen)}
+          className='text-[13px] cursor-pointer'
         >
           {totalLike}
         </span>
-        <Button  onClick={() => setIsCommentOpen(!isCommentOpen)}
-        className='p-1 border-none'>
+        <Button onClick={() => setIsCommentOpen(!isCommentOpen)}
+          className='p-1 border-none'>
           <FontAwesomeIcon icon={faComment} />
         </Button>
         <span className='text-[13px]' >
@@ -115,17 +118,17 @@ function PostCart({
         </span>
       </div>
       {isLikeOpen &&
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-center items-center transition duration-700'>
           <Like likeState={handleLikeState} postId={_id} />
         </div>
       }
       {isCommentOpen &&
-        <div className='flex justify-center items-center'>
-          <Comment commentState={handleCommentSate} postId={_id}/>
+        <div className='flex justify-center items-center transition ease-in delay-75 duration-500'>
+          <Comment commentState={handleCommentSate} postId={_id} />
         </div>
       }
     </div>
-    
+
   )
 }
 

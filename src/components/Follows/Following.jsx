@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams, Link } from 'react-router-dom';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 
 import Button from '../Atom/Button.jsx';
@@ -15,14 +15,15 @@ function following() {
 
   const { username, userId } = useParams()
   const [isFollowedLoading, setIsFollowedLoading] = useState(false)
+  const queryClient = useQueryClient()
 
   const userData = useSelector((state) => state.auth.userData)  
 
-  // Infinite Scrolling
+  // Fetch User Following (Infinite Scrolling)
   const MAX_PAGE_POST = 2
   const { data: following, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
-      queryKey: ["following", { userId }],
+      queryKey: ["following"],
       queryFn: ({ pageParam }) => fetchFollowing({ pageParam }, userId),
       refetchOnWindowFocus: false,
       // staleTime: 3000,
@@ -52,6 +53,7 @@ function following() {
       } else {
         useToast.successToast("Unfollow Successfully")
       }
+      queryClient.invalidateQueries(["following"])
     } catch (error) {
       throw console.error(error.message)
     } finally {
@@ -105,7 +107,7 @@ function following() {
         "Loading More" :
         hasNextPage ?
           "Scroll down to load more" :
-          "No more Posts"
+          "No more following"
       }
     </div>
   </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen'>

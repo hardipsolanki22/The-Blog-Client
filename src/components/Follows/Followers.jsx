@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams, Link } from 'react-router-dom';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { useSelector } from 'react-redux';
 
@@ -16,16 +16,14 @@ function Followers() {
   const [isFollowedLoading, setIsFollowedLoading] = useState(false)
 
   const userData = useSelector((state) => state.auth.userData)
+  const queryClient = useQueryClient()
 
-  // Infinite Scrolling
+  //  Fetch User Followers (Infinite Scrolling)
   const MAX_PAGE_POST = 2
   const { data: followers, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
-      queryKey: ["followers", { userId }],
+      queryKey: ["followers"],
       queryFn: ({ pageParam }) => fetchFollowers({ pageParam }, userId),
-      //refetchOnWindowFocus: false,
-      //  enabled: !!user,
-      // staleTime: 3000,
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.data.length === MAX_PAGE_POST ? allPages.length + 1 : undefined;
       },
@@ -49,6 +47,7 @@ function Followers() {
       setIsFollowedLoading(true)
       const response = await axiosInstance.post(`/subcriptions/${userId}/following`)
       if (response.data.data.following) {
+        queryClient.invalidateQueries(["followers"])
         useToast.successToast("Follow Successfully")
       } else {
         useToast.successToast("Unfollow Successfully")
@@ -106,7 +105,7 @@ function Followers() {
         "Loading More" :
         hasNextPage ?
           "Scroll down to load more" :
-          "No more Posts"
+          "No more followers"
       }
     </div>
   </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen'>

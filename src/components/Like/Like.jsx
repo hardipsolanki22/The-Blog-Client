@@ -6,18 +6,18 @@ import { useInView } from 'react-intersection-observer'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import Button from '../Atom/Button'
+import Button from '../Atoms/Button'
 import getPostLikes from '../Api/LikeApi/getPostLiked'
-import { axiosInstance } from '../../Helper/axiosService'
-import { useToast } from '../../Helper/toast'
+import { axiosInstance } from '../../Helpers/axiosService'
+import { useToast } from '../../Helpers/toast'
 
 
-function Like({ likeState, postId}) {
+function Like({ likeState, postId }) {
 
   const [isFollowedLoading, setIsFollowedLoading] = useState(false)
   const userData = useSelector((state) => state.auth.userData)
 
-  const  queryClient = useQueryClient()
+  const queryClient = useQueryClient()
 
   // Fetch User Who Like Posts (Infinite Scrolling)
   const MAX_PAGE_POST = 5
@@ -52,6 +52,7 @@ function Like({ likeState, postId}) {
       } else {
         useToast.successToast("Unfollow Successfully")
       }
+      queryClient.invalidateQueries(["users"])
       queryClient.invalidateQueries(["like", { postId }])
     } catch (error) {
       throw console.error(error.message)
@@ -60,10 +61,10 @@ function Like({ likeState, postId}) {
     }
   }
 
-  
+
   return !isLoading ? (<div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] 
-    overflow-y-auto rounded-md
-    border-x border-slate-400 bg-white text-black sm:mt-4 p-2 duration-300'>
+       overflow-y-auto rounded-md border-x border-slate-400 bg-white
+      text-black sm:mt-4 p-2 duration-300'>
     <Button className='p-1 font-bold' onClick={() => likeState(false)}>
       <FontAwesomeIcon icon={faClose} />
     </Button>
@@ -73,8 +74,8 @@ function Like({ likeState, postId}) {
     {likes.pages?.map((page) => (
       page.data?.map((like) => (
         <div className='my-6 flex justify-around items-center' key={like.likedBy._id}>
-          <Link  to={`/profile/${like.likedBy.username}`}
-          className='flex justify-center items-center no-underline text-black'>
+          <Link to={`/profile/${like.likedBy.username}`}
+            className='flex justify-center items-center no-underline text-black'>
             <div className='mr-2'>
               <img src={like.likedBy.avatar}
                 alt="avatar"
@@ -91,13 +92,13 @@ function Like({ likeState, postId}) {
                 className='px-4 py-2 rounded-full'
                 disabled={isFollowedLoading}
               >
-              { 
-              like.likedBy.isFollowed ? "Unfollow" : "Follow"
-             }
+                {
+                  like.likedBy.isFollowed ? "Unfollow" : "Follow"
+                }
               </Button>
 
             }
-          </div>                                      
+          </div>
         </div>
       ))
     ))

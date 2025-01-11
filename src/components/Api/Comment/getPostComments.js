@@ -1,4 +1,4 @@
-import { axiosInstance } from "../../../Helper/axiosService"
+import { axiosInstance } from "../../../Helpers/axiosService"
 
 const  MAX_PAGE_COMMENT = 5 
 

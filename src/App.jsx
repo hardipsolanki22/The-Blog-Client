@@ -1,14 +1,12 @@
-import { useState } from 'react'
+import React from 'react'
 import {Outlet} from 'react-router-dom'
-
-
+import { useQuery } from '@tanstack/react-query'
+import { ToastContainer } from 'react-toastify'
 
 import Header from './components/Header/Header'
 import DesktopNavbar from './components/Navbar/DesktopNavbar/DesktopNavbar'
 import MobileNavbar from './components/Navbar/MobileNavbar/MobileNavbar'
 import RightAside from './components/RightAside/RightAside'
-import { ToastContainer } from 'react-toastify'
-import { useQuery } from '@tanstack/react-query'
 import getCurrentUser from './components/Api/UserApi/getCurrentUser'
 import { useDispatch } from 'react-redux'
 import { login, logout } from './featured/authSlice'
@@ -19,7 +17,6 @@ function App() {
 
   const {data: user, isLoading} = useQuery({
     queryFn: getCurrentUser,
-    queryKey: ["currentUser"],
     refetchOnWindowFocus: false
   })
 

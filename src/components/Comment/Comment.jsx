@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 
-import Button from '../Atom/Button';
-import { useToast } from '../../Helper/toast';
-import { axiosInstance } from '../../Helper/axiosService';
+import Button from '../Atoms/Button';
+import { useToast } from '../../Helpers/toast';
+import { axiosInstance } from '../../Helpers/axiosService';
 import getPostCommets from '../Api/Comment/getPostComments';
 import CommentCart from './CommentCart';
 import { useSelector } from 'react-redux';
@@ -84,19 +84,23 @@ function Comment({ commentState, postId }) {
         <input
           type="text"
           placeholder='Add a comment...'
-          className="border rounded-lg text-base w-full px-3 py-2 focus:outline-none focus:border-blue-600 transition duration-200"
+          className="border rounded-lg text-base w-full px-3 py-2 focus:outline-none
+           focus:border-gray-600 transition duration-200"
           {...register("content", {
             required: true
           })}
         />
         <div className='flex justify-end mt-2'>
-          <button
-            className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 focus:outline-none'
+          <Button
+            className='px-4 py-2 rounded-lg
+             hover:bg-white hover:text-black transition duration-500 focus:outline-none'
+             bgColor='bg-black'
+             textColor='text-white'
             type='submit'
             disabled={isCommentLoading}
           >
             Submit
-          </button>
+          </Button>
         </div>
       </form>
 

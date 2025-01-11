@@ -1,4 +1,4 @@
-import { axiosInstance } from "../../../Helper/axiosService"
+import { axiosInstance } from "../../../Helpers/axiosService"
 
 const fetchUserProfile = async (username) => {
     const response = await axiosInstance.get(`/user/profile/${username}`, {

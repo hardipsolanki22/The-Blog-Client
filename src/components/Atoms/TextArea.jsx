@@ -1,7 +1,6 @@
 import React, { useId } from 'react'
 
-function Input({
-    type = "text",
+function TextArea({
     label,
     placeholder,
     className = "",
@@ -9,22 +8,23 @@ function Input({
 }, ref) {
 
     const id = useId()
+
     return (
         <div className='m-4'>
-            {label && <label
-                htmlFor={id}>
+            {label && 
+            <label htmlFor={id}>
                 {label}
             </label>}
-            <input
-                type={type}
-                id={id}
-                placeholder={type !== "file" && placeholder}
+            <textarea
+                placeholder={placeholder}
                 className={className}
+                id={id}
                 ref={ref}
                 {...props}
-            />
+                >
+            </textarea>
         </div>
     )
 }
 
-export default React.forwardRef(Input)
+export default React.forwardRef(TextArea)

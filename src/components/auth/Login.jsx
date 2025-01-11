@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import {useDispatch} from "react-redux"
 
-import { useToast } from '../../Helper/toast'
-import Input from '../Atom/Input'
-import Button from '../Atom/Button'
+import { useToast } from '../../Helpers/toast'
+import Input from '../Atoms/Input'
+import Button from '../Atoms/Button'
 import { login } from '../../featured/authSlice'
 import signInUser from '../Api/AuthApi/signIn'
 import getCurrentUser from '../Api/UserApi/getCurrentUser'
@@ -63,7 +63,8 @@ function Login() {
                         type="email"
                         label="Email: "
                         placeholder="Enter your email"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        transition duration-200 focus:border-gray-600"
                         {...register("email", {
                             required: true
                         })}
@@ -72,7 +73,8 @@ function Login() {
                         type="password"
                         label="Password: "
                         placeholder="Enter your password"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        transition duration-200 focus:border-gray-600"
                         {...register("password", {
                             required: true
                         })}

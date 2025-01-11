@@ -5,10 +5,10 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 
-import Button from '../Atom/Button.jsx';
+import Button from '../Atoms/Button.jsx';
 import fetchFollowing from '../Api/Follows/getFollowing.js';
-import { useToast } from '../../Helper/toast.js';
-import { axiosInstance } from '../../Helper/axiosService.js';
+import { useToast } from '../../Helpers/toast.js';
+import { axiosInstance } from '../../Helpers/axiosService.js';
 import { useSelector } from 'react-redux';
 
 function following() {

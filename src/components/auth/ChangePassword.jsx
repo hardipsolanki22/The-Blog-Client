@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
-import Input from '../Atom/Input'
-import Button from '../Atom/Button'
+import Input from '../Atoms/Input'
+import Button from '../Atoms/Button'
 import changePassword from '../Api/AuthApi/changePassword'
-import { useToast } from '../../Helper/toast'
+import { useToast } from '../../Helpers/toast'
 
 function ChangePassword() {
 
@@ -34,13 +34,14 @@ function ChangePassword() {
          border-y'>
             <div className='gap-4 flex flex-col justify-center items-center
         min-w-[70%]  h-auto bg-white text-black rounded-md p-10'>
-                <h1>Reset Password</h1>
+                <p className='text-2xl'>Reset Password</p>
                 <form onSubmit={handleSubmit(changePasswordHandler)} className='w-full'>
                     <Input
                         type="password"
                         label="Old Password: "
                         placeholder="Enter old password"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        transition duration-200 focus:border-gray-600"
                         {...register("oldPassword", {
                             required: true
                         })}
@@ -49,7 +50,8 @@ function ChangePassword() {
                         type="password"
                         label="New Password: "
                         placeholder="Enter new password"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        transition duration-200 focus:border-gray-600"
                         {...register("newPassword", {
                             required: true
                         })}

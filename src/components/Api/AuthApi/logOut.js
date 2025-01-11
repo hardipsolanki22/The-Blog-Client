@@ -1,5 +1,5 @@
 
-import { axiosInstance } from "../../../Helper/axiosService";   
+import { axiosInstance } from "../../../Helpers/axiosService";   
 
 const logOutUser = async () => {
     const response = await axiosInstance.post("/user/logout",{}, {

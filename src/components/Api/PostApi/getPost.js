@@ -1,4 +1,4 @@
-import { axiosInstance } from "../../../Helper/axiosService"
+import { axiosInstance } from "../../../Helpers/axiosService"
 
 const getPost = async (postId) => {
    try {

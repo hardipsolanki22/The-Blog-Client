@@ -4,7 +4,7 @@ import { faHome, faUserPlus, faSignInAlt, faPlus, faSearch } from '@fortawesome/
 import { useNavigate } from 'react-router-dom'
 import {useSelector} from 'react-redux'
 
-import Button from '../../Atom/Button'
+import Button from '../../Atoms/Button'
 
 
 

@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import Input from '../Atom/Input'
-import Button from '../Atom/Button'
-import { useToast } from '../../Helper/toast'
-import { parseErrorMesaage } from '../../Helper/parseErrMsg'
+import Input from '../Atoms/Input'
+import Button from '../Atoms/Button'
+import { useToast } from '../../Helpers/toast'
+import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
 import registerUser from '../Api/AuthApi/signUp'
 
 function Signup() {
@@ -69,7 +69,8 @@ function Signup() {
                         type="text"
                         label="Name: "
                         placeholder="Enter your name"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        transition duration-200 focus:border-gray-600"
                         {...register("name", {
                             required: true
                         })}
@@ -78,7 +79,8 @@ function Signup() {
                         type="text"
                         label="Username: "
                         placeholder="Enter your username"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        transition duration-200 focus:border-gray-600"
                         {...register("username", {
                             required: true
                         })}
@@ -87,7 +89,8 @@ function Signup() {
                         type="email"
                         label="Email: "
                         placeholder="Enter your email"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        transition duration-200 focus:border-gray-600"
                         {...register("email", {
                             required: true
                         })}
@@ -96,7 +99,8 @@ function Signup() {
                         type="password"
                         label="Password: "
                         placeholder="Enter your password"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        transition duration-200 focus:border-gray-600"
                         {...register("password", {
                             required: true
                         })}

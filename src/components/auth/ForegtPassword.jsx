@@ -2,9 +2,9 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 
-import Button from '../Atom/Button'
-import Input from '../Atom/Input'
-import { useToast } from '../../Helper/toast'
+import Button from '../Atoms/Button'
+import Input from '../Atoms/Input'
+import { useToast } from '../../Helpers/toast'
 import forgetPassword from '../Api/AuthApi/forgetPassword'
 
 function ForgetPassword() {
@@ -36,7 +36,8 @@ function ForgetPassword() {
             type="email"
             label="Email: "
             placeholder="Enter your email"
-            className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+            className="border text-base w-full px-2 py-2 focus:outline-none
+            transition duration-200 focus:border-gray-600"
             {...register("email", {
               required: true
             })}

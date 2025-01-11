@@ -1,4 +1,4 @@
-import { axiosInstance } from "../../../Helper/axiosService";
+import { axiosInstance } from "../../../Helpers/axiosService";
 
 const registerUser = async (data) => {
     const response = await axiosInstance.post('/user/register',data, {

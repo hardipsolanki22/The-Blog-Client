@@ -12,6 +12,7 @@ function EditPost() {
   const { data: post, isLoading , isError} = useQuery({
     queryFn: () => getPost(postId),
     queryKey: ["posts", { postId }],
+    refetchOnWindowFocus: false,
   })
 
   if (isError) {

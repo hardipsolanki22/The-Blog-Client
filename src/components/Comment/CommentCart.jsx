@@ -6,9 +6,9 @@ import { faRemove } from '@fortawesome/free-solid-svg-icons/faRemove';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 
-import Button from '../Atom/Button';
+import Button from '../Atoms/Button';
 import deleteComment from '../Api/Comment/deleteComment';
-import { useToast } from '../../Helper/toast'
+import { useToast } from '../../Helpers/toast'
 import { useQueryClient } from '@tanstack/react-query';
 import likeDislikeComment from '../Api/LikeApi/likeDislikeComment';
 

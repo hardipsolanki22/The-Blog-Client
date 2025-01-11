@@ -1,4 +1,4 @@
-import {axiosInstance} from '../../../Helper/axiosService'
+import {axiosInstance} from '../../../Helpers/axiosService'
 
 const updatePost = async (post) => {
     const response = await axiosInstance.patch(`/post/update-posts/${post._id}`, post.data, {

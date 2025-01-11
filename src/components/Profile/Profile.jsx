@@ -3,23 +3,22 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer'
 
-import Button from '../Atom/Button'
-import { useToast } from '../../Helper/toast';
+import Button from '../Atoms/Button'
+import { useToast } from '../../Helpers/toast';
 import fetchUserProfile from '../Api/UserApi/fetchProfile'
 import fetchUserPosts from '../Api/PostApi/fetchUserPosts';
-import { axiosInstance } from '../../Helper/axiosService';
+import { axiosInstance } from '../../Helpers/axiosService';
 import ProfilePostCart from '../Post/ProfilePostCart';
 
 function Profile() {
 
     const navigate = useNavigate()
     const { username } = useParams()
-
-    const [isFollowed, setIsFollowed] = useState(null)
     const [isFollowedLoading, setIsFollowedLoading] = useState(false)
+    const queryClient = useQueryClient()
 
     const userData = useSelector(state => state.auth.userData)
 
@@ -30,15 +29,9 @@ function Profile() {
     })
     
     const isAuth = user && userData ? user?.data._id === userData._id : false
-
-    useEffect(() => {
-        if (user) {
-            setIsFollowed(user?.data.isFollowed);
-        }
-    }, [user]);
     const userId = user?.data._id
 
-    // Infinite Scrolling
+    // Fetch User Potss (Infinite Scrolling)
     const MAX_PAGE_POST = 2
     const { data: posts, hasNextPage, fetchNextPage, isFetchingNextPage } =
         useInfiniteQuery({
@@ -50,8 +43,6 @@ function Profile() {
             getNextPageParam: (lastPage, allPages) => {
                 return lastPage.data.length === MAX_PAGE_POST ? allPages.length + 1 : undefined;
             },
-
-
         })
 
     const { ref, inView } = useInView({
@@ -69,12 +60,13 @@ function Profile() {
         try {
             setIsFollowedLoading(true)
             const response = await axiosInstance.post(`/subcriptions/${userId}/following`)
-            setIsFollowed(response.data.data.following)
             if (response.data.data.following) {
                 useToast.successToast("Follow successfully")
             } else {
                 useToast.successToast("Unfollow successfully")
             }
+            queryClient.invalidateQueries(["users",{username}])
+            queryClient.invalidateQueries(["users"])
         } catch (error) {
             throw console.error(error.message)
         } finally {
@@ -85,19 +77,18 @@ function Profile() {
     return (
         !isLoading ? (<div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto gap-4
             border-y '>
-            <div className='flex gap-4 ml-4 mt-4 mb-1'>
+            <div className='flex gap-4 ml-4 mt-4 mb-2'>
                 <Link to={"/"}
                     className='text-white'>
                     <FontAwesomeIcon icon={faArrowLeft} />
                 </Link>
-                <div>
-                    <p className='text-white text-2xl'>@{user.data.name}</p>
-                    <p className='text-slate-400'>{user.data.username}</p>
+                <div className=''>
+                    <p className='text-white text-2xl'>@{user.data.username}</p>
                 </div>
             </div>
             <div className='relative'>
                 <img
-                    src={user.data.coverImage}
+                    src={user.data?.coverImage}
                     alt="coverImage"
                     className='w-full sm:h-48 h-40 object-cover bg-slate-700'
                 />
@@ -115,7 +106,7 @@ function Profile() {
                         onClick={() => handleFollowUnfollow(userId)}
                         disabled={isFollowedLoading}
                     >
-                        {isFollowed ? "Unfollow" : "Follow"}
+                        {user.data.isFollowed ? "Unfollow" : "Follow"}
                     </Button>
                 </div>)}
             <div className='p-4'>

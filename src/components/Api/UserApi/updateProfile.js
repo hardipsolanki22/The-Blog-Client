@@ -1,4 +1,4 @@
-import { axiosInstance } from "../../../Helper/axiosService"
+import { axiosInstance } from "../../../Helpers/axiosService"
 
 const updateProfile = async (data) => {
     const response = await axiosInstance.patch('/user/update-account-details', data,{

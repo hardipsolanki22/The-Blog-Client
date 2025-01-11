@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 import { Link } from 'react-router-dom'
-import Button from '../Atom/Button'
+import Button from '../Atoms/Button'
 import Comment from '../Comment/Comment'
 import Like from '../Like/Like'
-import { useToast } from '../../Helper/toast';
-import { axiosInstance } from '../../Helper/axiosService';
+import { useToast } from '../../Helpers/toast';
+import { axiosInstance } from '../../Helpers/axiosService';
 
 function PostCart({
   _id,
@@ -68,7 +68,7 @@ function PostCart({
   return (
     <div className='flex-col justify-center items-center'>
       <Link to={`/profile/${owner.username}`}
-        className='flex items-center text-white'>
+        className='flex items-center text-white '>
         <div className=' mx-2 flex justify-center items-center'>
           <img src={owner.avatar}
             alt="hardip"

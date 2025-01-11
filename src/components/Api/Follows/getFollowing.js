@@ -1,4 +1,4 @@
-import { axiosInstance } from "../../../Helper/axiosService";
+import { axiosInstance } from "../../../Helpers/axiosService";
 
 const MAX_PAGE_POST = 2
 const fetchFollowing = async ({pageParam = 1},userId) => {

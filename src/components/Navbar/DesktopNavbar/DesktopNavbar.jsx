@@ -1,20 +1,16 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faPlus, faSearch, faExchange, faUser, faUserPlus, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faPlus, faSearch, faUser, faUserPlus, faSignIn } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import Button from '../../Atom/Button'
+import Button from '../../Atoms/Button'
 import LogoutBtn from '../../auth/LogoutBtn'
 
 function DesktopNavbar() {
     const authStatus = useSelector((state) => state.auth.status)
     const userData = useSelector(state => state.auth.userData)
     const navigate = useNavigate()
-
-    console.log(`userData: ${JSON.stringify(userData?.username)}`);
-    console.log(`status: ${JSON.stringify(authStatus)}`);
-    
 
     const navItems = [
         {
@@ -39,12 +35,6 @@ function DesktopNavbar() {
             name: "Profile",
             slug:  `/profile/${userData?.username}`,
             icon: <FontAwesomeIcon icon={faUser} />,
-            active: authStatus
-        },
-        {
-            name: "Change Password",
-            slug: "change-password",
-            icon: <FontAwesomeIcon icon={faExchange} />,
             active: authStatus
         },
         {
@@ -104,11 +94,13 @@ function DesktopNavbar() {
                     <ul className='gap-9 flex flex-col items-center justify-center my-4'>
                         {navItems.map((item) => (
                             item.active ? (
-                                <li>
+                                <li className='transition duration-500'>
                                     <Button onClick={() => navigate(item.slug)}
-                                        className='border-none font-normal
-                                        hover:bg-slate-600 p-2 rounded-md active:border-none
-                                        hover:w-30 text-center' bgColor='bg-black' textColor='text-white'>
+                                   className='px-4 py-2 rounded-lg
+                                   hover:bg-white hover:text-black transition duration-500 focus:outline-none'
+                                   bgColor='bg-black'
+                                   textColor='text-white'
+                                   >
                                         <span className='mr-2'>{item.icon}</span>
                                     </Button>
                                 </li>

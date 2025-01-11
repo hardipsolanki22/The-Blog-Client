@@ -3,12 +3,13 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 
-import Input from '../Atom/Input'
-import Button from '../Atom/Button'
-import Select from '../Atom/Select'
+import Input from '../Atoms/Input'
+import Button from '../Atoms/Button'
+import Select from '../Atoms/Select'
 import addPost from '../Api/PostApi/addPost'
-import { useToast } from '../../Helper/toast'
+import { useToast } from '../../Helpers/toast'
 import updatePost from '../Api/PostApi/updatePost'
+import TextArea from '../Atoms/TextArea'
 
 function PostForm({ post }) {
 
@@ -80,16 +81,18 @@ function PostForm({ post }) {
                         type="text"
                         label="Title: "
                         placeholder="Enter post title"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none 
+                        focus:border-gray-600 transition duration-200"
                         {...register("title", {
                             required: true
                         })}
                     />
-                    <Input
+                    <TextArea
                         type="text"
                         label="Content: "
                         placeholder="Enter post content"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px- h-48 focus:outline-none
+                         focus:border-gray-600 transition duration-200"
                         {...register("content", {
                             required: true
                         })}

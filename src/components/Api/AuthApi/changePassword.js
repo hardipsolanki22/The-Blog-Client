@@ -1,4 +1,4 @@
-import { axiosInstance } from "../../../Helper/axiosService"
+import { axiosInstance } from "../../../Helpers/axiosService"
 
 const changePassword = async (data) => {    
     const response = await axiosInstance.patch('/user/change-password', data, {

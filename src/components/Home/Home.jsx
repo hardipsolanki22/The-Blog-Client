@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ForYouFeed from './ForYouFeed'
 import FollowingFeed from './FollowingFeed'
-import Button from '../Atom/Button'
+import Button from '../Atoms/Button'
 
 function Home() {
 

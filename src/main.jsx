@@ -1,6 +1,6 @@
 import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Provider, useSelector } from 'react-redux'
+import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 
@@ -19,7 +19,7 @@ import PostForm from './components/Post/PostForm.jsx'
 import EditProfile from './components/Profile/EditProfile.jsx'
 import ChangePassword from './components/Auth/ChangePassword.jsx'
 import { store } from './store/store.js'
-import EditPost from './pages/editPost.jsx'
+import EditPost from './pages/EditPost.jsx'
 import Followers from './components/Follows/Followers.jsx'
 import Following from './components/Follows/Following.jsx'
 

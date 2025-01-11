@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form'
 
 import { useMutation } from '@tanstack/react-query'
 
-import Input from '../Atom/Input'
-import Button from '../Atom/Button'
-import { useToast } from '../../Helper/toast'
+import Input from '../Atoms/Input'
+import Button from '../Atoms/Button'
+import { useToast } from '../../Helpers/toast'
 import resetPassword from '../Api/AuthApi/resetPassword'
 
 function ResetPassword() {
@@ -44,13 +44,14 @@ function ResetPassword() {
          border-y'>
       <div className='gap-4 flex flex-col justify-center items-center
         min-w-[60%] h-auto bg-white text-black rounded-md p-10'>
-        <h1>Reset Password</h1>
+      <p className='text-2xl'>Reset Password</p>
         <form onSubmit={handleSubmit(resetPasswordHandler)} className='w-full'>
           <Input
             type="password"
             label="New Password: "
             placeholder="Enter new password"
-            className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+            className="border text-base w-full px-2 py-2 focus:outline-none
+            transition duration-200 focus:border-gray-600"
             {...register("password", {
               required: true
             })}

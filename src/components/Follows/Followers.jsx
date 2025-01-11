@@ -7,9 +7,9 @@ import { useInView } from 'react-intersection-observer';
 import { useSelector } from 'react-redux';
 
 import fetchFollowers from "../Api/Follows/getFollowers.js";
-import Button from '../Atom/Button.jsx';
-import { axiosInstance } from '../../Helper/axiosService.js';
-import { useToast } from '../../Helper/toast.js';
+import Button from '../Atoms/Button.jsx';
+import { axiosInstance } from '../../Helpers/axiosService.js';
+import { useToast } from '../../Helpers/toast.js';
 
 function Followers() {
   const { username, userId } = useParams()

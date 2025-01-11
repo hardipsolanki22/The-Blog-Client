@@ -14,7 +14,6 @@ function ForYouFeed() {
     useInfiniteQuery({
       queryKey: ["for-you-posts"],
       queryFn: fetchAllPosts,
-      // refetchOnWindowFocus: false,0
       staleTime: 3000,
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.data.length === MAX_PAGE_POST ? allPages.length + 1 : undefined;
@@ -35,7 +34,7 @@ function ForYouFeed() {
 
 
 
-  return !isLoading ? (<div className='sm:max-h-[91.7vh] z-0 sm:overflow-y-auto bg-black text-white'>
+  return !isLoading ? (<div className='sm:max-h-[91.7vh] sm:overflow-y-auto bg-black text-white'>
     {posts?.pages.map((page) => (
       page.data?.map((post) => (<div key={post.title}
         className='flex flex-col justify-center border-y p-5 h-auto '>

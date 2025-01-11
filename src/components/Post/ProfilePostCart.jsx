@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { faComment, faEdit, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faRemove } from '@fortawesome/free-solid-svg-icons';
-
+import { useQueryClient } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
 
-import { axiosInstance } from '../../Helper/axiosService'
-import { useToast } from '../../Helper/toast'
-import Button from '../Atom/Button'
+import { axiosInstance } from '../../Helpers/axiosService'
+import { useToast } from '../../Helpers/toast'
+import Button from '../Atoms/Button'
 import Like from '../Like/Like';
 import Comment from '../Comment/Comment';
 import deletePost from '../Api/PostApi/deletePost';
-import { useQueryClient } from '@tanstack/react-query';
 
 function ProfilePostCart({
     _id,
@@ -25,33 +25,38 @@ function ProfilePostCart({
     isLiked
 }) {
 
-    const [isPostLike, setIsPostLike] = useState(isLiked)
-    const [totalLike, setTotalLike] = useState(likesCount)
     const [isLoading, setIsLoading] = useState(false)
     const [isLikeOpen, setIsLikeOpen] = useState(false)
     const [isCommentOpen, setIsCommentOpen] = useState(false)
     const [isDotOpen, setIsDotOpen] = useState(false)
     const queryClient = useQueryClient()
+    const containerRef = useRef()
 
     const userData = useSelector(state => state.auth.userData)
     const isAuth = userData && owner ? owner === userData._id : false
 
+    const handleClickOutSide = () => {
+        if (containerRef.current && !containerRef.current.contains(event.target)) {
+            setIsDotOpen(false)
+        }
+    }
+
     useEffect(() => {
-        setIsPostLike(isLiked)
-        setTotalLike(likesCount)
-    }, [isLiked])
+        document.addEventListener("mousedown", handleClickOutSide)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutSide)
+        }
+    }, [])
 
     // PostLikeHandler
     const hanldePostLike = async (postId) => {
         try {
             setIsLoading(true)
             const response = await axiosInstance.post(`/like/create-like/${postId}`)
-            setIsPostLike(response.data.data.like)
+            queryClient.invalidateQueries(["posts", { owner }])
             if (response.data.data.like) {
-                setTotalLike((prevLike) => prevLike + 1)
                 useToast.successToast("Liked Successfully")
             } else {
-                setTotalLike((prevLike) => prevLike - 1)
                 useToast.successToast("Unliked Successfully")
             }
         } catch (error) {
@@ -94,9 +99,11 @@ function ProfilePostCart({
                     onClick={() => setIsDotOpen(true)}>
                     ...
                 </p>
-                {isDotOpen  &&
-                    <div className='flex flex-col justify-center items-center gap-5
-                                 top-3 border relative rounded-lg border-slate-600 p-5 mb-2'>
+                {isDotOpen &&
+                    <div ref={containerRef} 
+                    className='flex flex-col justify-center items-center gap-5
+                                transition duration-500 delay-100
+                                top-3 border relative rounded-lg border-slate-600 p-5 mb-2'>
                         <Link
                             to={`/edit-posts/${_id}`}
                             className='p-2 text-white no-underline'
@@ -129,7 +136,7 @@ function ProfilePostCart({
             </div>
             <div className='flex items-center gap-2 mt-3 ml-2'>
                 <Button onClick={() => hanldePostLike(_id)}
-                    className={` ${isPostLike ? "bg-red-500 text-white" : "bg-white text-black"}
+                    className={` ${isLiked ? "bg-red-500 text-white" : "bg-white text-black"}
               border-none p-1 rounded-full focus:outline-none`}
                     bgColor=""
                     textColor=''
@@ -137,14 +144,13 @@ function ProfilePostCart({
                 >
                     <FontAwesomeIcon
                         icon={faHeart}
-                        className={`text-lg hover:text-red-500 transition-all duration-200 `}
                     />
                 </Button>
 
                 <span onClick={() => setIsLikeOpen(!isLikeOpen)}
                     className='text-[13px] cursor-pointer'
                 >
-                    {totalLike}
+                    {likesCount}
                 </span>
                 <Button onClick={() => setIsCommentOpen(!isCommentOpen)}
                     className='p-1 border-none'>

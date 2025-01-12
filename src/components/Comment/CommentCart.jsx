@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons'
@@ -26,6 +26,20 @@ function CommentCart({
     const [isDotOpen, setIsDotOpen] = useState(false)
     const userData = useSelector(state => state.auth.userData)
     const queryClient = useQueryClient()
+    const containerRef = useRef(null)
+
+    const handleClickOutSide = () => {
+        if (containerRef.current && !containerRef.current.contains(event.target)) {
+            setIsDotOpen(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutSide)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutSide)
+        }
+    }, [])
 
     const isAuth = userData && owner ? userData._id === owner._id : false
 
@@ -95,13 +109,13 @@ function CommentCart({
                 </div>
             }
             {isDotOpen &&
-                <div className='duration-500 flex flex-col justify-center items-center gap-5
-                           top-3 border relative rounded-lg mb-2'>
+                <div ref={containerRef} className='duration-500 flex  items-center
+                            border rounded-lg mb-2'>
                     <Button
                         onClick={() => handleCommentDelete(_id)}
                         className=' p-3 border-none'
-                        bgColor=' bg-slate-300'
-                        textColor='text-black'>
+                        bgColor=' bg-black'
+                        textColor='text-white'>
                         <FontAwesomeIcon icon={faRemove} />
                         <span className='ml-2'>Delete</span>
                     </Button>

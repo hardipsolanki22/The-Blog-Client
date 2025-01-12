@@ -30,7 +30,7 @@ function ProfilePostCart({
     const [isCommentOpen, setIsCommentOpen] = useState(false)
     const [isDotOpen, setIsDotOpen] = useState(false)
     const queryClient = useQueryClient()
-    const containerRef = useRef()
+    const containerRef = useRef(null)
 
     const userData = useSelector(state => state.auth.userData)
     const isAuth = userData && owner ? owner === userData._id : false
@@ -93,7 +93,7 @@ function ProfilePostCart({
 
     return (
         <div className=' h-auto flex-col justify-center items-center p-8 border-y border-slate-600 '>
-            {isAuth && <div className='flex justify-end items-end mr-4'>
+            {isAuth && <div className='flex justify-end items-center mr-4'>
                 <p className={`text-[2rem] text-slate-300 block cursor-pointer
                                        ${isDotOpen && "hidden"}`}
                     onClick={() => setIsDotOpen(true)}>

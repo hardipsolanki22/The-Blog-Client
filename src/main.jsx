@@ -18,10 +18,12 @@ import ResetPassword from './components/Auth/ResetPassword.jsx'
 import PostForm from './components/Post/PostForm.jsx'
 import EditProfile from './components/Profile/EditProfile.jsx'
 import ChangePassword from './components/Auth/ChangePassword.jsx'
-import { store } from './store/store.js'
 import EditPost from './pages/EditPost.jsx'
 import Followers from './components/Follows/Followers.jsx'
 import Following from './components/Follows/Following.jsx'
+import { store } from './store/store.js'
+import AllTweets from './components/Tweet/AllTweets.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -84,7 +86,7 @@ const router = createBrowserRouter([
         path: "/profile/:username",
         element: (
           <Protected authentication>
-              <Profile />
+            <Profile />
           </Protected>
         )
       },
@@ -100,7 +102,7 @@ const router = createBrowserRouter([
         path: "/:username/:userId/followers",
         element: (
           <Protected authentication>
-              <Followers />
+            <Followers />
           </Protected>
         )
       },
@@ -108,7 +110,7 @@ const router = createBrowserRouter([
         path: "/:username/:userId/following",
         element: (
           <Protected authentication>
-              <Following />
+            <Following />
           </Protected>
         )
       },
@@ -125,6 +127,14 @@ const router = createBrowserRouter([
         element: (
           <Protected authentication>
             <EditPost />
+          </Protected>
+        )
+      },
+      {
+        path: "/tweets",
+        element: (
+          <Protected authentication>
+            <AllTweets />
           </Protected>
         )
       }

@@ -13,7 +13,7 @@ function Header({ activeItem }) {
     const userData = useSelector(state => state.auth.userData)
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
-    const sidebarRef = useRef()
+    const sidebarRef = useRef(null)
 
 
     const navItems = [

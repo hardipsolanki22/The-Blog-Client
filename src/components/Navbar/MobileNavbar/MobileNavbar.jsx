@@ -1,8 +1,8 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserPlus, faSignInAlt, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faPlus, faSearch, faRetweet } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import Button from '../../Atoms/Button'
 
@@ -16,22 +16,28 @@ function MobileNavbar() {
         {
             name: "Home",
             slug: "/",
-            Icon: <FontAwesomeIcon icon={faHome} />,
+            icon: <FontAwesomeIcon icon={faHome} />,
             active: authStatus
         },
         {
             name: "AddPost",
             slug: "/add-post",
-            Icon: <FontAwesomeIcon icon={faPlus} />,
+            icon: <FontAwesomeIcon icon={faPlus} />,
             active: authStatus
         },
         {
             name: "Search",
             slug: "/search-user",
-            Icon: <FontAwesomeIcon icon={faSearch} />,
+            icon: <FontAwesomeIcon icon={faSearch} />,
             active: authStatus
         },
-       
+        {
+            name: "Tweets",
+            slug: "/tweets",
+            icon: <FontAwesomeIcon icon={faRetweet} />,
+            active: authStatus
+        },
+
     ]
 
     return (
@@ -39,13 +45,13 @@ function MobileNavbar() {
             <ul className='flex justify-around mx-4 items-center h-full'>
                 {navItems.map((item) => (
                     item.active ? (
-                        <li key={item.name}>
+                        <li key={item.slug}>
                             <Button onClick={() => navigate(item.slug)}
                                 className='p-2 border-none'
                                 bgColor='bg-black'
                                 textColor='text-white'
                             >
-                                {item.Icon}
+                                {item.icon}
                             </Button>
                         </li>
                     ) : null

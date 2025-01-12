@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faPlus, faSearch, faUser, faUserPlus, faSignIn } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faPlus, faSearch, faUser, faUserPlus, faSignIn, faRetweet } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -35,6 +35,12 @@ function DesktopNavbar() {
             name: "Profile",
             slug:  `/profile/${userData?.username}`,
             icon: <FontAwesomeIcon icon={faUser} />,
+            active: authStatus
+        },
+        {
+            name: "Tweets",
+            slug: "/tweets",
+            icon: <FontAwesomeIcon icon={faRetweet}/>,
             active: authStatus
         },
         {

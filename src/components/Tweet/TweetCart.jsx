@@ -11,6 +11,7 @@ import deleteTweet from '../Api/Tweet/deleteTweet'
 import { useToast } from '../../Helpers/toast'
 import Button from '../Atoms/Button'
 import { faRemove } from '@fortawesome/free-solid-svg-icons'
+import { formateRelative } from '../../Helpers/formatRelative'
 
 function TweetCart({
     _id,
@@ -20,6 +21,7 @@ function TweetCart({
     isTweetDisLike,
     tweetLikeCount,
     tweetDisLikeCount,
+    createdAt
 }) {
 
     const userData = useSelector((state) => state.auth.userData)
@@ -81,7 +83,7 @@ function TweetCart({
                     {owner.username}
                 </p>
                 <p className='text-gray-500 text-[13px]'>
-                    Just now
+                   {formateRelative(createdAt)}
                 </p>
             </Link>
             <div className='ml-4 mt-4 flex overflow-hidden w-full'>
@@ -114,11 +116,11 @@ function TweetCart({
             }
             {isDotOpen &&
                 <div ref={containerRef}
-                    className='flex justify-center items-center
-                                border rounded-lg border-slate-600 p-2 mb-1'>
+                    className='flex justify-center items-center 
+                                border rounded-lg border-slate-600'>
                     <Button
                         onClick={() => handleTweetDelete(_id)}
-                        className='p-2'
+                        className='p-3'
                         bgColor='bg-black'
                         textColor='text-white'>
                         <FontAwesomeIcon icon={faRemove} />

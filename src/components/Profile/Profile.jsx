@@ -12,6 +12,7 @@ import fetchUserProfile from '../Api/UserApi/fetchProfile'
 import fetchUserPosts from '../Api/PostApi/fetchUserPosts';
 import { axiosInstance } from '../../Helpers/axiosService';
 import ProfilePostCart from '../Post/ProfilePostCart';
+import { formateRelative } from '../../Helpers/formatRelative';
 
 function Profile() {
 
@@ -112,6 +113,7 @@ function Profile() {
             <div className='p-4'>
                 <h1 className='text-xl font-bold'>@{user.data.name}</h1>
                 <p className='text-gray-400'>{user.data.username}</p>
+                <p className='text-gray-400 '>Joined {formateRelative(user.data.createdAt)}</p>
             </div>
             <div className='flex p-4 border-b gap-4 border-slate-600'>
                 <Link to={`/${user.data.username}/${user.data._id}/followers`}

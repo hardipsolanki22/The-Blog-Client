@@ -54,6 +54,9 @@ function AllTweets() {
 
     const createTweetHnadler = async (data) => {
         await mutateAsync(data)
+        console.log("dara: ", JSON.stringify(data));
+        console.log('regitser', JSON.stringify(register));
+                
     }
 
 
@@ -91,7 +94,7 @@ function AllTweets() {
             {!isLoading ? (
                 tweets?.pages?.map((page) => (
                     page.data?.map((tweet) => (
-                        <div key={tweet._id} className='h-auto mt-4 flex flex-col p-7
+                        <div key={tweet._id} className='h-auto m-2 flex flex-col p-5
                         border-t border-slate-500 tems-center'>
                             <TweetCart {...tweet} />
                         </div>

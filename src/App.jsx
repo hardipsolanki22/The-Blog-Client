@@ -16,6 +16,7 @@ function App() {
   const dispatch = useDispatch()
 
   const {data: user, isLoading} = useQuery({
+    queryKey: ["current-user"],
     queryFn: getCurrentUser,
     refetchOnWindowFocus: false
   })

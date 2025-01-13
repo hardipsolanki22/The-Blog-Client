@@ -11,6 +11,7 @@ import deleteComment from '../Api/Comment/deleteComment';
 import { useToast } from '../../Helpers/toast'
 import { useQueryClient } from '@tanstack/react-query';
 import likeDislikeComment from '../Api/LikeApi/likeDislikeComment';
+import { formateRelative } from '../../Helpers/formatRelative';
 
 function CommentCart({
     _id,
@@ -19,7 +20,8 @@ function CommentCart({
     commentlikesCount,
     commentDislikesCount,
     isCommentLike,
-    isCommentDisLike
+    isCommentDisLike,
+    createdAt
 
 }) {
 
@@ -79,7 +81,7 @@ function CommentCart({
                 <div className="flex items-center justify-between">
                     <div>
                         <span className="font-semibold">{owner.username}</span>
-                        <span className="text-gray-500 text-[13px] ml-2">2 month ago</span>
+                        <span className="text-gray-500 text-[13px] ml-2">{formateRelative(createdAt)}</span>
                     </div>
                 </div>
                 <div className="">

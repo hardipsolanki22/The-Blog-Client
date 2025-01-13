@@ -22,7 +22,8 @@ function ProfilePostCart({
     image,
     likesCount,
     commentsCount,
-    isLiked
+    isLiked,
+    createdAt
 }) {
 
     const [isLoading, setIsLoading] = useState(false)

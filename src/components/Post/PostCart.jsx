@@ -9,6 +9,7 @@ import Comment from '../Comment/Comment'
 import Like from '../Like/Like'
 import { useToast } from '../../Helpers/toast';
 import { axiosInstance } from '../../Helpers/axiosService';
+import { formateRelative } from '../../Helpers/formatRelative';
 
 function PostCart({
   _id,
@@ -19,7 +20,8 @@ function PostCart({
   image,
   likesCount,
   commentsCount,
-  isLike
+  isLike,
+  createdAt
 }) {
 
   const [isPostLike, setIsPostLike] = useState(isLike)
@@ -76,7 +78,7 @@ function PostCart({
           />
         </div>
         <p className='mr-2'>{owner.username}</p>
-        <p className='text-gray-500 text-[13px]'>{time}</p>
+        <p className='text-gray-500 text-[13px]'>{formateRelative(createdAt)}</p>
       </Link>
       <div className='flex flex-col justify-center items-center'>
         <div className='p-2'>

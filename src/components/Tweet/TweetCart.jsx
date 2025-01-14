@@ -71,21 +71,22 @@ function TweetCart({
 
     return (
         <div className='flex flex-col'>
-            <Link to={`/profile/${owner.username}`}
+            <div 
                 className='flex items-center text-white '>
-                <div className=' mx-2 flex justify-center items-center'>
+                <Link  to={`/profile/${owner.username}`}
+                className=' mx-2 flex justify-center items-center'>
                     <img src={owner.avatar}
                         alt="hardip"
                         className='rounded-full w-10 h-10'
                     />
-                </div>
+                </Link>
                 <p className='mr-2'>
                     {owner.username}
                 </p>
                 <p className='text-gray-500 text-[13px]'>
                    {formateRelative(createdAt)}
                 </p>
-            </Link>
+            </div>
             <div className='ml-4 mt-4 flex overflow-hidden w-full'>
                 <p className='break-words'>
                     {content}

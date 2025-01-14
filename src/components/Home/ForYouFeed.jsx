@@ -1,10 +1,12 @@
 
 import React, { useEffect } from 'react'
+import {Oval} from 'react-loader-spinner'
 import { useInView } from "react-intersection-observer";
 
 import PostCart from '../Post/PostCart'
 import { useInfiniteQuery } from '@tanstack/react-query';
 import fetchAllPosts from '../Api/PostApi/fetchAllPosts';
+import PostSkeleton from '../Skeleton/PostSkeleton';
 
 function ForYouFeed() {
   
@@ -43,16 +45,18 @@ function ForYouFeed() {
       ))
       
     ))}
-    <div ref={ref} className='p-4 rounded-3xl bg-slate-700 m-4 '>
+    <div ref={ref} 
+    className='flex justify-center items-center'>
       {isFetchingNextPage ?
-        "Loading More" :
-        hasNextPage ?
-          "Scroll down to load more" :
+        <Oval
+        height={'40'}
+        width={'40'}
+        /> :
           "No more Posts"
       }
     </div>
   </div>) : (<div className='sm:max-h-[91.7vh] z-0 sm:overflow-y-auto bg-black text-white'>
-    <p className='text-2xl'>Loading</p>
+      <PostSkeleton/>
   </div>)
 }
 

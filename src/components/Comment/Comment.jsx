@@ -11,6 +11,7 @@ import { axiosInstance } from '../../Helpers/axiosService';
 import getPostCommets from '../Api/Comment/getPostComments';
 import CommentCart from './CommentCart';
 import { useSelector } from 'react-redux';
+import { Oval } from 'react-loader-spinner';
 
 
 function Comment({ commentState, postId }) {
@@ -122,14 +123,13 @@ function Comment({ commentState, postId }) {
       <p className='text-2xl'>Loading</p>
     </div>
     )}
-    <div ref={ref} className='rounded-3xl text-black flex flex-col'>
-      {isFetchingNextPage ?
-        "Loading More" :
-        hasNextPage ?
-          "Scroll down to load more" :
-          "No more Comment"
-      }
-    </div>
+    <div ref={ref} 
+    className='flex justify-center items-center'>
+               <Oval
+               height={'40'}
+               width={'40'}
+               />
+       </div>
   </div>
 }
 

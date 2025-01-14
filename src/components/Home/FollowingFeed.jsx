@@ -5,6 +5,8 @@ import { useInView } from "react-intersection-observer";
 import PostCart from '../Post/PostCart'
 import { useInfiniteQuery } from '@tanstack/react-query';
 import fetchFollowingPost from '../Api/PostApi/fetchFollowingPosts';
+import { Oval } from 'react-loader-spinner';
+import PostSkeleton from '../Skeleton/PostSkeleton';
 
 function FollowingFeed() {
   
@@ -46,16 +48,18 @@ function FollowingFeed() {
       </div>)
       
     ))}
-    <div ref={ref} className='p-4 rounded-3xl bg-slate-700 m-4 '>
-      {isFetchingNextPage ?
-        "Loading More" :
-        hasNextPage ?
-          "Scroll down to load more" :
-          ""
-      }
+     <div ref={ref} 
+     className='flex justify-center items-center'>
+          {isFetchingNextPage ?
+            <Oval
+            height={'40'}
+            width={'40'}
+            /> :
+              "No more Posts"
+          }
     </div>
   </div>) : (<div className='sm:max-h-[91.7vh] z-0 sm:overflow-y-auto bg-black text-white'>
-    <p className='text-2xl'>Loading</p>
+      <PostSkeleton/>
   </div>)
 }
 

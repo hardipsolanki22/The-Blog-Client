@@ -18,7 +18,9 @@ function PersonalDetailsCart() {
     const navigate = useNavigate()
     const queryClient = useQueryClient();
     const [coverImage, setCoverImage] = useState(null)
-    const fileRef = useRef(null)
+    const [avatar, setAvatar] = useState(null)
+    const coverFileRef = useRef(null)
+    const avatarFileRef = useRef(null)
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
@@ -63,10 +65,7 @@ function PersonalDetailsCart() {
     const { mutateAsync, isPending, isSuccess } = useMutation({
         mutationFn: updateProfile,
         onSuccess: (response) => {
-            queryClient.invalidateQueries(["currentUser"])
-            queryClient.invalidateQueries(["users", { username: response.data.username }])
             setUser(response.data)
-
         },
         onError: (error) => {
             useToast.errorToast(error.message)
@@ -75,36 +74,28 @@ function PersonalDetailsCart() {
 
 
     const updateProfileHandler = async (data) => {
-        const formData = new FormData()
-        for (const key in data) {
-            if (key === "name" || key === "username" || key === "email") {
-                formData.append(key, data[key])
-            }
+        await mutateAsync(data)
+        if (avatar) {
+            updateAvatar({ avatar: avatar })
         }
-        await mutateAsync(formData)
-
-        if (data.avatar && data.avatar[0]) {
-            const formData = new FormData()
-            formData.append("avatar", data.avatar[0])
-            updateAvatar(formData)
+        if (coverImage) {
+            updateCoverImage({ coverImage: coverImage })
         }
-       if (coverImage) {
-        updateCoverImage({coverImage: coverImage})
-       }
-
-
     }
 
     if (isSuccess && !isLoading) {
+        queryClient.invalidateQueries(["current-user"])
         useToast.successToast("Profile update successfully")
         navigate(`/profile/${user.username}`)
     }
 
-    console.log(`coverImage: `, JSON.stringify(coverImage));
-    
 
     const handleCoverImageClick = () => {
-        fileRef.current.click();
+        coverFileRef.current.click();
+    };
+
+    const handleAvatarClick = () => {
+        avatarFileRef.current.click();
     };
 
     return (
@@ -115,18 +106,20 @@ function PersonalDetailsCart() {
                 <div className='w-full flex flex-col justify-center items-center'>
                     <div
                         className='w-full h-8'
-                        onClick={handleCoverImageClick}
-                    >
-                            <img
-                                src={coverImage ? URL.createObjectURL(coverImage) : userData.coverImage}
-                                alt={userData.username}
-                                className={`${!userData.coverImage && 'bg-slate-800'} w-full h-36`}
-                            />
-                    </div>
-                    <div className='mt-4'>
-                        <img src={userData.avatar}
+                        onClick={handleCoverImageClick}>
+                        <img
+                            src={coverImage ? URL.createObjectURL(coverImage) : userData.coverImage}
                             alt={userData.username}
-                            className='w-36 h-36 rounded-full'
+                            className={`${!userData.coverImage && 'bg-slate-800'} rounded-md w-full h-36`}
+                        />
+                    </div>
+                    <div 
+                    className='mt-4 relative '
+                    onClick={handleAvatarClick}>
+                    <img
+                            src={avatar ? URL.createObjectURL(avatar) : userData.avatar}
+                            alt={userData.username}
+                            className='rounded-full w-32 h-32'
                         />
                     </div>
                 </div>
@@ -152,12 +145,12 @@ function PersonalDetailsCart() {
                         className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
                         {...register("email")}
                     />
-                    <Input
+                    {/* <Input
                         type="file"
                         label="Avatar: "
                         // ref={fileRef}
                         {...register("avatar")}
-                    />
+                    /> */}
                     {/* <Input
                         type="file"
                         className='hidden'
@@ -167,10 +160,17 @@ function PersonalDetailsCart() {
                     /> */}
                     <input
                         type="file"
-                        name='coverImage'
-                        ref={fileRef}
+                        name='avatar'
+                        ref={avatarFileRef}
                         className='hidden'
-                        onChange={(e) => setCoverImage(e.target.files[0]) }
+                        onChange={(e) => setAvatar(e.target.files[0])}
+                    />
+                    <input
+                        type="file"
+                        name='coverImage'
+                        ref={coverFileRef}
+                        className='hidden'
+                        onChange={(e) => setCoverImage(e.target.files[0])}
                     />
                     <div className='flex m-2 justify-center items-center'>
                         <Button

@@ -13,6 +13,7 @@ import fetchUserPosts from '../Api/PostApi/fetchUserPosts';
 import { axiosInstance } from '../../Helpers/axiosService';
 import ProfilePostCart from '../Post/ProfilePostCart';
 import { formateRelative } from '../../Helpers/formatRelative';
+import { Oval } from 'react-loader-spinner';
 
 function Profile() {
 
@@ -24,11 +25,11 @@ function Profile() {
     const userData = useSelector(state => state.auth.userData)
 
     // Fetch User Profile
-    const { data: user, isLoading} = useQuery({
+    const { data: user, isLoading } = useQuery({
         queryFn: () => fetchUserProfile(username),
         queryKey: ["users", { username }],
     })
-    
+
     const isAuth = user && userData ? user?.data._id === userData._id : false
     const userId = user?.data._id
 
@@ -66,7 +67,7 @@ function Profile() {
             } else {
                 useToast.successToast("Unfollow successfully")
             }
-            queryClient.invalidateQueries(["users",{username}])
+            queryClient.invalidateQueries(["users", { username }])
             queryClient.invalidateQueries(["users"])
         } catch (error) {
             throw console.error(error.message)
@@ -136,20 +137,21 @@ function Profile() {
             </div>
             {posts?.pages.map((page) => (
                 page.data?.map((post) => (
-                  <div className='bg-black text-white h-auto'  key={post._id}>
-                      <ProfilePostCart {...post}/>
-                  </div>
+                    <div className='bg-black text-white h-auto' key={post._id}>
+                        <ProfilePostCart {...post} />
+                    </div>
                 ))
             ))}
-            <div ref={ref} className='p-4 rounded-3xl bg-slate-700'>
+            <div ref={ref}
+                className='flex justify-center items-center'>
                 {isFetchingNextPage ?
-                    "Loading More" :
-                    hasNextPage ?
-                        "Scroll down to load more" :
-                        "No more Posts"
+                    <Oval
+                        height={'40'}
+                        width={'40'}
+                    /> :
+                    "No more Posts"
                 }
             </div>
-
             {/* <div className='flex justify-center items-center w-full p-6'>
                    <p>No Posts</p>
                </div> */}

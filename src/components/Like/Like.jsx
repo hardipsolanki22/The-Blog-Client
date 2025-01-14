@@ -10,6 +10,7 @@ import Button from '../Atoms/Button'
 import getPostLikes from '../Api/LikeApi/getPostLiked'
 import { axiosInstance } from '../../Helpers/axiosService'
 import { useToast } from '../../Helpers/toast'
+import { Oval } from 'react-loader-spinner'
 
 
 function Like({ likeState, postId }) {
@@ -74,17 +75,18 @@ function Like({ likeState, postId }) {
     {likes.pages?.map((page) => (
       page.data?.map((like) => (
         <div className='my-6 flex justify-around items-center' key={like.likedBy._id}>
-          <Link to={`/profile/${like.likedBy.username}`}
-            className='flex justify-center items-center no-underline text-black'>
-            <div className='mr-2'>
+          <div className={`flex justify-center items-center no-underline text-black
+             ${userData._id === like.likedBy._id && 'mr-[2.7rem]'} mr-2`}>
+            <Link to={`/profile/${like.likedBy.username}`}
+              className='mr-2'>
               <img src={like.likedBy.avatar}
                 alt="avatar"
                 className='w-14 h-12 rounded-full'
               />
-            </div>
+            </Link>
             <p>{like.likedBy.username}</p>
-          </Link>
-          <div className='flex justify-center items-center'>
+          </div>
+          <div className={` flex justify-center items-center`}>
             {userData._id !== like.likedBy._id &&
               <Button onClick={() => handleFollowUnfollow(like.likedBy._id)}
                 bgColor='bg-sky-700'
@@ -104,14 +106,13 @@ function Like({ likeState, postId }) {
     ))
 
     }
-    <div ref={ref} className='p-4 rounded-3xl bg-slate-700'>
-      {isFetchingNextPage ?
-        "Loading More" :
-        hasNextPage ?
-          "Scroll down to load more" :
-          "No more user"
-      }
-    </div>
+    <div ref={ref} 
+    className='flex justify-center items-center'>
+               <Oval
+               height={'40'}
+               width={'40'}
+               /> 
+       </div>
   </div>) : (<div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto rounded-md
     border-x border-slate-400 bg-white text-black sm:mt-4 p-2 duration-300'>
     <p className='text-2xl'>Loading</p>

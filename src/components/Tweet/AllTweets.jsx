@@ -9,6 +9,7 @@ import createTweet from '../Api/Tweet/createTweet'
 import Button from '../Atoms/Button'
 import Input from '../Atoms/Input'
 import TweetCart from './TweetCart'
+import { Oval } from 'react-loader-spinner'
 
 
 function AllTweets() {
@@ -104,14 +105,17 @@ function AllTweets() {
                 <p className='text-2xl'>Loading</p>
             </>
             )}
-            <div ref={ref} className='p-4 rounded-3xl bg-slate-700 m-4 '>
-                {isFetchingNextPage ?
-                    "Loading More" :
-                    hasNextPage ?
-                        "Scroll down to load more" :
-                        "No more Tweet"
-                }
-            </div>
+            <div ref={ref} 
+            className='flex justify-center items-center mb-14'>
+                     {isFetchingNextPage ?
+                       <Oval
+                       height={'40'}
+                       width={'40'}
+                       color='whitee'
+                       /> :
+                         "No more tweets"
+                     }
+               </div>
         </div>
     )
 

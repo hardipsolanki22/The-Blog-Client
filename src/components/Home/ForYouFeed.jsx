@@ -7,7 +7,11 @@ import PostCart from '../Post/PostCart'
 import { useInfiniteQuery } from '@tanstack/react-query';
 import fetchAllPosts from '../Api/PostApi/fetchAllPosts';
 import PostSkeleton from '../Skeleton/PostSkeleton';
-
+import ProfileSkeleton from '../Skeleton/ProfileSkeleton';
+import TweetSkeleton from '../Skeleton/TweetSkeleton';
+import LikeSkeleton from '../Skeleton/LikeSkeleton';
+import CommentSkeleton from '../Skeleton/CommentSkeleton';
+import FollowingFollowersSkeleton from '../Skeleton/FollowingFollowersSkeleton';
 function ForYouFeed() {
   
   // Fetch All Posts (Infinite Scrolling)
@@ -36,10 +40,10 @@ function ForYouFeed() {
 
 
 
-  return !isLoading ? (<div className='sm:max-h-[91.7vh] sm:overflow-y-auto bg-black text-white'>
+  return !isLoading ? (<div className='sm:max-h-[91.7vh] h-auto sm:overflow-y-auto bg-black text-white'>
     {posts?.pages.map((page) => (
       page.data?.map((post) => (<div key={post.title}
-        className='flex flex-col justify-center border-y p-5 h-auto '>
+        className='flex flex-col justify-center border-y p-5 h-full '>
         <PostCart {...post} />
       </div>
       ))
@@ -56,7 +60,7 @@ function ForYouFeed() {
       }
     </div>
   </div>) : (<div className='sm:max-h-[91.7vh] z-0 sm:overflow-y-auto bg-black text-white'>
-      <PostSkeleton/>
+      <PostSkeleton cards={3}/>
   </div>)
 }
 

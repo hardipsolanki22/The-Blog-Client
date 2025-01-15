@@ -12,6 +12,7 @@ import getPostCommets from '../Api/Comment/getPostComments';
 import CommentCart from './CommentCart';
 import { useSelector } from 'react-redux';
 import { Oval } from 'react-loader-spinner';
+import CommentSkeleton from '../Skeleton/CommentSkeleton';
 
 
 function Comment({ commentState, postId }) {
@@ -65,7 +66,7 @@ function Comment({ commentState, postId }) {
   }
 
 
-  return <div className="absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
+  return <div className=" sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
     mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black">
     <Button className='p-1 font-bold' onClick={() => commentState(false)}>
       <FontAwesomeIcon icon={faClose} />
@@ -95,8 +96,8 @@ function Comment({ commentState, postId }) {
           <Button
             className='px-4 py-2 rounded-lg
              hover:bg-white hover:text-black transition duration-500 focus:outline-none'
-             bgColor='bg-black'
-             textColor='text-white'
+            bgColor='bg-black'
+            textColor='text-white'
             type='submit'
             disabled={isCommentLoading}
           >
@@ -112,24 +113,27 @@ function Comment({ commentState, postId }) {
           <CommentCart {...comment} />
         </div>
       ))) : (
-        <div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
-        mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black'>
-          <p className='text-2xl'>No comments found</p>
+        <div className='sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
+            mt-4 rounded-md flex justify-center p-4 border-b bg-white text-black'>
+            <p className='text-2xl'>No comments found</p>
         </div>)
 
     ))
-    ) : (<div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
-    mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black'>
-      <p className='text-2xl'>Loading</p>
+    ) : (
+    <div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
+          mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black'>
+         <CommentSkeleton cards={5} />
     </div>
     )}
-    <div ref={ref} 
-    className='flex justify-center items-center'>
-               <Oval
+    <div ref={ref}
+             className='flex justify-center relative bottom-0 right-0 left-0 m-2'>
+             {isFetchingNextPage ? 
+             <Oval
                height={'40'}
                width={'40'}
-               />
-       </div>
+             /> : "No more comment"
+             }
+           </div>
   </div>
 }
 

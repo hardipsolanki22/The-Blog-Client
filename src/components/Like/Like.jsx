@@ -11,6 +11,7 @@ import getPostLikes from '../Api/LikeApi/getPostLiked'
 import { axiosInstance } from '../../Helpers/axiosService'
 import { useToast } from '../../Helpers/toast'
 import { Oval } from 'react-loader-spinner'
+import LikeSkeleton from '../Skeleton/LikeSkeleton'
 
 
 function Like({ likeState, postId }) {
@@ -63,7 +64,7 @@ function Like({ likeState, postId }) {
   }
 
 
-  return !isLoading ? (<div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] 
+  return !isLoading ? (<div className='sm:sticky w-full h-[87vh] sm:h-[50vh] 
        overflow-y-auto rounded-md border-x border-slate-400 bg-white
       text-black sm:mt-4 p-2 duration-300'>
     <Button className='p-1 font-bold' onClick={() => likeState(false)}>
@@ -106,16 +107,18 @@ function Like({ likeState, postId }) {
     ))
 
     }
-    <div ref={ref} 
-    className='flex justify-center items-center'>
-               <Oval
-               height={'40'}
-               width={'40'}
-               /> 
+    <div ref={ref}
+         className='flex justify-center relative bottom-0 right-0 left-0 m-2'>
+         {isFetchingNextPage ? 
+         <Oval
+           height={'40'}
+           width={'40'}
+         /> : "No more user"
+         }
        </div>
   </div>) : (<div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto rounded-md
     border-x border-slate-400 bg-white text-black sm:mt-4 p-2 duration-300'>
-    <p className='text-2xl'>Loading</p>
+    <LikeSkeleton cards={100} />
   </div>)
 
 }

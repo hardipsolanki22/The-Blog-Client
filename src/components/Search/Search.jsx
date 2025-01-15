@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import Input from '../Atoms/Input'
 import searchUser from '../Api/UserApi/searchUser'
+import UsersSkeleton from '../Skeleton/UsersSkeleton'
 
 function Search() {
   const [username, setUsername] = useState(null)
@@ -53,8 +54,8 @@ function Search() {
             </Link>
           </div>
         ))}
-      </div>) : (<div className='flex justify-center items-center'>
-        <p className='text-2xl'>Loading...</p>
+      </div>) : (<div className='flex flex-col justify-center items-center'>
+       <UsersSkeleton cards={4}/>
       </div>)
       }
     </div>

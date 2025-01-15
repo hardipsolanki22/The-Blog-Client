@@ -10,6 +10,8 @@ import fetchFollowing from '../Api/Follows/getFollowing.js';
 import { useToast } from '../../Helpers/toast.js';
 import { axiosInstance } from '../../Helpers/axiosService.js';
 import { useSelector } from 'react-redux';
+import FollowingFollowersSkeleton from '../Skeleton/FollowingFollowersSkeleton.jsx';
+import { Oval } from 'react-loader-spinner';
 
 function following() {
 
@@ -102,18 +104,17 @@ function following() {
         </div>
       ))
     ))}
-    <div ref={ref} className='p-4 rounded-3xl bg-slate-700'>
-      {isFetchingNextPage ?
-        "Loading More" :
-        hasNextPage ?
-          "Scroll down to load more" :
-          "No more following"
-      }
-    </div>
+     <div ref={ref}
+          className='flex justify-center items-center'>
+          {isFetchingNextPage ? 
+          <Oval
+            height={'40'}
+            width={'40'}
+          /> : "No more following"
+          }
+        </div>
   </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen'>
-    <p className='text-2xl text-white'>
-      Loading
-    </p>
+    <FollowingFollowersSkeleton cards={6} />
   </div>)
 }
 

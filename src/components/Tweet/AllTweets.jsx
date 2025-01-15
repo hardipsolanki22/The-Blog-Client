@@ -10,6 +10,8 @@ import Button from '../Atoms/Button'
 import Input from '../Atoms/Input'
 import TweetCart from './TweetCart'
 import { Oval } from 'react-loader-spinner'
+import TweetSkeleton from '../Skeleton/TweetSkeleton'
+import TextArea from '../Atoms/TextArea'
 
 
 function AllTweets() {
@@ -55,26 +57,24 @@ function AllTweets() {
 
     const createTweetHnadler = async (data) => {
         await mutateAsync(data)
-        console.log("dara: ", JSON.stringify(data));
-        console.log('regitser', JSON.stringify(register));
-                
+
     }
 
 
     return (
         <div className='sm:col-span-11 md:col-span-6 sm:max-h-screen 
-        flex flex-col  sm:overflow-y-auto bg-black text-white border-y'>
+            flex flex-col  sm:overflow-y-auto bg-black text-white border-y'>
             <div className='flex flex-col  items-center'>
                 <p className='text-2xl'>Tweet</p>
                 <div className='gap-4 flex flex-col justify-center items-center
                  min-w-[70%] h-auto bg-white text-black rounded-md p-10'>
                     <form onSubmit={handleSubmit(createTweetHnadler)} className='w-full'>
-                        <Input
+                        <TextArea
                             type="text"
                             label="Content: "
-                            placeholder="Your thouts..."
-                            className="border text-base w-full px-2 py-2 focus:outline-none
-                     transition duration-200 focus:border-gray-600"
+                            placeholder="Your thought..."
+                            className="border p-2 text-base w-full h-16 focus:outline-none
+                                                focus:border-gray-600 transition duration-200"
                             {...register("content", {
                                 required: true
                             })}
@@ -101,21 +101,22 @@ function AllTweets() {
                         </div>
                     ))
                 ))
-            ) : (<>
-                <p className='text-2xl'>Loading</p>
-            </>
+            ) : (<div className='sm:col-span-11 md:col-span-6 sm:max-h-screen 
+            sm:overflow-y-auto bg-black text-white'>
+                <TweetSkeleton cards={5} />
+            </div>
             )}
-            <div ref={ref} 
-            className='flex justify-center items-center mb-14'>
-                     {isFetchingNextPage ?
-                       <Oval
-                       height={'40'}
-                       width={'40'}
-                       color='whitee'
-                       /> :
-                         "No more tweets"
-                     }
-               </div>
+            <div ref={ref}
+                className='flex justify-center items-center mb-14'>
+                {isFetchingNextPage ?
+                    <Oval
+                        height={'40'}
+                        width={'40'}
+                        color='whitee'
+                    /> :
+                    "No more tweets"
+                }
+            </div>
         </div>
     )
 

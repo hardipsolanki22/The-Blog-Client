@@ -1,13 +1,12 @@
 import React from 'react'
 import Skeleton from 'react-loading-skeleton'
 
-
-function PostSkeleton({ cards }) {
+function FollowingFollowersSkeleton({ cards }) {
     return Array(cards)
         .fill()
         .map((_, index) => (
             <div key={index}
-                className='flex flex-col justify-center items-center w-full h-full'>
+                className='flex flex-col items-center w-full h-full'>
                 <div className='w-[90%] h-auto m-4 '>
                     <div className='flex justify-center gap-2 items-center '>
                         <div>
@@ -17,19 +16,8 @@ function PostSkeleton({ cards }) {
                             <Skeleton className=' w-[60%]' />
                         </div>
                     </div>
-                    <div className='mt-2 flex flex-col justify-center gap-2 items-center'>
-                        <div className='w-full h-full'>
-                            <Skeleton className='w-full h-72' />
-                        </div>
-                        <div className='w-full'>
-                            <Skeleton />
-                            <Skeleton className='h-16' />
-                        </div>
-                    </div>
                 </div>
-
             </div>
         ))
 }
-
-export default PostSkeleton
+export default FollowingFollowersSkeleton

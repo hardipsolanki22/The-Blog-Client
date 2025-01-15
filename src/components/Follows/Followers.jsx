@@ -10,6 +10,8 @@ import fetchFollowers from "../Api/Follows/getFollowers.js";
 import Button from '../Atoms/Button.jsx';
 import { axiosInstance } from '../../Helpers/axiosService.js';
 import { useToast } from '../../Helpers/toast.js';
+import FollowingFollowersSkeleton from '../Skeleton/FollowingFollowersSkeleton.jsx';
+import { Oval } from 'react-loader-spinner';
 
 function Followers() {
   const { username, userId } = useParams()
@@ -93,25 +95,23 @@ function Followers() {
               >
                 {user.followDetails.isFollowed ? "Unfollow" : "Follow"}
               </Button>
-
             }
           </div>
         </div>
       ))
     ))
     }
-    <div ref={ref} className='p-4 rounded-3xl bg-slate-700'>
-      {isFetchingNextPage ?
-        "Loading More" :
-        hasNextPage ?
-          "Scroll down to load more" :
-          "No more followers"
-      }
-    </div>
+    <div ref={ref}
+         className='flex justify-center items-center'>
+         {isFetchingNextPage ? 
+         <Oval
+           height={'40'}
+           width={'40'}
+         /> : "No more followers"
+         }
+       </div>
   </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen'>
-    <p className='text-2xl text-white'>
-      Loading
-    </p>
+    <FollowingFollowersSkeleton cards={6} />
   </div>)
 }
 

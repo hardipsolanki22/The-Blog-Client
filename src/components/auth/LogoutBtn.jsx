@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import Button from '../Atoms/Button'
 import logOutUser from '../Api/AuthApi/logOut'
 import { useToast } from '../../Helpers/toast'
-import {logout} from '../../featured/authSlice'
+import { logout } from '../../featured/authSlice'
 
 function LogoutBtn() {
   const navigate = useNavigate()
@@ -37,9 +37,9 @@ function LogoutBtn() {
 
   return (
     <div>
-      <Button className='border-none font-normal
-        hover:bg-slate-600 p-2 rounded-md active:border-none
-        hover:w-30 text-center'
+      <Button className='px-4 py-2 rounded-lg
+       hover:bg-white hover:text-black transition
+        duration-500 focus:outline-none'
         bgColor='bg-black'
         textColor='text-white'
         onClick={async () => await mutateAsync()}>

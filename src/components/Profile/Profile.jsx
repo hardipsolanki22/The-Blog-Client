@@ -14,6 +14,7 @@ import { axiosInstance } from '../../Helpers/axiosService';
 import ProfilePostCart from '../Post/ProfilePostCart';
 import { formateRelative } from '../../Helpers/formatRelative';
 import { Oval } from 'react-loader-spinner';
+import ProfileSkeleton from '../Skeleton/ProfileSkeleton';
 
 function Profile() {
 
@@ -97,7 +98,8 @@ function Profile() {
                 <img
                     src={user.data.avatar}
                     alt="avatar"
-                    className='sm:w-36 sm:h-36 h-28 w-28 rounded-full absolute left-8 bottom-0 transform translate-y-1/2 border-4 border-black'
+                    className='sm:w-36 sm:h-36 h-28 w-28 rounded-full absolute left-8 bottom-0 
+                    transform translate-y-1/2 border-4 border-black'
                 />
             </div>
             {isAuth ? (<div className='flex justify-end p-4'>
@@ -155,8 +157,8 @@ function Profile() {
             {/* <div className='flex justify-center items-center w-full p-6'>
                    <p>No Posts</p>
                </div> */}
-        </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen'>
-            <h1>Loading... </h1>
+        </div>) : (<div className='sm:col-span-11 md:col-span-6  max-h-screen sm:overflow-y-auto'>
+           <ProfileSkeleton cards={3} />
         </div>)
     )
 }

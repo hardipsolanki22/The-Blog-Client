@@ -20,14 +20,8 @@ function Header({ activeItem }) {
         {
             name: "Home",
             slug: "/",
-            Icon: <FontAwesomeIcon icon={faHome} />,
+            icon: <FontAwesomeIcon icon={faHome} />,
             active: true
-        },
-        {
-            name: "Change Password",
-            slug: "change-password",
-            Icon: <FontAwesomeIcon icon={faExchange} />,
-            active: authStatus
         },
         {
             name: "Profile",
@@ -77,19 +71,13 @@ function Header({ activeItem }) {
                             className='w-10 h-10 rounded-full'
                         />
                     </div>
-                    {/* <div className='hidden sm:block'>
-                        <img
-                            src={userData?.avatar}
-                            alt={userData.avatar}
-                        />
-                    </div> */}
                     <div>
                         <p>The Blog</p>
                     </div>
                 </div>
             </header>
             {isOpen ? (
-                <aside ref={sidebarRef} className='transition-all ease-linear delay-0 duration-500 backdrop-blur-md bg-opacity-50 
+                <aside ref={sidebarRef} className='transition duration-500 backdrop-blur-md bg-opacity-50 
                 fixed z-10 top-0 bottom-14 flex w-72 flex-col gap-6
                 border p-4 bg-black text-white '>
                     <div className='flex items-center justify-center'>
@@ -110,10 +98,10 @@ function Header({ activeItem }) {
                                     <li>
                                         <Button onClick={() => navigate(item.slug)}
                                             className='rounded-lg border-none font-normal p-2 text-center'
-                                            bgColor='bg-white'
+                                            bgColor='none'
                                             textColor='text-black'
                                         >
-                                            <span className='mr-2'>{item.Icon}</span>
+                                            <span className='mr-2'>{item.icon}</span>
                                             <span>{item.name}</span>
                                         </Button>
                                     </li>

@@ -120,12 +120,14 @@ function PostCart({
         </span>
       </div>
       {isLikeOpen &&
-        <div className='flex justify-center items-center transition duration-700'>
+        <div className='fixed sm:sticky top-0 left-0 right-0 bottom-0 flex justify-center
+       items-center bg-black bg-opacity-75 z-10 '>
           <Like likeState={handleLikeState} postId={_id} />
         </div>
       }
       {isCommentOpen &&
-        <div className='flex justify-center items-center transition ease-in delay-75 duration-500'>
+        <div className='fixed sm:sticky top-0 left-0 right-0 bottom-0 flex justify-center
+       items-center bg-black bg-opacity-75 z-10 '>
           <Comment commentState={handleCommentSate} postId={_id} />
         </div>
       }
@@ -135,3 +137,4 @@ function PostCart({
 }
 
 export default PostCart
+

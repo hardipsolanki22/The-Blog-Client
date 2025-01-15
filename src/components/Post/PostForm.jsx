@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import Input from '../Atoms/Input'
 import Button from '../Atoms/Button'
@@ -11,11 +11,9 @@ import { useToast } from '../../Helpers/toast'
 import updatePost from '../Api/PostApi/updatePost'
 import TextArea from '../Atoms/TextArea'
 
-function PostForm({ post }) {
-
-    console.log(`post: ${JSON.stringify(post)}`);
+function PostForm({ post }) {    
     
-
+    const queryClient = useQueryClient()
     const { register, handleSubmit } = useForm({
         defaultValues: {
             title: post ? post.title : "",
@@ -32,6 +30,8 @@ function PostForm({ post }) {
                 useToast.successToast("Update post succefully"),
                 navigate(`/profile/${postData.data.owner.username}`)
             ) : (
+                queryClient.invalidateQueries(["for-you-posts"]),
+                queryClient.invalidateQueries(["following-posts"]),
                 useToast.successToast("Post add succefully"),
                 navigate("/")
             )
@@ -41,11 +41,7 @@ function PostForm({ post }) {
         }
     })
 
-    const postHandler = async (data) => {
-
-        console.log(`data: ${JSON.stringify(data)}`);
-        
-
+    const postHandler = async (data) => {        
         if (post) {
             const formData = {
                 _id: post._id,
@@ -53,17 +49,10 @@ function PostForm({ post }) {
             }
             await mutateAsync(formData)
         }
-
-
         const formData = new FormData()
         for (const key in data) {
             formData.append(key, data[key])
         }
-
-        formData.append("post", data.post[0])
-        console.log(`formData: ${JSON.stringify(formData)}`);
-        
-
         await mutateAsync(formData)
 
     }
@@ -91,7 +80,7 @@ function PostForm({ post }) {
                         type="text"
                         label="Content: "
                         placeholder="Enter post content"
-                        className="border text-base w-full px- h-48 focus:outline-none
+                        className="border text-base w-full p-2 h-48 focus:outline-none
                          focus:border-gray-600 transition duration-200"
                         {...register("content", {
                             required: true
@@ -127,7 +116,10 @@ function PostForm({ post }) {
                             textColor='text-white'
                             disabled={isPending}
                         >
-                            {isPending ? "Loading..." : "Submit"}
+                            {isPending ? <img src=""
+                             alt="loader" 
+                            />
+                            : "Submit"}
                         </Button>
                     </div>
                 </form>

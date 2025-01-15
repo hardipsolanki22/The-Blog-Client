@@ -33,14 +33,14 @@ function DesktopNavbar() {
         },
         {
             name: "Profile",
-            slug:  `/profile/${userData?.username}`,
+            slug: `/profile/${userData?.username}`,
             icon: <FontAwesomeIcon icon={faUser} />,
             active: authStatus
         },
         {
             name: "Tweets",
             slug: "/tweets",
-            icon: <FontAwesomeIcon icon={faRetweet}/>,
+            icon: <FontAwesomeIcon icon={faRetweet} />,
             active: authStatus
         },
         {
@@ -77,10 +77,9 @@ function DesktopNavbar() {
                             item.active ? (
                                 <li key={item.name}>
                                     <Button onClick={() => navigate(item.slug)}
-                                        className='border-none font-normal
-                                        hover:bg-slate-400
-                                        p-2 rounded-md active:border-none
-                                        hover:w-30 text-center' bgColor='bg-black' textColor='text-white'>
+                                        className='px-4 py-2 rounded-lg
+                                        hover:bg-white hover:text-black transition duration-500 focus:outline-none'
+                                        bgColor='bg-black' textColor='text-white'>
                                         <span className='mr-2'>{item.icon}</span>
                                         <span>{item.name}</span>
                                     </Button>
@@ -89,7 +88,7 @@ function DesktopNavbar() {
                         ))}
                         {authStatus && (
                             <li key="logout">
-                                <LogoutBtn/>
+                                <LogoutBtn />
                             </li>
                         )}
                     </ul>
@@ -102,11 +101,11 @@ function DesktopNavbar() {
                             item.active ? (
                                 <li className='transition duration-500'>
                                     <Button onClick={() => navigate(item.slug)}
-                                   className='px-4 py-2 rounded-lg
+                                        className='px-4 py-2 rounded-lg
                                    hover:bg-white hover:text-black transition duration-500 focus:outline-none'
-                                   bgColor='bg-black'
-                                   textColor='text-white'
-                                   >
+                                        bgColor='bg-black'
+                                        textColor='text-white'
+                                    >
                                         <span className='mr-2'>{item.icon}</span>
                                     </Button>
                                 </li>
@@ -114,7 +113,7 @@ function DesktopNavbar() {
                         ))}
                         {authStatus && (
                             <li key="logout">
-                                <LogoutBtn/>
+                                <LogoutBtn />
                             </li>
                         )}
                     </ul>

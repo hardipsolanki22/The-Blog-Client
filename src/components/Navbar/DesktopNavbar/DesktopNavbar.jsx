@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faPlus, faSearch, faUser, faUserPlus, faSignIn, faRetweet } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
@@ -6,11 +6,29 @@ import { useSelector } from 'react-redux'
 
 import Button from '../../Atoms/Button'
 import LogoutBtn from '../../auth/LogoutBtn'
+import { axiosInstance } from '../../../Helpers/axiosService'
 
 function DesktopNavbar() {
+    const [user , setUser] = useState({})
     const authStatus = useSelector((state) => state.auth.status)
     const userData = useSelector(state => state.auth.userData)
     const navigate = useNavigate()
+
+    useEffect(() => {
+       (async() => {
+        try {
+            const response = await axiosInstance.get(`/user/profile/${userData.username}`, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            setUser(response.data.data)
+        } catch (error) {
+            console.error(error.message);
+            
+        }
+       })()
+    }, [])
 
     const navItems = [
         {
@@ -63,11 +81,14 @@ function DesktopNavbar() {
                 <div className='flex items-center justify-center my-6'>
                     <div className='flex flex-col items-center'>
                         <div>
-                            <img src="" alt="Profile" />
+                            <img src={userData.avatar}
+                             alt="Profile" 
+                             className='w-24 h-24 rounded-full'
+                             />
                         </div>
-                        <div className='flex justify-between items-center'>
-                            <p>Followers</p>
-                            <p>Followings</p>
+                        <div className='flex justify-between items-center gap-4'>
+                            <p>Followers: {user.followingsCount}</p>
+                            <p>Followings: {user.followersCount}</p>
                         </div>
                     </div>
                 </div>
@@ -99,7 +120,8 @@ function DesktopNavbar() {
                     <ul className='gap-9 flex flex-col items-center justify-center my-4'>
                         {navItems.map((item) => (
                             item.active ? (
-                                <li className='transition duration-500'>
+                                <li  key={item.name}
+                                className='transition duration-500'>
                                     <Button onClick={() => navigate(item.slug)}
                                         className='px-4 py-2 rounded-lg
                                    hover:bg-white hover:text-black transition duration-500 focus:outline-none'

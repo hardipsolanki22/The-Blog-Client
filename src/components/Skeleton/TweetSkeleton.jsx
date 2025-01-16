@@ -6,9 +6,9 @@ function TweetSkeleton({ cards }) {
         .fill()
         .map((_, index) => (
             <div key={index}
-                className='flex flex-col justify-center items-center w-full h-full'>
-                <div className='w-[90%] h-auto '>
-                    <div className='flex justify-center gap-2 items-center '>
+                className='flex flex-col justify-center items-center w-full h-auto'>
+                <div className='w-[90%] h-auto m-4'>
+                    <div className='flex justify-center gap-2 items-center'>
                         <div>
                             <Skeleton circle className='w-12 h-12' />
                         </div>

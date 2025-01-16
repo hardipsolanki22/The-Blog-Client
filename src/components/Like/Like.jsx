@@ -64,7 +64,7 @@ function Like({ likeState, postId }) {
   }
 
 
-  return !isLoading ? (<div className='sm:sticky w-full h-[87vh] sm:h-[50vh] 
+  return !isLoading ? (<div className='sm:static w-full h-[87vh] sm:h-[50vh] 
        overflow-y-auto rounded-md border-x border-slate-400 bg-white
       text-black sm:mt-4 p-2 duration-300'>
     <Button className='p-1 font-bold' onClick={() => likeState(false)}>
@@ -108,17 +108,19 @@ function Like({ likeState, postId }) {
 
     }
     <div ref={ref}
-         className='flex justify-center relative bottom-0 right-0 left-0 m-2'>
+         className='flex justify-center relative my-4  bottom-0 right-0 left-0'>
          {isFetchingNextPage ? 
          <Oval
            height={'40'}
            width={'40'}
+           color='black'
+           secondaryColor='white'
          /> : "No more user"
          }
        </div>
-  </div>) : (<div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto rounded-md
+  </div>) : (<div className='sm:static w-full h-[87vh] sm:h-[50vh] overflow-y-auto rounded-md
     border-x border-slate-400 bg-white text-black sm:mt-4 p-2 duration-300'>
-    <LikeSkeleton cards={100} />
+    <LikeSkeleton cards={6} />
   </div>)
 
 }

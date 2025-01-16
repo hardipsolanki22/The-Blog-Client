@@ -1,10 +1,10 @@
 import React from 'react'
 import Skeleton from 'react-loading-skeleton'
 
-function ProfileSkeleton() {
+function ProfileSkeleton({cards}) {
     return (
-        <div className='flex flex-col justify-center items-center w-full h-full'>
-            <div className='w-[90%] m-4 '>
+        <div className='flex flex-col justify-center items-center w-full h-auto'>
+            <div className='w-[90%] m-4 h-auto'>
                 <div>
                     <Skeleton className='w-[50%]' />
                 </div>
@@ -19,7 +19,11 @@ function ProfileSkeleton() {
                 <div className='mt-4 gap-2'>
                     <Skeleton count={2} className='w-[20%]' />
                 </div>
-                <div className='mt-2 flex flex-col justify-center gap-2 items-center'>
+               { Array(cards)
+                .fill()
+                .map((_, index) => (
+                    <div key={index} 
+                    className='mt-2 flex flex-col justify-center gap-2 items-center h-auto'>
                     <div className='w-full h-full'>
                         <Skeleton className='w-full h-72' />
                     </div>
@@ -28,6 +32,9 @@ function ProfileSkeleton() {
                         <Skeleton className='h-16' />
                     </div>
                 </div>
+                ))
+
+               }
             </div>
         </div>
     )

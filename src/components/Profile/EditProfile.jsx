@@ -12,12 +12,13 @@ function EditProfile() {
         <div className='sm:col-span-11 md:col-span-6 border-y '>
             <div className='flex justify-around items-center m-2'>
                 <Button
-                    className={`p-2 text-black bg-white ${feed === 'following' && 'bg-sky-900 text-white'}`}
+                    className={`p-2 text-black bg-white focus:outline-none
+                        ${feed === 'following' && 'bg-sky-900 text-white'}`}
                     onClick={() => setFeed("PersonalDetails")}>
                     Personal Details
                 </Button>
                 <Button
-                    className="p-2 text-black bg-white"
+                    className="p-2 text-black bg-white focus:outline-none"
                     onClick={() => setFeed("ChangePassword")}>
                     Change Password
                 </Button>

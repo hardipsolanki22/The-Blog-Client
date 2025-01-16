@@ -145,19 +145,6 @@ function PersonalDetailsCart() {
                         className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
                         {...register("email")}
                     />
-                    {/* <Input
-                        type="file"
-                        label="Avatar: "
-                        // ref={fileRef}
-                        {...register("avatar")}
-                    /> */}
-                    {/* <Input
-                        type="file"
-                        className='hidden'
-                        label="Cover Image: "
-                        ref={fileRef}
-                        {...register("coverImage")}
-                    /> */}
                     <input
                         type="file"
                         name='avatar'
@@ -172,14 +159,22 @@ function PersonalDetailsCart() {
                         className='hidden'
                         onChange={(e) => setCoverImage(e.target.files[0])}
                     />
-                    <div className='flex m-2 justify-center items-center'>
+                    <div className='flex m-2 gap-2 justify-end items-center'>
+                    <Button
+                            className=''
+                            bgColor='bg-black'
+                            textColor='text-white'
+                            onClick={() => navigate(`/profile/${userData.username}`)}
+                        >
+                            Cancle
+                        </Button>
                         <Button
                             className=''
                             bgColor='bg-black'
                             textColor='text-white'
                             disabled={isPending || isLoading}
                         >
-                            {isLoading || isPending ? 'Loading' : 'Submit'}
+                            {isLoading || isPending ? 'Loading' : 'Save'}
                         </Button>
                     </div>
                 </form>

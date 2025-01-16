@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useSelector } from 'react-redux'
 
 import Input from '../Atoms/Input'
 import Button from '../Atoms/Button'
@@ -11,8 +12,9 @@ import { useToast } from '../../Helpers/toast'
 import updatePost from '../Api/PostApi/updatePost'
 import TextArea from '../Atoms/TextArea'
 
-function PostForm({ post }) {    
-    
+function PostForm({ post }) {
+
+    const userData = useSelector(state => state.auth.userData)
     const queryClient = useQueryClient()
     const { register, handleSubmit } = useForm({
         defaultValues: {
@@ -41,7 +43,7 @@ function PostForm({ post }) {
         }
     })
 
-    const postHandler = async (data) => {        
+    const postHandler = async (data) => {
         if (post) {
             const formData = {
                 _id: post._id,
@@ -80,7 +82,7 @@ function PostForm({ post }) {
                         type="text"
                         label="Content: "
                         placeholder="Enter post content"
-                        className="border text-base w-full p-2 h-48 focus:outline-none
+                        className="border text-base w-full p-2 h-40 focus:outline-none
                          focus:border-gray-600 transition duration-200"
                         {...register("content", {
                             required: true
@@ -90,7 +92,7 @@ function PostForm({ post }) {
                         <img
                             src={post.image}
                             alt="post"
-                            className='rounded-md border border-slate-600'
+                            className='rounded-md border border-slate-600 max-h-56 w-[80%] object-cover'
                         />
                     </div>
 
@@ -109,7 +111,17 @@ function PostForm({ post }) {
                         options={["active", "inactive"]}
                         {...register("status")}
                     />
-                    <div className='flex m-2 justify-center items-center'>
+                    <div className='flex m-4 justify-end gap-2 items-center'>
+                        {post &&
+                            <Button
+                                className=''
+                                bgColor='bg-black'
+                                textColor='text-white'
+                                onClick={() => navigate(`/profile/${userData.username}`)}
+                            >
+                                Cancle
+                            </Button>
+                        }
                         <Button
                             className=''
                             bgColor='bg-black'
@@ -117,9 +129,12 @@ function PostForm({ post }) {
                             disabled={isPending}
                         >
                             {isPending ? <img src=""
-                             alt="loader" 
+                                alt="loader"
                             />
-                            : "Submit"}
+                                : post ?
+                                    "Save" :
+                                    "Submit"
+                            }
                         </Button>
                     </div>
                 </form>

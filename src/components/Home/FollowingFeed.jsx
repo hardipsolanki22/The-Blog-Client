@@ -9,10 +9,10 @@ import { Oval } from 'react-loader-spinner';
 import PostSkeleton from '../Skeleton/PostSkeleton';
 
 function FollowingFeed() {
-  
+
   // Fetch Following User Posts (Infinite Scrolling)
   const MAX_PAGE_POST = 2
-  const { data: posts, hasNextPage, fetchNextPage, isFetchingNextPage , isLoading} =
+  const { data: posts, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
       queryKey: ["following-posts"],
       queryFn: fetchFollowingPost,
@@ -36,30 +36,33 @@ function FollowingFeed() {
 
 
 
-  return !isLoading ? (<div className='sm:max-h-[91.7vh] sm:overflow-y-auto bg-black text-white'>
+  return !isLoading ? (<div className='h-auto sm:max-h-[91.7vh] sm:overflow-y-auto
+   border-y bg-black text-white'>
     {posts?.pages.map((page) => (
-     page.data.length ? ( page.data?.map((post) => (
-      <div key={post.title}
-        className='flex flex-col justify-center border-y p-5 h-auto '>
-        <PostCart {...post} />
-      </div>
+      page.data.length ? (page.data?.map((post) => (
+        <div key={post.title}
+          className='flex flex-col justify-center border-t p-5 h-auto '>
+          <PostCart {...post} />
+        </div>
       ))) : (<div className='flex justify-center items-center'>
-      <p className='text-2xl'> User Dose not following any user </p>
+        {/* <p className='text-2xl'> User Dose not following any user </p> */}
       </div>)
-      
+
     ))}
-     <div ref={ref} 
-     className='flex justify-center items-center'>
-          {isFetchingNextPage ?
-            <Oval
-            height={'40'}
-            width={'40'}
-            /> :
-              "No more Posts"
-          }
+    <div ref={ref}
+      className='flex justify-center items-center mb-16 mt-4 sm:my-4'>
+      {isFetchingNextPage ?
+        <Oval
+          height={'40'}
+          width={'40'}
+          color='black'
+          secondaryColor='white'
+        /> :
+        "No more posts"
+      }
     </div>
   </div>) : (<div className='sm:max-h-[91.7vh] sm:overflow-y-auto bg-black text-white'>
-      <PostSkeleton cards={3} />
+    <PostSkeleton cards={3} />
   </div>)
 }
 

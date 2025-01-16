@@ -109,28 +109,30 @@ function Comment({ commentState, postId }) {
     </div>
     {!isLoading ? (comments.pages?.map((page) => (
       page.data.length > 0 ? (page.data?.map((comment) => (
-        <div className='flex items-centere mt-6 w-full'>
+        <div  key={comment._id}
+        className='flex items-centere mt-6 w-full'>
           <CommentCart {...comment} />
         </div>
       ))) : (
-        <div className='sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
-            mt-4 rounded-md flex justify-center p-4 border-b bg-white text-black'>
+        <div className=' sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
+    mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black'>
             <p className='text-2xl'>No comments found</p>
         </div>)
 
     ))
     ) : (
-    <div className='absolute top-20 sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
-          mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black'>
+    <>
          <CommentSkeleton cards={5} />
-    </div>
+    </>
     )}
     <div ref={ref}
-             className='flex justify-center relative bottom-0 right-0 left-0 m-2'>
+             className='flex justify-center my-4 relative bottom-0 right-0 left-0'>
              {isFetchingNextPage ? 
              <Oval
                height={'40'}
                width={'40'}
+               color='black'
+               secondaryColor='white'
              /> : "No more comment"
              }
            </div>

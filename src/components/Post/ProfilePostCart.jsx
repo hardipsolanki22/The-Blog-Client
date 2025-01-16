@@ -93,7 +93,7 @@ function ProfilePostCart({
     }
 
     return (
-        <div className=' h-auto flex-col justify-center items-center p-8 border-y border-slate-600 '>
+        <div className=' h-auto flex-col justify-center items-center p-8 border-t border-slate-600 '>
             {isAuth && <div className='flex justify-end items-center mr-4'>
                 <p className={`text-[2rem] text-slate-300 block cursor-pointer
                                        ${isDotOpen && "hidden"}`}

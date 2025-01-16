@@ -8,7 +8,7 @@ import { useRef } from 'react'
 import Button from '../Atoms/Button'
 import LogoutBtn from '../auth/LogoutBtn'
 
-function Header({ activeItem }) {
+function Header() {
     const authStatus = useSelector((state) => state.auth.status)
     const userData = useSelector(state => state.auth.userData)
     const [isOpen, setIsOpen] = useState(false)
@@ -83,11 +83,12 @@ function Header({ activeItem }) {
                     <div className='flex items-center justify-center'>
                         <div className='flex flex-col items-center'>
                             <div>
-                                <img src="" alt="Profile" />
+                                <img src={userData.avatar}
+                                className='w-20 h-20 rounded-full'
+                                alt="Profile" />
                             </div>
                             <div className='flex justify-between items-center'>
-                                <p>Followers</p>
-                                <p>Followings</p>
+                                <p className='font-semibold'>{userData.username}</p>
                             </div>
                         </div>
                     </div>
@@ -95,7 +96,7 @@ function Header({ activeItem }) {
                         {
                             navItems.map((item) => (
                                 item.active ? (
-                                    <li>
+                                    <li key={item.name}>
                                         <Button onClick={() => navigate(item.slug)}
                                             className='rounded-lg border-none font-normal p-2 text-center'
                                             bgColor='none'

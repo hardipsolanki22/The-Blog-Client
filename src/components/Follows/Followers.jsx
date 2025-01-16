@@ -61,58 +61,59 @@ function Followers() {
     }
   }
 
-  return !isLoading ? (<div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto border-y'>
-    <div className='flex gap-4 ml-4 mt-4 mb-3 items-center'>
-      <Link to={`/profile/${username}`}
-        className='text-white'>
-        <FontAwesomeIcon icon={faArrowLeft} />
-      </Link>
-      <p className='text-white text-2xl'>@{username}</p>
-    </div>
-    <div className='flex justify-center items-center'>
-      <p className='text-2xl'>Followers</p>
-    </div>
-    {followers.pages?.map((page) => (
-      page.data?.map((user) => (
-        <div className='my-6 flex justify-around items-center' key={user.followDetails._id}>
-          <Link to={`/profile/${user.followDetails.username}`}
-            className='text-white flex justify-center items-center'>
-            <div className='mr-2'>
-              <img src={user.followDetails.avatar}
-                alt="avatar"
-                className='w-14 h-12 rounded-full'
-              />
+  return !isLoading ?
+    (<div className='sm:col-span-11 md:col-span-6 sm:max-h-screen sm:overflow-y-auto border-y'>
+      <div className='flex gap-4 ml-4 mt-4 mb-3 items-center'>
+        <Link to={`/profile/${username}`}
+          className='text-white'>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </Link>
+        <p className='text-white text-2xl'>@{username}</p>
+      </div>
+      <div className='flex justify-center items-center'>
+        <p className='text-2xl'>Followers</p>
+      </div>
+      {followers.pages?.map((page) => (
+        page.data?.map((user) => (
+          <div className='my-6 flex justify-around items-center' key={user.followDetails._id}>
+            <Link to={`/profile/${user.followDetails.username}`}
+              className='text-white flex justify-center items-center'>
+              <div className='mr-2'>
+                <img src={user.followDetails.avatar}
+                  alt="avatar"
+                  className='w-14 h-12 rounded-full'
+                />
+              </div>
+              <p>{user.followDetails.username}</p>
+            </Link>
+            <div className='flex justify-center items-center'>
+              {userData._id !== user.followDetails._id &&
+                <Button onClick={() => handleFollowUnfollow(user.followDetails._id)}
+                  bgColor='bg-sky-700'
+                  textColor='text-white'
+                  className='px-4 py-2 rounded-full'
+                  disabled={isFollowedLoading}
+                >
+                  {user.followDetails.isFollowed ? "Unfollow" : "Follow"}
+                </Button>
+              }
             </div>
-            <p>{user.followDetails.username}</p>
-          </Link>
-          <div className='flex justify-center items-center'>
-            {userData._id !== user.followDetails._id &&
-              <Button onClick={() => handleFollowUnfollow(user.followDetails._id)}
-                bgColor='bg-sky-700'
-                textColor='text-white'
-                className='px-4 py-2 rounded-full'
-                disabled={isFollowedLoading}
-              >
-                {user.followDetails.isFollowed ? "Unfollow" : "Follow"}
-              </Button>
-            }
           </div>
-        </div>
+        ))
       ))
-    ))
-    }
-    <div ref={ref}
-         className='flex justify-center items-center'>
-         {isFetchingNextPage ? 
-         <Oval
-           height={'40'}
-           width={'40'}
-         /> : "No more followers"
-         }
-       </div>
-  </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen'>
-    <FollowingFollowersSkeleton cards={6} />
-  </div>)
+      }
+      <div ref={ref}
+        className='flex justify-center items-center'>
+        {isFetchingNextPage ?
+          <Oval
+            height={'40'}
+            width={'40'}
+          /> : "No more followers"
+        }
+      </div>
+    </div>) : (<div className='sm:col-span-11 md:col-span-6 sm:max-h-screen sm:overflow-y-auto'>
+      <FollowingFollowersSkeleton cards={6} />
+    </div>)
 }
 
 export default Followers

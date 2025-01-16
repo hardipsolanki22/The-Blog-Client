@@ -113,7 +113,7 @@ function following() {
           /> : "No more following"
           }
         </div>
-  </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen'>
+  </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto '>
     <FollowingFollowersSkeleton cards={6} />
   </div>)
 }

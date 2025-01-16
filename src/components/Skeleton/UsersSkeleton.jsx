@@ -6,7 +6,7 @@ function UsersSkeleton({ cards }) {
         .fill()
         .map((_, index) => (
             <div key={index}
-                className='flex flex-col justify-center items-center w-full h-full'>
+                className='flex flex-col justify-center items-center w-full h-auto'>
                 <div className='w-[90%] h-auto m-4 '>
                     <div className='flex justify-center gap-2 items-center '>
                         <div>

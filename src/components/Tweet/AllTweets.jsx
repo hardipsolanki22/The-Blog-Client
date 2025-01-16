@@ -101,18 +101,18 @@ function AllTweets() {
                         </div>
                     ))
                 ))
-            ) : (<div className='sm:col-span-11 md:col-span-6 sm:max-h-screen 
-            sm:overflow-y-auto bg-black text-white'>
-                <TweetSkeleton cards={5} />
-            </div>
+            ) : (<>
+                <TweetSkeleton cards={10} />
+            </>
             )}
             <div ref={ref}
-                className='flex justify-center items-center mb-14'>
+                className='flex justify-center items-center mb-14 sm:my-4'>
                 {isFetchingNextPage ?
                     <Oval
                         height={'40'}
                         width={'40'}
-                        color='whitee'
+                        color='black'
+                        secondaryColor='white'
                     /> :
                     "No more tweets"
                 }

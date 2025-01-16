@@ -78,8 +78,8 @@ function Profile() {
     }
 
     return (
-        !isLoading ? (<div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto gap-4
-            border-y '>
+        !isLoading ? (<div className='sm:col-span-11 md:col-span-6 h-auto 
+            sm:max-h-screen sm:overflow-y-auto gap-4 border-y '>
             <div className='flex gap-4 ml-4 mt-4 mb-2'>
                 <Link to={"/"}
                     className='text-white'>
@@ -144,20 +144,22 @@ function Profile() {
                     </div>
                 ))
             ))}
-            <div ref={ref}
-                className='flex justify-center items-center'>
+           <div ref={ref}
+                className='flex justify-center items-center mb-16 mt-4 sm:my-4'>
                 {isFetchingNextPage ?
                     <Oval
                         height={'40'}
                         width={'40'}
+                        color='black'
+                        secondaryColor='white'
                     /> :
                     "No more Posts"
-                }
+                } 
             </div>
             {/* <div className='flex justify-center items-center w-full p-6'>
                    <p>No Posts</p>
                </div> */}
-        </div>) : (<div className='sm:col-span-11 md:col-span-6  max-h-screen sm:overflow-y-auto'>
+        </div>) : (<div className='sm:col-span-11 md:col-span-6  sm:max-h-screen sm:overflow-y-auto'>
            <ProfileSkeleton cards={3} />
         </div>)
     )

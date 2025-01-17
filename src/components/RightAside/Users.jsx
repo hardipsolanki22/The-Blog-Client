@@ -40,7 +40,7 @@ function Users() {
         useToast.errorToast(isError.message)
     }
 
-    return ! isLoading ? (  <div className='text-white p-3 duration-300 rounded-md border'>
+    return ! isLoading ? (  <div className='text-white p-3 duration-300 rounded-md border border-slate-600'>
         <h2 className='text-2xl'>Who to follow</h2>
         { users?.data && users?.data?.map((user) => (
                 <div className='flex justify-around items-center my-4 ' key={user._id}>

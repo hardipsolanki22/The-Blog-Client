@@ -8,6 +8,7 @@ import Button from '../Atoms/Button'
 import { useToast } from '../../Helpers/toast'
 import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
 import registerUser from '../Api/AuthApi/signUp'
+import { Oval } from 'react-loader-spinner'
 
 function Signup() {
     const { register, handleSubmit } = useForm()
@@ -19,7 +20,7 @@ function Signup() {
 
         mutationFn: registerUser,
 
-        onSuccess: () => {  
+        onSuccess: () => {
             useToast.successToast("Signup successfully")
             queryClient.invalidateQueries(["users"])
             navigate("/login")
@@ -34,7 +35,7 @@ function Signup() {
         for (const key in data) {
             formData.append(key, data[key])
         }
-        
+
         formData.append("avatar", data.avatar[0])
 
         if (data.coverImage) {
@@ -42,8 +43,8 @@ function Signup() {
         }
 
         console.log(`formData: ${JSON.stringify(formData)}`);
-        
-       await mutateAsync(formData)
+
+        await mutateAsync(formData)
 
     }
 
@@ -125,7 +126,16 @@ function Signup() {
                             type='submit'
                             disabled={isPending}
                         >
-                            {isPending ? "Loading..." : "Signup"}
+                            {isPending ?
+                                <Oval
+                                    height={23}
+                                    width={23}
+                                    color='black'
+                                    secondaryColor='white'
+                                    strokeWidth={5}
+                                    strokeWidthSecondary={5}
+                                />
+                                : "Signup"}
                         </Button>
                     </div>
                 </form>

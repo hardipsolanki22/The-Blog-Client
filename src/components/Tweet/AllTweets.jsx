@@ -63,7 +63,7 @@ function AllTweets() {
 
     return (
         <div className='sm:col-span-11 md:col-span-6 sm:max-h-screen 
-            flex flex-col  sm:overflow-y-auto bg-black text-white border-y'>
+            sm:no-scrollbar flex flex-col  sm:overflow-y-auto bg-black text-white border-y'>
             <div className='flex flex-col  items-center'>
                 <p className='text-2xl'>Tweet</p>
                 <div className='gap-4 flex flex-col justify-center items-center
@@ -86,7 +86,16 @@ function AllTweets() {
                                 textColor='text-white'
                                 disabled={isPending}
                             >
-                                {isPending ? "Loading" : "Submit"}
+                                {isPending ?
+                                    <Oval
+                                        height={23}
+                                        width={23}
+                                        color='black'
+                                        secondaryColor='white'
+                                        strokeWidth={5}
+                                        strokeWidthSecondary={5}
+                                    />
+                                    : "Submit"}
                             </Button>
                         </div>
                     </form>

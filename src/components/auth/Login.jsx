@@ -2,7 +2,7 @@ import React from 'react'
 import { QueryClient, useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux"
 
 import { useToast } from '../../Helpers/toast'
 import Input from '../Atoms/Input'
@@ -10,6 +10,7 @@ import Button from '../Atoms/Button'
 import { login } from '../../featured/authSlice'
 import signInUser from '../Api/AuthApi/signIn'
 import getCurrentUser from '../Api/UserApi/getCurrentUser'
+import { Oval } from 'react-loader-spinner'
 
 function Login() {
 
@@ -20,21 +21,21 @@ function Login() {
 
 
 
-    const {mutateAsync, isPending} = useMutation({
+    const { mutateAsync, isPending } = useMutation({
         mutationFn: signInUser,
 
-        onSuccess: async() => {
-           
+        onSuccess: async () => {
+
             const currentUser = await getCurrentUser()
-    
-            dispatch(login( {userData: currentUser.data} ))
+
+            dispatch(login({ userData: currentUser.data }))
             useToast.successToast("Login successfully")
             navigate(`/profile/${currentUser.data.username}`)
         },
 
         onError: (error) => {
             useToast.errorToast(error.message)
-            
+
         }
     })
 
@@ -93,7 +94,16 @@ function Login() {
                             textColor='text-white'
                             disabled={isPending}
                         >
-                            {isPending ? "Loading": "Submit"}
+                            {isPending ?
+                                <Oval
+                                    height={23}
+                                    width={23}
+                                    color='black'
+                                    secondaryColor='white'
+                                    strokeWidth={5}
+                                    strokeWidthSecondary={5}
+                                />
+                                : "Submit"}
                         </Button>
                     </div>
                 </form>

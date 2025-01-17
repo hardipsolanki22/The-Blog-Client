@@ -19,7 +19,7 @@ function Select({
       ref={ref}
        id={id}
         {...props}
-        className={`${className} py-2 px-3 bg-slate-500 rounded-lmd`}>
+        className={`${className} py-2 px-3 rounded-md`}>
         {options?.map((option) => (
           <option  key={option} value={option}>
             {option}

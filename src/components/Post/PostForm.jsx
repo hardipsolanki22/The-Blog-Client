@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 
@@ -11,6 +11,7 @@ import addPost from '../Api/PostApi/addPost'
 import { useToast } from '../../Helpers/toast'
 import updatePost from '../Api/PostApi/updatePost'
 import TextArea from '../Atoms/TextArea'
+import { Oval } from 'react-loader-spinner'
 
 function PostForm({ post }) {
 
@@ -28,7 +29,7 @@ function PostForm({ post }) {
     const { mutateAsync, isPending } = useMutation({
         mutationFn: post ? updatePost : addPost,
         onSuccess: (postData) => {
-            post ? (
+            postData && post ? (
                 useToast.successToast("Update post succefully"),
                 navigate(`/profile/${postData.data.owner.username}`)
             ) : (
@@ -61,10 +62,10 @@ function PostForm({ post }) {
 
     return (
         <div className='flex flex-col items-center justify-center 
-            sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
+            sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:no-scrollbar sm:overflow-y-auto gap-4
         border-y '>
             <div className='flex flex-col justify-center items-center
-         h-auto w-auto  sm:max-w-[75%]  min-w-[70%]  bg-white text-black rounded-md p-5'>
+         h-auto w-auto  sm:max-w-[75%] min-w-[70%] bg-white text-black rounded-md p-5'>
                 <h1>Post</h1>
 
                 <form onSubmit={handleSubmit(postHandler)} className='w-full'>
@@ -113,14 +114,11 @@ function PostForm({ post }) {
                     />
                     <div className='flex m-4 justify-end gap-2 items-center'>
                         {post &&
-                            <Button
-                                className=''
-                                bgColor='bg-black'
-                                textColor='text-white'
-                                onClick={() => navigate(`/profile/${userData.username}`)}
+                            <Link to={`/profile/${userData.username}`}
+                                className='bg-black text-white p-[9.7px] rounded-md'
                             >
                                 Cancle
-                            </Button>
+                            </Link>
                         }
                         <Button
                             className=''
@@ -128,9 +126,15 @@ function PostForm({ post }) {
                             textColor='text-white'
                             disabled={isPending}
                         >
-                            {isPending ? <img src=""
-                                alt="loader"
-                            />
+                            {isPending ?
+                                <Oval
+                                    height={23}
+                                    width={23}
+                                    color='black'
+                                    secondaryColor='white'
+                                    strokeWidth={5}
+                                    strokeWidthSecondary={5}
+                                />
                                 : post ?
                                     "Save" :
                                     "Submit"

@@ -9,7 +9,7 @@ function Home() {
 
     return (
         <div className='sm:col-span-11 md:col-span-6 h-16'>
-            <div className='w-full flex justify-around items-center h-full '>
+            <div className='w-full flex justify-around items-center h-full border-b border-slate-600 '>
                 <Button 
                 className={`p-2 text-black bg-white focus:outline-none
                 ${feed === 'ForYoua' && 'bg-sky-900 text-white'}`}

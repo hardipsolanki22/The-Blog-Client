@@ -8,6 +8,7 @@ import Input from '../Atoms/Input'
 import Button from '../Atoms/Button'
 import { useToast } from '../../Helpers/toast'
 import resetPassword from '../Api/AuthApi/resetPassword'
+import { Oval } from 'react-loader-spinner'
 
 function ResetPassword() {
 
@@ -25,16 +26,16 @@ function ResetPassword() {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: resetPassword,
     onSuccess: () => {
-        useToast.successToast("Password reset successfully")
-        navigate("/login")
+      useToast.successToast("Password reset successfully")
+      navigate("/login")
     },
     onError: (error) => {
-        useToast.errorToast(error.message)
+      useToast.errorToast(error.message)
     }
-})
+  })
 
   const resetPasswordHandler = async (data) => {
-    const requestData = {token, data}
+    const requestData = { token, data }
     await mutateAsync(requestData)
   }
 
@@ -44,7 +45,7 @@ function ResetPassword() {
          border-y'>
       <div className='gap-4 flex flex-col justify-center items-center
         min-w-[60%] h-auto bg-white text-black rounded-md p-10'>
-      <p className='text-2xl'>Reset Password</p>
+        <p className='text-2xl'>Reset Password</p>
         <form onSubmit={handleSubmit(resetPasswordHandler)} className='w-full'>
           <Input
             type="password"
@@ -72,7 +73,16 @@ function ResetPassword() {
               textColor='text-white'
               disabled={isPending}
             >
-               {isPending ? "Loading" : "Submit"}
+              {isPending ?
+                <Oval
+                  height={23}
+                  width={23}
+                  color='black'
+                  secondaryColor='white'
+                  strokeWidth={5}
+                  strokeWidthSecondary={5}
+                />
+                : "Submit"}
             </Button>
           </div>
         </form>

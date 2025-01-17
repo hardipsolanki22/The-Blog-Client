@@ -63,7 +63,8 @@ function following() {
     }
   }
 
-  return !isLoading ? (<div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto border-y'>
+  return !isLoading ? (<div className='sm:col-span-11 md:col-span-6 max-h-screen 
+    sm:no-scrollbar sm:overflow-y-auto border-y'>
     <div className='flex gap-4 ml-4 mt-4 mb-3 items-center'>
       <Link to={`/profile/${username}`}
         className='text-white'>
@@ -113,7 +114,8 @@ function following() {
           /> : "No more following"
           }
         </div>
-  </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen sm:overflow-y-auto '>
+  </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen
+     sm:overflow-y-auto sm:no-scrollbar'>
     <FollowingFollowersSkeleton cards={6} />
   </div>)
 }

@@ -2,14 +2,17 @@ import React, { useDebugValue, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-
+import { Link, useNavigate } from 'react-router-dom'
+import { Oval } from 'react-loader-spinner'
 
 import Button from '../Atoms/Button'
 import Input from '../Atoms/Input'
 import updateProfile from '../Api/UserApi/updateProfile'
-import { useNavigate } from 'react-router-dom'
 import { useToast } from '../../Helpers/toast'
 import { axiosInstance } from '../../Helpers/axiosService'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCamera } from '@fortawesome/free-solid-svg-icons'
+
 function PersonalDetailsCart() {
 
     const userData = useSelector(state => state.auth.userData)
@@ -103,24 +106,28 @@ function PersonalDetailsCart() {
             <div className='gap-4 flex flex-col justify-center items-center
         min-w-[75%] h-auto bg-white text-black rounded-md p-4'>
                 <p className='text-2xl'>Personal Details</p>
-                <div className='w-full flex flex-col justify-center items-center'>
+                <div className='w-full flex flex-col justify-center items-center h-auto'>
                     <div
                         className='w-full h-8'
                         onClick={handleCoverImageClick}>
                         <img
                             src={coverImage ? URL.createObjectURL(coverImage) : userData.coverImage}
                             alt={userData.username}
-                            className={`${!userData.coverImage && 'bg-slate-800'} rounded-md w-full h-36`}
+                            className={`border-2 border-violet-700 
+                                ${!userData.coverImage && 'bg-slate-800'} rounded-md w-full h-36`}
                         />
                     </div>
-                    <div 
-                    className='mt-4 relative '
-                    onClick={handleAvatarClick}>
-                    <img
-                            src={avatar ? URL.createObjectURL(avatar) : userData.avatar}
-                            alt={userData.username}
-                            className='rounded-full w-32 h-32'
-                        />
+                    <div
+                        className='mt-4 flex flex-col  justify-center items-center'
+                        onClick={handleAvatarClick}>
+                        <div className='group'>
+                            <img
+                                src={avatar ? URL.createObjectURL(avatar) : userData.avatar}
+                                alt={userData.username}
+                                className='rounded-full w-32 h-32 border-2 border-violet-700 '
+                            />
+                        </div>
+                        <p className='ml'>{userData.username}</p>
                     </div>
                 </div>
                 <form onSubmit={handleSubmit(updateProfileHandler)}>
@@ -160,21 +167,28 @@ function PersonalDetailsCart() {
                         onChange={(e) => setCoverImage(e.target.files[0])}
                     />
                     <div className='flex m-2 gap-2 justify-end items-center'>
-                    <Button
-                            className=''
-                            bgColor='bg-black'
-                            textColor='text-white'
-                            onClick={() => navigate(`/profile/${userData.username}`)}
+                        <Link to={`/profile/${userData.username}`}
+                            className='bg-black text-white p-[9.7px] rounded-md'
                         >
                             Cancle
-                        </Button>
+                        </Link>
                         <Button
                             className=''
                             bgColor='bg-black'
                             textColor='text-white'
                             disabled={isPending || isLoading}
                         >
-                            {isLoading || isPending ? 'Loading' : 'Save'}
+                            {isLoading || isPending ?
+                                <Oval
+                                    height={23}
+                                    width={23}
+                                    color='black'
+                                    secondaryColor='white'
+                                    strokeWidth={5}
+                                    strokeWidthSecondary={5}
+                                />
+                                : 'Save'
+                            }
                         </Button>
                     </div>
                 </form>

@@ -7,6 +7,7 @@ import Input from '../Atoms/Input'
 import Button from '../Atoms/Button'
 import changePassword from '../Api/AuthApi/changePassword'
 import { useToast } from '../../Helpers/toast'
+import { Oval } from 'react-loader-spinner'
 
 function ChangePassword() {
 
@@ -63,7 +64,16 @@ function ChangePassword() {
                             textColor='text-white'
                             disabled={isPending}
                         >
-                            {isPending ? "Loading" : "Submit"}
+                            {isPending ?
+                                <Oval
+                                    height={23}
+                                    width={23}
+                                    color='black'
+                                    secondaryColor='white'
+                                    strokeWidth={5}
+                                    strokeWidthSecondary={5}
+                                />
+                                : "Submit"}
                         </Button>
                     </div>
                 </form>

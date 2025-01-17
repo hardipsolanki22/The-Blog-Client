@@ -6,6 +6,7 @@ import Button from '../Atoms/Button'
 import Input from '../Atoms/Input'
 import { useToast } from '../../Helpers/toast'
 import forgetPassword from '../Api/AuthApi/forgetPassword'
+import { Oval } from 'react-loader-spinner'
 
 function ForgetPassword() {
 
@@ -49,7 +50,16 @@ function ForgetPassword() {
               textColor='text-white'
               disabled={isPending}
             >
-              {isPending ? "Loading" : "Submit"}
+              {isPending ?
+                <Oval
+                  height={23}
+                  width={23}
+                  color='black'
+                  secondaryColor='white'
+                  strokeWidth={5}
+                  strokeWidthSecondary={5}
+                />
+                : "Submit"}
             </Button>
           </div>
         </form>

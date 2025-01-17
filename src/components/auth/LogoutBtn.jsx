@@ -37,16 +37,14 @@ function LogoutBtn() {
 
   return (
     <div>
-      <Button className='px-4 py-2 rounded-lg
-       hover:bg-white hover:text-black transition
-        duration-500 focus:outline-none'
+      <Button className='md:px-4 md:py-2 sm:px-2 sm:py-1 rounded-lg
+       hover:bg-white hover:text-black transition flex
+        duration-500 focus:outline-none md:text-xl md:font-semibold'
         bgColor='bg-black'
         textColor='text-white'
         onClick={async () => await mutateAsync()}>
-        <span className='mr-2'>
           <FontAwesomeIcon icon={faSignOut} />
-        </span>
-        Logout
+=      <span className='md:block sm:hidden ml-2'>Logout</span>
       </Button>
     </div>
   )

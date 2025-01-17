@@ -62,7 +62,8 @@ function Header() {
     return (
         <div>
             <header >
-                <div className='w-full h-14 sm:hidden text-white bg-black z-10 flex items-center justify-around'>
+                <div className='w-full h-14 sm:hidden text-white bg-black z-10 
+                flex items-center justify-around border-b border-slate-600 '>
                     {/*TODO:: HANDLE ACTIVE ROUTE  */}
                     <div className='sm:hidden' onClick={() => setIsOpen((isOpen) => !isOpen)}>
                         <img
@@ -80,18 +81,20 @@ function Header() {
                 <aside ref={sidebarRef} className='transition duration-500 backdrop-blur-md bg-opacity-50 
                 fixed z-10 top-0 bottom-14 flex w-72 flex-col gap-6
                 border p-4 bg-black text-white '>
-                    <div className='flex items-center justify-center'>
-                        <div className='flex flex-col items-center'>
-                            <div>
-                                <img src={userData.avatar}
-                                className='w-20 h-20 rounded-full'
-                                alt="Profile" />
-                            </div>
-                            <div className='flex justify-between items-center'>
-                                <p className='font-semibold'>{userData.username}</p>
+                    {authStatus &&
+                        <div className='flex items-center justify-center'>
+                            <div className='flex flex-col items-center'>
+                                <div>
+                                    <img src={userData?.avatar}
+                                        className='w-20 h-20 rounded-full'
+                                        alt="Profile" />
+                                </div>
+                                <div className='flex justify-between items-center'>
+                                    <p className='font-semibold'>{userData?.username}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                     <ul className='flex flex-col gap-8 h-auto'>
                         {
                             navItems.map((item) => (
@@ -124,6 +127,4 @@ function Header() {
 }
 
 export default Header
-
-
 

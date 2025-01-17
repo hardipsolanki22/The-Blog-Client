@@ -65,7 +65,7 @@ function Like({ likeState, postId }) {
 
 
   return !isLoading ? (<div className='sm:static w-full h-[87vh] sm:h-[50vh] 
-       overflow-y-auto rounded-md border-x border-slate-400 bg-white
+      sm:no-scrollbar overflow-y-auto rounded-md border-x border-slate-400 bg-white
       text-black sm:mt-4 p-2 duration-300'>
     <Button className='p-1 font-bold' onClick={() => likeState(false)}>
       <FontAwesomeIcon icon={faClose} />
@@ -119,7 +119,7 @@ function Like({ likeState, postId }) {
          }
        </div>
   </div>) : (<div className='sm:static w-full h-[87vh] sm:h-[50vh] overflow-y-auto rounded-md
-    border-x border-slate-400 bg-white text-black sm:mt-4 p-2 duration-300'>
+      sm:no-scrollbar border-x border-slate-400 bg-white text-black sm:mt-4 p-2 duration-300'>
     <LikeSkeleton cards={6} />
   </div>)
 

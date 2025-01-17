@@ -103,8 +103,8 @@ function ProfilePostCart({
                 {isDotOpen &&
                     <div ref={containerRef} 
                     className='flex flex-col justify-center items-center gap-5
-                                transition duration-500 delay-100
-                                top-3 border relative rounded-lg border-slate-600 p-5 mb-2'>
+                                top-3 border relative rounded-lg border-slate-600 p-5 mb-2'
+                    >
                         <Link
                             to={`/edit-posts/${_id}`}
                             className='p-2 text-white no-underline'

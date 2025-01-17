@@ -1,5 +1,5 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { ToastContainer } from 'react-toastify'
 import { SkeletonTheme } from 'react-loading-skeleton'
@@ -13,9 +13,12 @@ import RightAside from './components/RightAside/RightAside'
 import getCurrentUser from './components/Api/UserApi/getCurrentUser'
 import { useDispatch } from 'react-redux'
 import { login, logout } from './featured/authSlice'
+import { ThemeProvider } from './components/Contexts/theme'
 
 
 function App() {
+  const navigate = useNavigate()
+  const [themeMode , setThemeMode] = useState(true)
   const dispatch = useDispatch()
 
   const { data: user, isLoading } = useQuery({
@@ -30,23 +33,44 @@ function App() {
     dispatch(logout())
   }
 
+  // toggle dark mode and light mode 
+  const toggleMode = () => {
+    setThemeMode(!themeMode)
+  }
+
+  useEffect(() => {
+    document.querySelector('html')
+                        .classList.remove("light", "dark")
+    document.querySelector('html')
+                        .classList.add(themeMode ? "dark" : "light")
+
+   console.log(`html: `, document.querySelector('html'));
+   
+
+  }, [themeMode])
+
+
   return (
-    !isLoading ? (
-      <div className=''>
-        <Header />
-        <main className='grid sm:grid-cols-12 bg-black text-white'>
-          <SkeletonTheme baseColor='#313131' highlightColor='#525252'>
-            <DesktopNavbar />
-            <Outlet />
-            <RightAside />
-            <MobileNavbar />
-            <ToastContainer />
-          </SkeletonTheme>
-        </main>
-      </div>
-    ) : (<div>
-      <h1>Loding...</h1>
-    </div>)
+    <ThemeProvider value={{themeMode, toggleMode}}>
+      {!isLoading ? (
+        <>
+          <Header />
+          <main className='grid sm:grid-cols-12 w-full'>
+            <SkeletonTheme baseColor='#313131' highlightColor='#525252'>
+              <DesktopNavbar />
+              <Outlet />
+              <RightAside />
+              <MobileNavbar />
+              <ToastContainer />
+            </SkeletonTheme>
+          </main>
+        </>
+      ) : (<div>
+        <h1>Loding...</h1>
+      </div>)
+
+      }
+    </ThemeProvider>
   )
 }
 

@@ -23,7 +23,7 @@ function Search() {
 
   return (
     <div className=' sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen 
-    sm:overflow-y-auto gap-4 bg-black text-white border-y'>
+      sm:no-scrollbar sm:overflow-y-auto gap-4 bg-black text-white border-y'>
       <div className='flex justify-center items-center'>
         <form>
           <Input

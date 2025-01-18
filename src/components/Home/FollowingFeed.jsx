@@ -7,6 +7,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import fetchFollowingPost from '../Api/PostApi/fetchFollowingPosts';
 import { Oval } from 'react-loader-spinner';
 import PostSkeleton from '../Skeleton/PostSkeleton';
+import { useTheme } from '../Contexts/theme';
 
 function FollowingFeed() {
 
@@ -33,11 +34,12 @@ function FollowingFeed() {
     }
   }, [inView, hasNextPage, fetchNextPage])
 
+    const {themeMode} = useTheme()
+  
 
 
-
-  return !isLoading ? (<div className='h-auto sm:max-h-[91.7vh] sm:overflow-y-auto sm:no-scrollbar
-   border-b border-slate-600 bg-black text-white'>
+  return !isLoading ? (<div className={`h-auto sm:max-h-[91.7vh] sm:overflow-y-auto sm:no-scrollbar
+   border-b border-slate-600 ${themeMode ? 'dark' : 'light'}`}>
     {posts?.pages.map((page) => (
       page.data.length ? (page.data?.map((post) => (
         <div key={post.title}
@@ -61,7 +63,8 @@ function FollowingFeed() {
         "No more posts"
       }
     </div>
-  </div>) : (<div className='sm:max-h-[91.7vh] sm:no-scrollbar sm:overflow-y-auto bg-black text-white'>
+  </div>) : (<div className={`sm:max-h-[91.7vh] sm:no-scrollbar sm:overflow-y-auto
+    ${themeMode ? 'dark' : 'light'}`}>
     <PostSkeleton cards={3} />
   </div>)
 }

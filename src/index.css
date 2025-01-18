@@ -15,7 +15,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} 
 
 a {
   font-weight: 500;
@@ -70,11 +70,11 @@ button:focus-visible {
 }
 
 .dark {
-  color: wheat;
-  background-color: black;
+  color: #ffffff;
+  background-color: #1a1a1a;
 }
 
 .light {
-  color: black;
-  background-color: white;
-}
+  color: #1a1a1a;
+  background-color: #ffffff;
+}  

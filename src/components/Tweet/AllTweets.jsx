@@ -63,11 +63,11 @@ function AllTweets() {
 
     return (
         <div className='sm:col-span-11 md:col-span-6 sm:max-h-screen 
-            sm:no-scrollbar flex flex-col  sm:overflow-y-auto bg-black text-white border-y'>
+            sm:no-scrollbar flex flex-col  sm:overflow-y-auto border-y'>
             <div className='flex flex-col  items-center'>
                 <p className='text-2xl'>Tweet</p>
-                <div className='gap-4 flex flex-col justify-center items-center
-                 min-w-[70%] h-auto bg-white text-black rounded-md p-10'>
+                <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
+                 min-w-[70%] h-auto border border-violet-600 rounded-md p-10'>
                     <form onSubmit={handleSubmit(createTweetHnadler)} className='w-full'>
                         <TextArea
                             type="text"

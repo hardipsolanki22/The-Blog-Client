@@ -53,8 +53,8 @@ function Signup() {
         <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
         border-y'>
-            <div className='gap-4 flex flex-col justify-center items-center
-        w-auto h-auto bg-white text-black rounded-md p-5'>
+            <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
+        w-auto h-auto border border-violet-600 rounded-md p-5'>
                 <h1>Signup</h1>
                 <div>
                     <p>Signup to create your account</p>
@@ -71,7 +71,7 @@ function Signup() {
                         label="Name: "
                         placeholder="Enter your name"
                         className="border text-base w-full px-2 py-2 focus:outline-none
-                        transition duration-200 focus:border-gray-600"
+                        transition duration-200 focus:border-gray-600 text-black"
                         {...register("name", {
                             required: true
                         })}
@@ -81,7 +81,7 @@ function Signup() {
                         label="Username: "
                         placeholder="Enter your username"
                         className="border text-base w-full px-2 py-2 focus:outline-none
-                        transition duration-200 focus:border-gray-600"
+                        transition duration-200 focus:border-gray-600 text-black"
                         {...register("username", {
                             required: true
                         })}
@@ -91,7 +91,7 @@ function Signup() {
                         label="Email: "
                         placeholder="Enter your email"
                         className="border text-base w-full px-2 py-2 focus:outline-none
-                        transition duration-200 focus:border-gray-600"
+                        transition duration-200 focus:border-gray-600  text-black"
                         {...register("email", {
                             required: true
                         })}
@@ -101,7 +101,7 @@ function Signup() {
                         label="Password: "
                         placeholder="Enter your password"
                         className="border text-base w-full px-2 py-2 focus:outline-none
-                        transition duration-200 focus:border-gray-600"
+                        transition duration-200 focus:border-gray-600  text-black"
                         {...register("password", {
                             required: true
                         })}
@@ -120,9 +120,6 @@ function Signup() {
                     />
                     <div className='flex m-2 justify-center items-center'>
                         <Button
-                            className=''
-                            bgColor='bg-black'
-                            textColor='text-white'
                             type='submit'
                             disabled={isPending}
                         >

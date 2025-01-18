@@ -22,8 +22,8 @@ function Search() {
   }
 
   return (
-    <div className=' sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen 
-      sm:no-scrollbar sm:overflow-y-auto gap-4 bg-black text-white border-y'>
+    <div className='sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen 
+      sm:no-scrollbar sm:overflow-y-auto gap-4 sm:border-y'>
       <div className='flex justify-center items-center'>
         <form>
           <Input
@@ -40,7 +40,7 @@ function Search() {
         {users?.data  && users.data.map((user) => (
           <div key={user._id} className='flex flex-col '>
             <Link  to={`/profile/${user.username}`}
-            className='flex gap-4 m-4 text-white'>
+            className='flex gap-4 m-4'>
               <div>
                 <img src={user.avatar}
                   alt={user.username}

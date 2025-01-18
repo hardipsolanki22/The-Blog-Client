@@ -79,14 +79,14 @@ function Profile() {
 
     return (
         !isLoading ? (<div className='sm:col-span-11 md:col-span-6 h-auto 
-           sm:no-scrollbar sm:max-h-screen sm:overflow-y-auto gap-4 border-y '>
+           sm:no-scrollbar sm:max-h-screen sm:overflow-y-auto gap-4 sm:border-y '>
             <div className='flex gap-4 ml-4 mt-4 mb-2'>
                 <Link to={"/"}
                     className='text-white'>
                     <FontAwesomeIcon icon={faArrowLeft} />
                 </Link>
                 <div className=''>
-                    <p className='text-white text-2xl'>@{user.data.username}</p>
+                    <p className='text-white text-2xl'>@{user.data?.username}</p>
                 </div>
             </div>
             <div className='relative'>
@@ -96,10 +96,10 @@ function Profile() {
                     className='w-full sm:h-48 h-40 object-cover bg-slate-700'
                 />
                 <img
-                    src={user.data.avatar}
+                    src={user.data?.avatar}
                     alt="avatar"
                     className='sm:w-36 sm:h-36 h-28 w-28 rounded-full absolute left-8 bottom-0 
-                    transform translate-y-1/2 border-4 border-black'
+                    transform translate-y-1/2 border-2 border-black'
                 />
             </div>
             {isAuth ? (<div className='flex justify-end p-4'>
@@ -114,8 +114,8 @@ function Profile() {
                     </Button>
                 </div>)}
             <div className='p-4'>
-                <h1 className='text-xl font-bold'>@{user.data.name}</h1>
-                <p className='text-gray-400'>{user.data.username}</p>
+                <h1 className='text-xl font-bold'>@{user.data?.name}</h1>
+                <p className='text-gray-400'>{user.data?.username}</p>
                 <p className='text-gray-400 '>Joined {formateRelative(user.data.createdAt)}</p>
             </div>
             <div className='flex p-4 border-b gap-4 border-slate-600'>
@@ -139,7 +139,7 @@ function Profile() {
             </div>
             {posts?.pages.map((page) => (
                 page.data?.map((post) => (
-                    <div className='bg-black text-white h-auto' key={post._id}>
+                    <div className=' h-auto' key={post._id}>
                         <ProfilePostCart {...post} />
                     </div>
                 ))

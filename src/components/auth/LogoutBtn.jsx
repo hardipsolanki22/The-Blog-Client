@@ -10,6 +10,7 @@ import Button from '../Atoms/Button'
 import logOutUser from '../Api/AuthApi/logOut'
 import { useToast } from '../../Helpers/toast'
 import { logout } from '../../featured/authSlice'
+import { useTheme } from '../Contexts/theme'
 
 function LogoutBtn() {
   const navigate = useNavigate()
@@ -35,18 +36,20 @@ function LogoutBtn() {
   //   await mutateAsync()
   // }
 
+  const { themeMode } = useTheme()
+
   return (
     <div>
-      <Button className='md:px-4 md:py-2 sm:px-2 sm:py-1 rounded-lg
-       hover:bg-white hover:text-black transition flex
-        duration-500 focus:outline-none md:text-xl md:font-semibold'
-        bgColor='bg-black'
-        textColor='text-white'
+      <button className={`md:px-4 md:py-2 sm:px-2 sm:py-1 rounded-lg border text-center
+                transition flex duration-150 focus:outline-none md:text-xl md:font-semibold
+                 ${themeMode ? 'hover:bg-purple-500 bg-inherit text-white hover:text-white border-slate-400'
+                :' hover:bg-blue-500 hover:text-white text-black border-slate-600'}           
+           `}
         onClick={async () => await mutateAsync()}>
-          <FontAwesomeIcon icon={faSignOut} />
-=      <span className='md:block sm:hidden ml-2'>Logout</span>
-      </Button>
-    </div>
+        <FontAwesomeIcon icon={faSignOut} />
+        <span className='md:block sm:hidden ml-2'>Logout</span>
+      </button>
+    </div >
   )
 }
 

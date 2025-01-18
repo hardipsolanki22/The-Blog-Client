@@ -69,7 +69,7 @@ function PostCart({
 
   return (
     <div className='flex-col justify-center items-center'>
-      <div className='flex items-center text-white '>
+      <div className='flex items-center '>
         <Link  to={`/profile/${owner.username}`}
         className=' mx-2 flex justify-center items-center'>
           <img src={owner.avatar}

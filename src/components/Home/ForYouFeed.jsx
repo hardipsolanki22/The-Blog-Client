@@ -12,6 +12,8 @@ import TweetSkeleton from '../Skeleton/TweetSkeleton';
 import LikeSkeleton from '../Skeleton/LikeSkeleton';
 import CommentSkeleton from '../Skeleton/CommentSkeleton';
 import FollowingFollowersSkeleton from '../Skeleton/FollowingFollowersSkeleton';
+import { useTheme } from '../Contexts/theme';
+
 function ForYouFeed() {
 
   // Fetch All Posts (Infinite Scrolling)
@@ -38,10 +40,11 @@ function ForYouFeed() {
   }, [inView, hasNextPage, fetchNextPage])
 
 
+  const {themeMode} = useTheme()
 
 
-  return !isLoading ? (<div className='h-auto sm:max-h-[91.7vh] sm:overflow-y-auto sm:no-scrollbar
-    border-b  border-slate-600 bg-black text-white'>
+  return !isLoading ? (<div className={`h-auto sm:max-h-[91.7vh] sm:overflow-y-auto sm:no-scrollbar
+    border-b border-slate-600  ${themeMode ? 'dark' : 'light'}`}>
     {posts?.pages.map((page) => (
       page.data?.map((post) => (<div key={post._id}
         className='flex flex-col justify-center border-b  border-slate-600 p-5 h-full '>
@@ -62,7 +65,8 @@ function ForYouFeed() {
 
      } 
     </div>
-  </div>) : (<div className='sm:max-h-[91.7vh] sm:no-scrollbar sm:overflow-y-auto bg-black text-white'>
+  </div>) : (<div className={`sm:max-h-[91.7vh] sm:no-scrollbar sm:overflow-y-auto 
+      ${themeMode ? 'dark' : 'light'}`}>
     <PostSkeleton cards={3} />
   </div>)
 }

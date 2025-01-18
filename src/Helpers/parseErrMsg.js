@@ -1,15 +1,17 @@
-const parseErrorMesaage = (htmlElement) => {
-    const parser = new DOMParser();
-    const document = parser.parseFromString(htmlElement, "text/html");
-    const errorMessageEle = document.querySelector("pre");
-    const errorMessage = errorMessageEle?.innerText
-    
+const parseErrorMesaage = (stringDocument) => {
 
-    if (errorMessage) {
-        return errorMessage.split(":").pop().trim();;
+  const parseErrorMessage = stringDocument
+    .split('/')[2]
+    .split('<')[2]
+    .replace("pre>Error:", "")
+    .trim()
+
+    if (parseErrorMessage) {
+      return parseErrorMessage
     }
 
-    return null
+    return "Something want to wrong"
+
 }
 
-export {parseErrorMesaage}
+export { parseErrorMesaage }

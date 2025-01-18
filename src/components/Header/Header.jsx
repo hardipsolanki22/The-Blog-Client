@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faExchange, faUserPlus, faSignIn, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useRef } from 'react'
 
 import Button from '../Atoms/Button'
 import LogoutBtn from '../auth/LogoutBtn'
+import { useTheme } from '../Contexts/theme'
 
 function Header() {
     const authStatus = useSelector((state) => state.auth.status)
@@ -59,12 +60,13 @@ function Header() {
 
     }, [])
 
+    const { themeMode } = useTheme()
+
     return (
-        <div>
+        <div className={`${themeMode ? 'dark' : 'light'}`}>
             <header >
-                <div className='w-full h-14 sm:hidden text-white bg-black z-10 
-                flex items-center justify-around border-b border-slate-600 '>
-                    {/*TODO:: HANDLE ACTIVE ROUTE  */}
+                <div className='w-full h-14 sm:hidden bg-blackz-10 
+                flex items-center justify-around border-b border-slate-600'>
                     <div className='sm:hidden' onClick={() => setIsOpen((isOpen) => !isOpen)}>
                         <img
                             src={userData?.avatar}
@@ -78,9 +80,10 @@ function Header() {
                 </div>
             </header>
             {isOpen ? (
-                <aside ref={sidebarRef} className='transition duration-500 backdrop-blur-md bg-opacity-50 
-                fixed z-10 top-0 bottom-14 flex w-72 flex-col gap-6
-                border p-4 bg-black text-white '>
+                <aside ref={sidebarRef} className={`transition duration-500 border
+                fixed z-10 top-0 bottom-14 flex w-72 flex-col gap-6 ${themeMode ? 'dark border-slate-400'
+                    : 'light border-slate-600'}
+                 p-4`}>
                     {authStatus &&
                         <div className='flex items-center justify-center'>
                             <div className='flex flex-col items-center'>
@@ -100,14 +103,18 @@ function Header() {
                             navItems.map((item) => (
                                 item.active ? (
                                     <li key={item.name}>
-                                        <Button onClick={() => navigate(item.slug)}
-                                            className='rounded-lg border-none font-normal p-2 text-center'
-                                            bgColor='none'
-                                            textColor='text-black'
+                                        <NavLink to={item.slug}
+                                            onClick={() => navigate(item.slug)}
+                                            className={({ isActive }) => `  
+                                            border rounded-lg focus:outline-none font-normal p-2 text-center
+                                            ${themeMode ? 'hover:bg-purple-500 text-white hover:text-white border-slate-400'
+                                            :'hover:bg-blue-500 hover:text-white text-black border-slate-600'}
+                                            ${isActive && themeMode && "text-white bg-purple-500 "}
+                                            ${isActive && !themeMode && " text-white bg-blue-500"}`}
                                         >
                                             <span className='mr-2'>{item.icon}</span>
                                             <span>{item.name}</span>
-                                        </Button>
+                                        </NavLink>
                                     </li>
                                 ) : null
                             ))}

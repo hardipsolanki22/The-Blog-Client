@@ -43,8 +43,8 @@ function ResetPassword() {
     <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
          border-y'>
-      <div className='gap-4 flex flex-col justify-center items-center
-        min-w-[60%] h-auto bg-white text-black rounded-md p-10'>
+      <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
+        min-w-[60%] h-auto border border-violet-600 rounded-md p-10'>
         <p className='text-2xl'>Reset Password</p>
         <form onSubmit={handleSubmit(resetPasswordHandler)} className='w-full'>
           <Input
@@ -52,7 +52,7 @@ function ResetPassword() {
             label="New Password: "
             placeholder="Enter new password"
             className="border text-base w-full px-2 py-2 focus:outline-none
-            transition duration-200 focus:border-gray-600"
+            transition duration-200 focus:border-gray-600 text-black"
             {...register("password", {
               required: true
             })}
@@ -61,16 +61,14 @@ function ResetPassword() {
             type="password"
             label="Conform Password: "
             placeholder="Enter same password"
-            className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+            className="border text-base w-full px-2 py-2 focus:outline-none
+              transition duration-200 text-black focus:border-gray-600"
             {...register("conformPassword", {
               required: true
             })}
           />
           <div className='flex m-2 justify-center items-center'>
             <Button
-              className=''
-              bgColor='bg-black'
-              textColor='text-white'
               disabled={isPending}
             >
               {isPending ?

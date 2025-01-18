@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { faComment, faEdit, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faRemove } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from '@tanstack/react-query';
@@ -13,6 +13,7 @@ import Button from '../Atoms/Button'
 import Like from '../Like/Like';
 import Comment from '../Comment/Comment';
 import deletePost from '../Api/PostApi/deletePost';
+import { useTheme } from '../Contexts/theme';
 
 function ProfilePostCart({
     _id,
@@ -30,6 +31,7 @@ function ProfilePostCart({
     const [isLikeOpen, setIsLikeOpen] = useState(false)
     const [isCommentOpen, setIsCommentOpen] = useState(false)
     const [isDotOpen, setIsDotOpen] = useState(false)
+    const navigate = useNavigate()
     const queryClient = useQueryClient()
     const containerRef = useRef(null)
 
@@ -92,31 +94,31 @@ function ProfilePostCart({
         setIsCommentOpen(data)
     }
 
+    const {themeMode} = useTheme()
+
     return (
         <div className=' h-auto flex-col justify-center items-center p-8 border-t border-slate-600 '>
             {isAuth && <div className='flex justify-end items-center mr-4'>
-                <p className={`text-[2rem] text-slate-300 block cursor-pointer
+                <p className={`text-[2rem] ${themeMode ? 'text-white' : 'text-slate-800'} block cursor-pointer
                                        ${isDotOpen && "hidden"}`}
                     onClick={() => setIsDotOpen(true)}>
                     ...
                 </p>
                 {isDotOpen &&
                     <div ref={containerRef} 
-                    className='flex flex-col justify-center items-center gap-5
-                                top-3 border relative rounded-lg border-slate-600 p-5 mb-2'
+                    className={`flex flex-col justify-center items-center gap-5 ${themeMode ? 'dark' : 'light'}
+                                top-3 border relative rounded-lg border-violet-600 p-5 mb-2`}
                     >
-                        <Link
-                            to={`/edit-posts/${_id}`}
-                            className='p-2 text-white no-underline'
+                        <Button
+                           onClick={() => navigate(`/edit-posts/${_id}`)}
+                            className='p-2'
                         >
                             <FontAwesomeIcon icon={faEdit} />
                             <span className='ml-2'>Edit</span>
-                        </Link>
+                        </Button>
                         <Button
                             onClick={() => handlePostDelete(_id)}
-                            className='p-2'
-                            bgColor='bg-black'
-                            textColor='text-white'>
+                            className='p-2'>
                             <FontAwesomeIcon icon={faRemove} />
                             <span className='ml-2'>Delete</span>
                         </Button>

@@ -33,8 +33,8 @@ function ChangePassword() {
         <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
          border-y'>
-            <div className='gap-4 flex flex-col justify-center items-center
-        min-w-[70%]  h-auto bg-white text-black rounded-md p-10'>
+            <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
+        min-w-[70%]  h-auto border border-violet-600 rounded-md p-10'>
                 <p className='text-2xl'>Reset Password</p>
                 <form onSubmit={handleSubmit(changePasswordHandler)} className='w-full'>
                     <Input
@@ -42,7 +42,7 @@ function ChangePassword() {
                         label="Old Password: "
                         placeholder="Enter old password"
                         className="border text-base w-full px-2 py-2 focus:outline-none
-                        transition duration-200 focus:border-gray-600"
+                        transition duration-200 focus:border-gray-600 text-black"
                         {...register("oldPassword", {
                             required: true
                         })}
@@ -52,7 +52,7 @@ function ChangePassword() {
                         label="New Password: "
                         placeholder="Enter new password"
                         className="border text-base w-full px-2 py-2 focus:outline-none
-                        transition duration-200 focus:border-gray-600"
+                        transition duration-200 focus:border-gray-600 text-black"
                         {...register("newPassword", {
                             required: true
                         })}
@@ -60,8 +60,6 @@ function ChangePassword() {
                     <div className='flex m-2 justify-center items-center'>
                         <Button
                             className=''
-                            bgColor='bg-black'
-                            textColor='text-white'
                             disabled={isPending}
                         >
                             {isPending ?

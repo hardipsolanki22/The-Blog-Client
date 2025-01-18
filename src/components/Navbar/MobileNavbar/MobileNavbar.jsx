@@ -46,13 +46,11 @@ function MobileNavbar() {
                 {navItems.map((item) => (
                     item.active ? (
                         <li key={item.slug}>
-                            <Button onClick={() => navigate(item.slug)}
-                                className='p-2 border-none'
-                                bgColor='bg-black'
-                                textColor='text-white'
+                            <button onClick={() => navigate(item.slug)}
+                                className='p-2 focus:outline-none bg-black text-white'
                             >
                                 {item.icon}
-                            </Button>
+                            </button>
                         </li>
                     ) : null
                 ))

@@ -1,19 +1,23 @@
 import React from 'react'
+import { useTheme } from '../Contexts/theme'
 
 function Button({
-    type = "submit",
-    bgColor = "bg-white",
-    textColor = "text-black",
-    className = "",
-    children,
-    ...props
+  type = "submit",
+  className,
+  children,
+  ...props
 }) {
+
+  const { themeMode } = useTheme()
+
   return (
-    <button 
-    type={type}
-    className={`${bgColor} 
-    ${textColor} ${className}`} {...props}>
-        {children}
+    <button
+      type={type}
+      className={`${themeMode ? 'text-white bg-purple-600 hover:bg-purple-700'
+        : 'bg-blue-500 hover:bg-blue-600 text-white'}
+         ${className}  `}
+      {...props}>
+      {children}
     </button>
   )
 }

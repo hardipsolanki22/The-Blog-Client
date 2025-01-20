@@ -12,15 +12,16 @@ import TweetCart from './TweetCart'
 import { Oval } from 'react-loader-spinner'
 import TweetSkeleton from '../Skeleton/TweetSkeleton'
 import TextArea from '../Atoms/TextArea'
+import { useTheme } from '../Contexts/theme'
 
 
 function AllTweets() {
 
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, reset } = useForm()
     const queryClient = useQueryClient()
 
 
-    // Fetch All Tweets (Infinite Scrolling)
+    // Fetch All Tweets 
     const MAX_PAGE_TWEETS = 5
     const { data: tweets, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
         useInfiniteQuery({
@@ -48,7 +49,7 @@ function AllTweets() {
         mutationFn: createTweet,
         onSuccess: () => {
             queryClient.invalidateQueries(["tweets"])
-            useToast.successToast("Tweet create successfully")
+            useToast.successToast("😊 Tweet create successfully")
         },
         onError: (error) => {
             useToast.errorToast(error.message)
@@ -57,13 +58,16 @@ function AllTweets() {
 
     const createTweetHnadler = async (data) => {
         await mutateAsync(data)
+        reset()
 
     }
+
+    const {themeMode} = useTheme()
 
 
     return (
         <div className='sm:col-span-11 md:col-span-6 sm:max-h-screen 
-            sm:no-scrollbar flex flex-col  sm:overflow-y-auto border-y'>
+            sm:no-scrollbar flex flex-col  sm:overflow-y-auto border-y border-slate-600'>
             <div className='flex flex-col  items-center'>
                 <p className='text-2xl'>Tweet</p>
                 <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
@@ -73,7 +77,7 @@ function AllTweets() {
                             type="text"
                             label="Content: "
                             placeholder="Your thought..."
-                            className="border p-2 text-base w-full h-16 focus:outline-none
+                            className="border p-2 text-base w-full h-16 focus:outline-none text-black
                                                 focus:border-gray-600 transition duration-200"
                             {...register("content", {
                                 required: true
@@ -104,7 +108,7 @@ function AllTweets() {
             {!isLoading ? (
                 tweets?.pages?.map((page) => (
                     page.data?.map((tweet) => (
-                        <div key={tweet._id} className='h-auto m-2 flex flex-col p-5
+                        <div key={tweet._id} className='h-auto m-2 flex flex-col p-2 
                         border-t border-slate-500 tems-center'>
                             <TweetCart {...tweet} />
                         </div>
@@ -115,16 +119,15 @@ function AllTweets() {
             </>
             )}
             <div ref={ref}
-                className='flex justify-center items-center mb-14 sm:my-4'>
-                {isFetchingNextPage ?
-                    <Oval
-                        height={'40'}
-                        width={'40'}
-                        color='black'
-                        secondaryColor='white'
-                    /> :
-                    "No more tweets"
-                }
+              className='flex justify-center items-center'>
+              {isFetchingNextPage &&
+              <Oval
+                height={'40'}
+                width={'40'}
+                color={`${themeMode ? 'black' : 'white'}`}
+                secondaryColor={`${themeMode ? 'white' : 'black'}`}
+              /> 
+              }
             </div>
         </div>
     )

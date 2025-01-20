@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Input from '../Atoms/Input'
 import searchUser from '../Api/UserApi/searchUser'
 import UsersSkeleton from '../Skeleton/UsersSkeleton'
+import { useTheme } from '../Contexts/theme'
 
 function Search() {
   const [username, setUsername] = useState(null)
@@ -17,13 +18,14 @@ function Search() {
   })
 
   if (isError) {
-    console.log(`error on serach`, isError);
-
+    console.error(isError);
   }
+
+  const {themeMode} = useTheme()
 
   return (
     <div className='sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen 
-      sm:no-scrollbar sm:overflow-y-auto gap-4 sm:border-y'>
+      sm:no-scrollbar sm:overflow-y-auto gap-4 sm:border-y border-slate-600'>
       <div className='flex justify-center items-center'>
         <form>
           <Input
@@ -39,8 +41,8 @@ function Search() {
       {!isLoading ? (<div className='flex flex-col mt-20 '>
         {users?.data  && users.data.map((user) => (
           <div key={user._id} className='flex flex-col '>
-            <Link  to={`/profile/${user.username}`}
-            className='flex gap-4 m-4'>
+            <Link  to={`/${user.username}`}
+            className={`flex gap-4 m-4 ${themeMode ? 'text-white' : 'text-black'}`}>
               <div>
                 <img src={user.avatar}
                   alt={user.username}

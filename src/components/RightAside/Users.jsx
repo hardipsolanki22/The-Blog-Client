@@ -8,6 +8,7 @@ import { useToast } from '../../Helpers/toast'
 import { axiosInstance } from '../../Helpers/axiosService'
 import getAllUsers from '../Api/UserApi/getAllUsers'
 import RightSidebarUsersSkeleton from '../Skeleton/RightSidebarUsersSkeleton'
+import { useTheme } from '../Contexts/theme'
 
 function Users() {
 
@@ -37,14 +38,19 @@ function Users() {
     }
 
     if (isError) {
-        useToast.errorToast(isError.message)
+        console.error(isError);
+        
     }
 
+    const {themeMode} = useTheme()
+
     return ! isLoading ? (  <div className='p-3 duration-300 rounded-md border border-slate-600'>
-        <h2 className='text-2xl'>Who to follow</h2>
+        <h2 className='text-2xl text-center'>Who to follow</h2>
         { users?.data && users?.data?.map((user) => (
                 <div className='flex justify-around items-center my-4 ' key={user._id}>
-                    <Link to={`/profile/${user.username}`}>
+                    <Link to={`/${user.username}`}
+                     className={`${themeMode ? 'text-white' : 'text-black'}`}
+                    >
                         <div className='flex flex-col items-center justify-center '>
                             <div className=''>
                                 <img src={user.avatar}
@@ -52,12 +58,12 @@ function Users() {
                                     className='w-9 h-9 rounded-full'
                                 />
                             </div>
-                            <p className=''>{user.name}</p>
+                            <p>{user.name}</p>
                         </div>
                     </Link>
                     <Button
                         onClick={() => handleFollowUnfollow(user._id)}
-                        className='p-2 rounded-full'
+                        className='p-2 rounded-full focus:outline-none'
                         disabled={isFollowedLoading}
                     >
                         Follow

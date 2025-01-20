@@ -11,7 +11,7 @@ function ProfileSkeleton({cards}) {
                 <div className='relative'>
                     <Skeleton className='w-[100%] h-40 sm:h-48' />
                     <Skeleton className='sm:w-36 sm:h-36 h-28 w-28 rounded-full absolute 
-                    left-8 bottom-0 transform translate-y-1/2 border-4 border-black'/>
+                    left-8 bottom-0 transform translate-y-1/2 border-2 border-black'/>
                 </div>
                 <div className='mt-14 sm:mt-[4.5rem] gap-2'>
                     <Skeleton count={3} className='w-[20%]' />

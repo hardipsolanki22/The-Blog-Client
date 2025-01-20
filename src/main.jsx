@@ -23,6 +23,7 @@ import Followers from './components/Follows/Followers.jsx'
 import Following from './components/Follows/Following.jsx'
 import { store } from './store/store.js'
 import AllTweets from './components/Tweet/AllTweets.jsx'
+import Page404 from './components/Atoms/page404.jsx'
 
 
 const router = createBrowserRouter([
@@ -83,7 +84,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/profile/:username",
+        path: "/:username",
         element: (
           <Protected authentication>
             <Profile />
@@ -137,6 +138,10 @@ const router = createBrowserRouter([
             <AllTweets />
           </Protected>
         )
+      },
+      {
+        path: "*",
+        element: <Page404 />
       }
     ]
   }

@@ -1,36 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faPlus, faSearch, faUser, faUserPlus, faSignIn, faRetweet, faMoon } from '@fortawesome/free-solid-svg-icons'
+import {
+    faHome, faPlus, faSearch, faUser, faUserPlus, faSignIn, faRetweet,
+} from '@fortawesome/free-solid-svg-icons'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import Button from '../../Atoms/Button'
-import LogoutBtn from '../../auth/LogoutBtn'
-import { axiosInstance } from '../../../Helpers/axiosService'
-import ThemeBtn from '../../Atoms/ThemeBtn'
-import { useTheme } from '../../Contexts/theme'
+import LogoutBtn from '../auth/LogoutBtn'
+import ThemeBtn from '../Atoms/ThemeBtn'
+import { useTheme } from '../Contexts/theme'
 
-function DesktopNavbar() {
-    const [user, setUser] = useState({})
+function AsideNav() {
     const authStatus = useSelector((state) => state.auth.status)
     const userData = useSelector(state => state.auth.userData)
     const navigate = useNavigate()
-
-    // useEffect(() => {
-    //     (async () => {
-    //         try {
-    //             const response = await axiosInstance.get(`/user/profile/${userData.username}`, {
-    //                 headers: {
-    //                     "Content-Type": "application/json"
-    //                 }
-    //             })
-    //             setUser(response.data.data)
-    //         } catch (error) {
-    //             console.error(error.message);
-
-    //         }
-    //     })()
-    // }, [])
 
     const navItems = [
         {
@@ -53,7 +36,7 @@ function DesktopNavbar() {
         },
         {
             name: "Profile",
-            slug: `/profile/${userData?.username}`,
+            slug: `/${userData?.username}`,
             icon: <FontAwesomeIcon icon={faUser} />,
             active: authStatus
         },
@@ -81,23 +64,7 @@ function DesktopNavbar() {
 
     return (
         <>
-            <aside className='md:col-span-3 hidden md:block min-h-screen border border-slate-600'>
-                {/* {authStatus &&
-                    <div className='flex items-center justify-center my-6'>
-                        <div className='flex flex-col items-center'>
-                            <div>
-                                <img src={userData?.avatar}
-                                    alt="Profile"
-                                    className='w-24 h-24 rounded-full'
-                                />
-                            </div>
-                            <div className='flex justify-between items-center gap-4'>
-                                <p>Followers: {user?.followingsCount}</p>
-                                <p>Followings: {user?.followersCount}</p>
-                            </div>
-                        </div>
-                    </div>
-                } */}
+            <aside className='md:col-span-3 hidden md:block min-h-screen border-r border-slate-600'>
                 <nav>
                     <ul className='gap-10 flex flex-col items-center justify-center mt-6 '>
                         {navItems.map((item) => (
@@ -109,7 +76,7 @@ function DesktopNavbar() {
                                         px-4 py-2 rounded-lg text-xl font-semibold
                                         transition duration-150 border
                                         ${themeMode ? ' hover:bg-purple-500 text-white hover:text-white border-slate-400'
-                                            : '   hover:bg-blue-500 hover:text-white text-black border-slate-600'}
+                                                : '   hover:bg-blue-500 hover:text-white text-black border-slate-600'}
                                         ${isActive && themeMode && "text-white bg-purple-500 "}
                                         ${isActive && !themeMode && " text-white bg-blue-500"}`}
                                     >
@@ -124,11 +91,14 @@ function DesktopNavbar() {
                                 <LogoutBtn />
                             </li>
                         )}
-                        <ThemeBtn />
+                        <li key='mode'>
+                            <ThemeBtn />
+                        </li>
+
                     </ul>
                 </nav>
             </aside>
-            <aside className='sm:col-span-1 hidden sm:block md:hidden min-h-screen border border-slate-600'>
+            <aside className='sm:col-span-1 hidden sm:block md:hidden min-h-screen border-r border-slate-600'>
                 <nav className=''>
                     <ul className='gap-9 flex flex-col items-center justify-center my-4'>
                         {navItems.map((item) => (
@@ -138,7 +108,7 @@ function DesktopNavbar() {
                                         className={({ isActive }) => `px-2 py-1 rounded-lg font-semibold
                                          transition duration-150 focus:outline-none text-center border
                                         ${themeMode ? 'text-white hover:bg-purple-500 border-slate-40 hover:text-white'
-                                        : ' text-black hover:bg-blue-500 border-slate-500 hover:text-white'}
+                                                : ' text-black hover:bg-blue-500 border-slate-500 hover:text-white'}
                                         ${isActive && themeMode && "bg-purple-500"}
                                         ${isActive && !themeMode && "bg-blue-500"}`}
                                     >
@@ -152,6 +122,9 @@ function DesktopNavbar() {
                                 <LogoutBtn />
                             </li>
                         )}
+                        <li>
+                            <ThemeBtn />
+                        </li>
                     </ul>
                 </nav>
             </aside>
@@ -160,4 +133,4 @@ function DesktopNavbar() {
     )
 }
 
-export default DesktopNavbar
+export default AsideNav

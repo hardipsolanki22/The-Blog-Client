@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, matchPath, useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faEye, faEyeLowVision} from '@fortawesome/free-solid-svg-icons'
+import { faEye, faEyeLowVision } from '@fortawesome/free-solid-svg-icons'
 
 import { useToast } from '../../Helpers/toast'
 import Input from '../Atoms/Input'
@@ -18,25 +18,23 @@ import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
 function Login() {
 
     const [isEyeOpen, setIsEyeOpen] = useState(false)
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    // signIn handler
     const { mutateAsync, isPending } = useMutation({
         mutationFn: signInUser,
 
         onSuccess: async () => {
             const currentUser = await getCurrentUser()
             dispatch(login({ userData: currentUser.data }))
-            useToast.successToast("Login successfully")
-            navigate(`/profile/${currentUser.data.username}`)
+            useToast.successToast("😍 Login successfully")
+            navigate("/")
         },
 
         onError: (error) => {
-            console.log(`errrp`, JSON.stringify(error));
-            
             useToast.errorToast(parseErrorMesaage(error.response.data))
-
         }
     })
 
@@ -51,7 +49,7 @@ function Login() {
     return (
         <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
-         border-y'>
+         border-b'>
             <div className={`gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
                min-w-[70%]  h-auto border border-violet-600
                 rounded-md p-10`}>
@@ -59,8 +57,10 @@ function Login() {
                 <div>
                     <p>Login your account</p>
                     <p>
-                        Do you have no account ?
-                        <Link to={"/signup"}>
+                        Do you have no account&#63;
+                        <Link to={"/signup"}
+                        className='text-blue-500'
+                        >
                             Signup
                         </Link>
                     </p>
@@ -73,9 +73,14 @@ function Login() {
                         className="border text-base w-full px-2 py-2 focus:outline-none
                         transition duration-200 focus:border-gray-600 text-black"
                         {...register("email", {
-                            required: true
+                           required: true,
+                            validate: {
+                                matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)
+                                 || "Email address must be a valid address.",
+                            }
                         })}
                     />
+                    {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                     <Input
                         type={isEyeOpen ? "text" : "password"}
                         label="Password: "
@@ -83,11 +88,17 @@ function Login() {
                         className="border text-base w-full px-2 py-2 focus:outline-none
                         transition duration-200 focus:border-gray-600 text-black"
                         {...register("password", {
-                            required: true
+                            required: true,
+                            validate: {
+                                matchPatern: (value) =>  /^(?=.{8,})/gm.test(value)
+                                 || "Password must be at least 8 characters long.",
+                            }
                         })}
                     />
+                    {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+
                     <span onClick={handleHideShowPassword}
-                        className={`absolute right-6 top-[7.9rem] z-10 text-black text-lg
+                        className={`absolute right-6 top-[7.9rem]  text-black text-lg
                         ${!isEyeOpen ? 'block' : 'hidden'} cursor-pointer`}
                     >
                         <FontAwesomeIcon icon={faEyeLowVision} />
@@ -100,16 +111,14 @@ function Login() {
                     </span>
                     <div>
                         <Link to={"/forget-password"}
-                            className='text-black text-sm underline'
+                            className='text-blue-500 text-sm underline'
                         >
                             Forget Password
                         </Link>
                     </div>
                     <div className='flex m-2 justify-center items-center'>
                         <Button
-                            className=''
-                            bgColor='bg-black'
-                            textColor='text-white'
+                            className='focus:outline-none'
                             disabled={isPending}
                         >
                             {isPending ?

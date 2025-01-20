@@ -62,7 +62,7 @@ function TweetCart({
             if (response) {
                 setIsDotOpen(false)
                 queryClient.invalidateQueries(["tweets"])
-                useToast.successToast("Delete tweet successfully")
+                useToast.successToast("😒 Delete tweet successfully")
             }
         } catch (error) {
             useToast.errorToast(error.message)
@@ -70,11 +70,11 @@ function TweetCart({
     }
 
     return (
-        <div className='flex flex-col'>
-            <div 
-                className='flex items-center text-white '>
-                <Link  to={`/profile/${owner.username}`}
-                className=' mx-2 flex justify-center items-center'>
+        <div className='flex flex-col relative p-9 h-auto '>
+            <div
+                className='flex items-center'>
+                <Link to={`/${owner.username}`}
+                    className=' mx-2 flex justify-center items-center'>
                     <img src={owner.avatar}
                         alt="hardip"
                         className='rounded-full w-10 h-10'
@@ -84,7 +84,7 @@ function TweetCart({
                     {owner.username}
                 </p>
                 <p className='text-gray-500 text-[13px]'>
-                   {formateRelative(createdAt)}
+                    {formateRelative(createdAt)}
                 </p>
             </div>
             <div className='ml-4 mt-4 flex overflow-hidden w-full'>
@@ -94,36 +94,37 @@ function TweetCart({
             </div>
             <div className="ml-4 flex items-center text-gray-500">
                 <button onClick={async () => await mutateAsync({ tweetId: _id, type: "LIKE" })}
-                    className={`hover:text-blue-500 p-2 ${isTweetLike ? 'text-blue-500' : ''}
-                        bg-black border-none focus:outline-none`}>
-                    <FontAwesomeIcon icon={faThumbsUp} />
+                    className={`hover:text-blue-500 p-2 
+                    bg-inherit focus:outline-none`}>
+                    <FontAwesomeIcon icon={faThumbsUp} 
+                    color={`${isTweetLike && 'blue'}`} />
                 </button>
 
                 <span className='text-[13px]'>{tweetLikeCount}</span>
                 <button onClick={async () => await mutateAsync({ tweetId: _id, type: "DISLIKE" })}
-                    className={`hover:text-red-500 p-2 ${isTweetDisLike ? 'text-red-500' : ''}
-                        bg-black border-none focus:outline-none`}>
-                    <FontAwesomeIcon icon={faThumbsDown} />
+                    className={`hover:text-red-500 p-2 
+                       bg-inherit border-none focus:outline-none`}>
+                    <FontAwesomeIcon icon={faThumbsDown}
+                     className={`${isTweetDisLike && 'text-red-500'}`}
+                     />
                 </button>
                 <span className='text-[13px]'>{tweetDisLikeCount}</span>
             </div>
-            {isAuth && <div className='w-full flex text-white justify-end mr-4'>
+            {isAuth && <div className='w-full flex justify-end mr-4'>
                 <p className={`text-[2rem] block cursor-pointer
                       ${isDotOpen && "hidden"}`}
                     onClick={() => setIsDotOpen(true)}>
-                    ...
+                    &hellip;
                 </p>
             </div>
             }
             {isDotOpen &&
                 <div ref={containerRef}
-                    className='flex justify-center items-center 
-                                border rounded-lg border-slate-600'>
-                    <Button
-                        onClick={() => handleTweetDelete(_id)}
-                        className='p-3'
-                        bgColor='bg-black'
-                        textColor='text-white'>
+                    className='absolute right-0 bottom-0 sm:bottom-auto p-2 sm:right-1
+                    sm:top-0 rounded-lg'>
+                    <Button onClick={() => handleTweetDelete(_id)}
+                        className='focus:outline-none'
+                    >
                         <FontAwesomeIcon icon={faRemove} />
                         <span className='ml-2'>Delete</span>
                     </Button>

@@ -4,11 +4,9 @@ import { faHome, faPlus, faSearch, faRetweet } from '@fortawesome/free-solid-svg
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import Button from '../../Atoms/Button'
 
 
-
-function MobileNavbar() {
+function FooterNav() {
     const authStatus = useSelector((state) => state.auth.status)
     const navigate = useNavigate()
 
@@ -41,24 +39,24 @@ function MobileNavbar() {
     ]
 
     return (
-        <nav className='borde w-full fixed bottom-0 sm:hidden bg-black text-white h-14'>
-            <ul className='flex justify-around mx-4 items-center h-full'>
-                {navItems.map((item) => (
-                    item.active ? (
-                        <li key={item.slug}>
-                            <button onClick={() => navigate(item.slug)}
-                                className='p-2 focus:outline-none bg-black text-white'
-                            >
-                                {item.icon}
-                            </button>
-                        </li>
-                    ) : null
-                ))
+    authStatus && (<footer className='borde w-full fixed bottom-0 sm:hidden bg-black text-white h-14'>
+        <ul className='flex justify-around mx-4 items-center h-full'>
+            {navItems.map((item) => (
+                item.active ? (
+                    <li key={item.slug}>
+                        <button onClick={() => navigate(item.slug)}
+                            className='p-2 focus:outline-none bg-black text-white'
+                        >
+                            {item.icon}
+                        </button>
+                    </li>
+                ) : null
+            ))
 
-                }
-            </ul>
-        </nav>
+            }
+        </ul>
+    </footer>)
     )
 }
 
-export default MobileNavbar
+export default FooterNav

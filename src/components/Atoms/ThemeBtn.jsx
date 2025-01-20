@@ -5,30 +5,25 @@ import { faMoon } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from '../Contexts/theme'
 
 function ThemeBtn() {
-    const {themeMode, toggleMode} = useTheme()
+  const { themeMode, toggleMode } = useTheme()
 
-    const onChangeBtn = (e) => {
-        console.log(`click`);
-       toggleMode() 
-        // const darkModeStatus = e.currentTarget.checked
+  const onChangeBtn = (e) => {
+    console.log(`click`);
+    toggleMode()
+  }
 
-        // if (darkModeStatus) toggleMode()
-        // else toggleMode()
-    }
-
-    console.log(`mode: `, themeMode);
-    
 
   return (
     <li className='flex justify-center items-center'>
-        <input 
-         className='p-12'
+      <input
+        className='p-12'
         type="checkbox"
         value=''
-         checked={themeMode === false}
+        checked={themeMode === false}
         onChange={onChangeBtn}
-        />
-            <span><FontAwesomeIcon icon={faMoon} /></span>
+      />
+      <div className="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-blue-600 peer-focus:ring-4 peer-focus:ring-blue-300 peer"> <div className="dot w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-300 ease-in-out peer-checked:translate-x-5"></div> </div>
+      <span><FontAwesomeIcon icon={faMoon} /></span>
     </li>
   )
 }

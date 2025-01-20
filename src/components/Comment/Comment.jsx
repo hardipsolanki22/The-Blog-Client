@@ -13,22 +13,24 @@ import CommentCart from './CommentCart';
 import { useSelector } from 'react-redux';
 import { Oval } from 'react-loader-spinner';
 import CommentSkeleton from '../Skeleton/CommentSkeleton';
+import { useTheme } from '../Contexts/theme';
 
 
 function Comment({ commentState, postId }) {
 
   const userData = useSelector(state => state.auth.userData)
   const [isCommentLoading, setIsCommentLoading] = useState(false)
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset} = useForm()
   const queryClient = useQueryClient()
 
-  const MAX_PAGE_POST = 5
+  // fetch comment 
+  const MAX_PAGE_COMMENTS = 5
   const { data: comments, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
       queryKey: ["comments"],
       queryFn: ({ pageParam }) => getPostCommets({ pageParam }, postId),
       getNextPageParam: (lastPage, allPages) => {
-        return lastPage.data.length === MAX_PAGE_POST ? allPages.length + 1 : undefined;
+        return lastPage.data.length === MAX_PAGE_COMMENTS ? allPages.length + 1 : undefined;
       },
       staleTime: 0
 
@@ -45,7 +47,7 @@ function Comment({ commentState, postId }) {
     }
   }, [inView, hasNextPage, fetchNextPage])
 
-
+// create comment handler
   const commentHandler = async (data) => {
     try {
       setIsCommentLoading(true)
@@ -59,15 +61,20 @@ function Comment({ commentState, postId }) {
         useToast.successToast("Comment successfully")
       }
     } catch (error) {
-      useToast.errorToast(error.message)
+      console.error(error.message);
+
     } finally {
       setIsCommentLoading(false)
     }
+    reset()
   }
 
+  const { themeMode } = useTheme()
 
-  return <div className=" sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
-    sm:no-scrollbar mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black">
+  return <div className={`sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
+     ${themeMode ? "bg-black text-white" : "bg-slate-200 text-black"}
+      sm:border sm:border-violet-500 sm:bg-inherit  border-slate-400 
+    sm:no-scrollbar mt-4 rounded-md flex-col justify-center p-4 border-x`}>
     <Button className='p-1 font-bold' onClick={() => commentState(false)}>
       <FontAwesomeIcon icon={faClose} />
     </Button>
@@ -94,10 +101,7 @@ function Comment({ commentState, postId }) {
         />
         <div className='flex justify-end mt-2'>
           <Button
-            className='px-4 py-2 rounded-lg
-             hover:bg-white hover:text-black transition duration-500 focus:outline-none'
-            bgColor='bg-black'
-            textColor='text-white'
+            className='px-4 py-2 rounded-lg focus:outline-none'
             type='submit'
             disabled={isCommentLoading}
           >
@@ -115,8 +119,8 @@ function Comment({ commentState, postId }) {
         </div>
       ))) : (
         <div className=' sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
-          sm:no-scrollbar mt-4 rounded-md flex-col justify-center p-4 border-b bg-white text-black'>
-          <p className='text-2xl'>No comments found</p>
+          sm:no-scrollbar mt-4 rounded-md flex-col justify-center items-center p-4'>
+          <p className='text-2xl text-center'>No comments found</p>
         </div>)
 
     ))
@@ -126,14 +130,14 @@ function Comment({ commentState, postId }) {
       </>
     )}
     <div ref={ref}
-      className='flex justify-center my-4 relative bottom-0 right-0 left-0'>
-      {isFetchingNextPage ?
+      className='flex justify-center items-center'>
+      {isFetchingNextPage &&
         <Oval
           height={'40'}
           width={'40'}
-          color='black'
-          secondaryColor='white'
-        /> : "No more comment"
+          color={`${themeMode ? 'black' : 'white'}`}
+          secondaryColor={`${themeMode ? 'white' : 'black'}`}
+        />
       }
     </div>
   </div>

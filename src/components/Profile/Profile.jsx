@@ -15,6 +15,7 @@ import ProfilePostCart from '../Post/ProfilePostCart';
 import { formateRelative } from '../../Helpers/formatRelative';
 import { Oval } from 'react-loader-spinner';
 import ProfileSkeleton from '../Skeleton/ProfileSkeleton';
+import { useTheme } from '../Contexts/theme';
 
 function Profile() {
 
@@ -34,7 +35,7 @@ function Profile() {
     const isAuth = user && userData ? user?.data._id === userData._id : false
     const userId = user?.data._id
 
-    // Fetch User Potss (Infinite Scrolling)
+    // Fetch User Posts
     const MAX_PAGE_POST = 2
     const { data: posts, hasNextPage, fetchNextPage, isFetchingNextPage } =
         useInfiniteQuery({
@@ -64,10 +65,11 @@ function Profile() {
             setIsFollowedLoading(true)
             const response = await axiosInstance.post(`/subcriptions/${userId}/following`)
             if (response.data.data.following) {
-                useToast.successToast("Follow successfully")
+                useToast.successToast("😍 Follow successfully")
             } else {
-                useToast.successToast("Unfollow successfully")
+                useToast.successToast("😒 Unfollow successfully")
             }
+            // fetch all users and users with this username
             queryClient.invalidateQueries(["users", { username }])
             queryClient.invalidateQueries(["users"])
         } catch (error) {
@@ -77,9 +79,11 @@ function Profile() {
         }
     }
 
+    const { themeMode } = useTheme()
+
     return (
         !isLoading ? (<div className='sm:col-span-11 md:col-span-6 h-auto 
-           sm:no-scrollbar sm:max-h-screen sm:overflow-y-auto gap-4 sm:border-y '>
+           sm:no-scrollbar sm:max-h-screen sm:overflow-y-auto gap-4 sm:border-y border-slate-600'>
             <div className='flex gap-4 ml-4 mt-4 mb-2'>
                 <Link to={"/"}
                     className='text-white'>
@@ -99,14 +103,15 @@ function Profile() {
                     src={user.data?.avatar}
                     alt="avatar"
                     className='sm:w-36 sm:h-36 h-28 w-28 rounded-full absolute left-8 bottom-0 
-                    transform translate-y-1/2 border-2 border-black'
+                    transform translate-y-1/2 border border-black'
                 />
             </div>
             {isAuth ? (<div className='flex justify-end p-4'>
-                <Button className='' onClick={() => navigate("/edit-profile")}>
+                <Button className='focus:outline-none'
+                    onClick={() => navigate("/edit-profile")}>
                     Edit
                 </Button> </div>) : (<div className='flex justify-end p-4'>
-                    <Button className=''
+                    <Button className='focus:outline-none'
                         onClick={() => handleFollowUnfollow(userId)}
                         disabled={isFollowedLoading}
                     >
@@ -120,12 +125,12 @@ function Profile() {
             </div>
             <div className='flex p-4 border-b gap-4 border-slate-600'>
                 <Link to={`/${user.data.username}/${user.data._id}/followers`}
-                    className='text-center'>
+                    className='text-gray-400 text-center'>
                     <p className='font-bold cursor-pointer'>{user.data.followersCount}</p>
                     <p className='text-gray-400'>Followers</p>
                 </Link>
                 <Link to={`/${user.data.username}/${user.data._id}/following`}
-                    className='text-center'>
+                    className='text-gray-400 text-center'>
                     <p className='font-bold cursor-pointer'>{user.data.followingsCount}</p>
                     <p className='text-gray-400'>Following</p>
                 </Link>
@@ -144,24 +149,23 @@ function Profile() {
                     </div>
                 ))
             ))}
-           <div ref={ref}
-                className='flex justify-center items-center mb-16 mt-4 sm:my-4'>
-                {isFetchingNextPage ?
+            <div ref={ref}
+                className='flex justify-center items-center'>
+                {isFetchingNextPage &&
                     <Oval
                         height={'40'}
                         width={'40'}
-                        color='black'
-                        secondaryColor='white'
-                    /> :
-                    "No more Posts"
-                } 
+                        color={`${themeMode ? 'black' : 'white'}`}
+                        secondaryColor={`${themeMode ? 'white' : 'black'}`}
+                    />
+                }
             </div>
             {/* <div className='flex justify-center items-center w-full p-6'>
                    <p>No Posts</p>
                </div> */}
         </div>) : (<div className='sm:col-span-11 md:col-span-6 sm:no-scrollbar
              sm:max-h-screen sm:overflow-y-auto'>
-           <ProfileSkeleton cards={3} />
+            <ProfileSkeleton cards={3} />
         </div>)
     )
 }

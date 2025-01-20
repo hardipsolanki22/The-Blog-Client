@@ -1,17 +1,17 @@
-
 import React, { useEffect } from 'react'
 import { useInView } from "react-intersection-observer";
+import { Oval } from 'react-loader-spinner';
+
 
 import PostCart from '../Post/PostCart'
 import { useInfiniteQuery } from '@tanstack/react-query';
 import fetchFollowingPost from '../Api/PostApi/fetchFollowingPosts';
-import { Oval } from 'react-loader-spinner';
 import PostSkeleton from '../Skeleton/PostSkeleton';
 import { useTheme } from '../Contexts/theme';
 
 function FollowingFeed() {
 
-  // Fetch Following User Posts (Infinite Scrolling)
+  // Fetch Following User Posts 
   const MAX_PAGE_POST = 2
   const { data: posts, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
@@ -34,12 +34,12 @@ function FollowingFeed() {
     }
   }, [inView, hasNextPage, fetchNextPage])
 
-    const {themeMode} = useTheme()
-  
+  const { themeMode } = useTheme()
 
 
-  return !isLoading ? (<div className={`h-auto sm:max-h-[91.7vh] sm:overflow-y-auto sm:no-scrollbar
-   border-b border-slate-600 ${themeMode ? 'dark' : 'light'}`}>
+
+  return !isLoading ? (<div className={`h-auto sm:max-h-[82.7vh] lg:[86.7vh] xl:max-h-[83.7vh]
+     sm:overflow-y-auto sm:no-scrollbar ${themeMode ? 'dark' : 'light'}`}>
     {posts?.pages.map((page) => (
       page.data.length ? (page.data?.map((post) => (
         <div key={post.title}
@@ -57,14 +57,15 @@ function FollowingFeed() {
         <Oval
           height={'40'}
           width={'40'}
-          color='black'
-          secondaryColor='white'
+          color={`${themeMode ? 'black' : 'white'}`}
+          secondaryColor={`${themeMode ? 'white' : 'black'}`}
         /> :
         "No more posts"
       }
     </div>
-  </div>) : (<div className={`sm:max-h-[91.7vh] sm:no-scrollbar sm:overflow-y-auto
-    ${themeMode ? 'dark' : 'light'}`}>
+
+  </div>) : (<div className={`h-auto sm:max-h-[83.7vh] lg:[86.7vh] xl:max-h-[83.7vh]  
+    sm:no-scrollbar sm:overflow-y-auto ${themeMode ? 'dark' : 'light'}`}>
     <PostSkeleton cards={3} />
   </div>)
 }

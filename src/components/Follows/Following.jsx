@@ -12,6 +12,7 @@ import { axiosInstance } from '../../Helpers/axiosService.js';
 import { useSelector } from 'react-redux';
 import FollowingFollowersSkeleton from '../Skeleton/FollowingFollowersSkeleton.jsx';
 import { Oval } from 'react-loader-spinner';
+import { useTheme } from '../Contexts/theme.js';
 
 function following() {
 
@@ -19,10 +20,10 @@ function following() {
   const [isFollowedLoading, setIsFollowedLoading] = useState(false)
   const queryClient = useQueryClient()
 
-  const userData = useSelector((state) => state.auth.userData)  
+  const userData = useSelector((state) => state.auth.userData)
 
-  // Fetch User Following (Infinite Scrolling)
-  const MAX_PAGE_POST = 2
+  // Fetch User Following
+  const MAX_PAGE_FOLLOWING = 4
   const { data: following, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
       queryKey: ["following"],
@@ -30,7 +31,7 @@ function following() {
       refetchOnWindowFocus: false,
       // staleTime: 3000,
       getNextPageParam: (lastPage, allPages) => {
-        return lastPage.data.length === MAX_PAGE_POST ? allPages.length + 1 : undefined;
+        return lastPage.data.length === MAX_PAGE_FOLLOWING ? allPages.length + 1 : undefined;
       },
 
     })
@@ -51,9 +52,9 @@ function following() {
       setIsFollowedLoading(true)
       const response = await axiosInstance.post(`/subcriptions/${userId}/following`)
       if (response.data.data.following) {
-        useToast.successToast("Follow Successfully")
+        useToast.successToast("😍 Follow Successfully")
       } else {
-        useToast.successToast("Unfollow Successfully")
+        useToast.successToast("😒 Unfollow Successfully")
       }
       queryClient.invalidateQueries(["following"])
     } catch (error) {
@@ -63,33 +64,36 @@ function following() {
     }
   }
 
+  const { themeMode } = useTheme()
+
   return !isLoading ? (<div className='sm:col-span-11 md:col-span-6 max-h-screen 
-    sm:no-scrollbar sm:overflow-y-auto border-y'>
+    sm:no-scrollbar sm:overflow-y-auto'>
     <div className='flex gap-4 ml-4 mt-4 mb-3 items-center'>
-      <Link to={`/profile/${username}`}
-        className='text-white'>
+      <Link to={`/${username}`}
+        className={`${themeMode ? 'text-white' : 'text-black'}`}
+      >
         <FontAwesomeIcon icon={faArrowLeft} />
       </Link>
-      <p className='text-white text-2xl'>@{username}</p>
+      <p className='text-2xl'>@{username}</p>
     </div>
     <div className='flex justify-center items-center'>
       <p className='text-2xl'>Following</p>
     </div>
     {following.pages?.map((page) => (
       page.data?.map((user) => (
-        console.log(`uer: ${JSON.stringify(user)}`),
-
         <div className='my-6 flex justify-around items-center' key={user.followDetails._id}>
-          <Link to={`/profile/${user.followDetails.username}`}
-            className='text-white flex justify-center items-center'>
-            <div className='mr-2'>
-              <img src={user.followDetails.avatar}
-                alt="avatar"
-                className='w-14 h-12 rounded-full'
-              />
-            </div>
+          <div className={`${userData._id === user.followDetails._id && 'mr-14'} flex justify-center items-center gap-3`}>
+            <Link to={`/${user.followDetails.username}`}
+              className='text-white flex justify-center items-center'>
+              <div>
+                <img src={user.followDetails.avatar}
+                  alt="avatar"
+                  className='w-14 h-12 rounded-full'
+                />
+              </div>
+            </Link>
             <p>{user.followDetails.username}</p>
-          </Link>
+          </div>
           <div className='flex justify-center items-center'>
             {userData._id !== user.followDetails._id &&
               <Button onClick={() => handleFollowUnfollow(user.followDetails._id)}
@@ -105,15 +109,17 @@ function following() {
         </div>
       ))
     ))}
-     <div ref={ref}
-          className='flex justify-center items-center'>
-          {isFetchingNextPage ? 
-          <Oval
-            height={'40'}
-            width={'40'}
-          /> : "No more following"
-          }
-        </div>
+    <div ref={ref}
+      className='flex justify-center items-center'>
+      {isFetchingNextPage &&
+        <Oval
+          height={'40'}
+          width={'40'}
+          color={`${themeMode ? 'black' : 'white'}`}
+          secondaryColor={`${themeMode ? 'white' : 'black'}`}
+        />
+      }
+    </div>
   </div>) : (<div className='sm:col-span-11 md:col-span-6 max-h-screen
      sm:overflow-y-auto sm:no-scrollbar'>
     <FollowingFollowersSkeleton cards={6} />

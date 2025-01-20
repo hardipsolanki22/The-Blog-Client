@@ -1,4 +1,4 @@
-import React, { useDebugValue, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -10,8 +10,8 @@ import Input from '../Atoms/Input'
 import updateProfile from '../Api/UserApi/updateProfile'
 import { useToast } from '../../Helpers/toast'
 import { axiosInstance } from '../../Helpers/axiosService'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCamera } from '@fortawesome/free-solid-svg-icons'
+import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
+import { useTheme } from '../Contexts/theme'
 
 function PersonalDetailsCart() {
 
@@ -32,6 +32,8 @@ function PersonalDetailsCart() {
             email: userData.email
         }
     })
+    
+    // update user details
 
     const updateAvatar = async (data) => {
         try {
@@ -71,7 +73,7 @@ function PersonalDetailsCart() {
             setUser(response.data)
         },
         onError: (error) => {
-            useToast.errorToast(error.message)
+            useToast.errorToast(parseErrorMesaage(error.response.data))
         }
     })
 
@@ -88,7 +90,7 @@ function PersonalDetailsCart() {
 
     if (isSuccess && !isLoading) {
         queryClient.invalidateQueries(["current-user"])
-        useToast.successToast("Profile update successfully")
+        useToast.successToast("😊 Profile update successfully")
         navigate(`/profile/${user.username}`)
     }
 
@@ -101,8 +103,11 @@ function PersonalDetailsCart() {
         avatarFileRef.current.click();
     };
 
+    const { themeMode } = useTheme()
+
     return (
-        <div className='flex flex-col items-center justify-center border-y h-screen'>
+        <div className='flex flex-col items-center justify-center border-t border-slate-600 
+        h-screen sm:h-[92vh]'>
             <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
         min-w-[75%] h-auto border border-violet-600 rounded-md p-4'>
                 <p className='text-2xl'>Personal Details</p>
@@ -130,7 +135,7 @@ function PersonalDetailsCart() {
                         <p className='ml'>{userData.username}</p>
                     </div>
                 </div>
-                <form onSubmit={handleSubmit(updateProfileHandler)}>
+                <form onSubmit={handleSubmit(updateProfileHandler)} className='w-full'>
                     <Input
                         type="text"
                         label="Name: "
@@ -167,15 +172,14 @@ function PersonalDetailsCart() {
                         onChange={(e) => setCoverImage(e.target.files[0])}
                     />
                     <div className='flex m-2 gap-2 justify-end items-center'>
-                        <Link to={`/profile/${userData.username}`}
-                            className='bg-black text-white p-[9.7px] rounded-md'
+                        <Link to={`/${userData.username}`}
+                            className={`bg-black text-white p-[9.7px] rounded-md
+                            ${themeMode ? 'text-white bg-purple-600 hover:bg-purple-700'
+                                    : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
                         >
                             Cancle
                         </Link>
                         <Button
-                            className=''
-                            bgColor='bg-black'
-                            textColor='text-white'
                             disabled={isPending || isLoading}
                         >
                             {isLoading || isPending ?

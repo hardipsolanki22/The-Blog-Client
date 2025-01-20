@@ -6,7 +6,9 @@ export default {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      screens: { 'md': '850px',  },
+    },
   },
   plugins: [
     function ({ addUtilities }) {

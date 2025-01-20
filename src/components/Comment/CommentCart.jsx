@@ -69,8 +69,8 @@ function CommentCart({
 
 
     return (
-        <div className='flex justify-around w-full'>
-            <Link to={`/profile/${owner.username}`}
+        <div className='flex justify-around w-full relative'>
+            <Link to={`/${owner.username}`}
                 className=" mt-1 mr-4  no-underline">
                 <img src={owner.avatar}
                     alt="Avatar"
@@ -89,21 +89,29 @@ function CommentCart({
                 </div>
                 <div className="flex mt-[3px] items-center text-gray-500">
                     <button onClick={async () => await mutateAsync({ commentId: _id, type: "LIKE" })}
-                        className={`hover:text-blue-500 p-2 ${isCommentLike ? 'text-black' : ''} border-none focus:outline-none`}>
-                        <FontAwesomeIcon icon={faThumbsUp} />
+                        className={`hover:text-blue-500 p-2  
+                        bg-inherit border-none focus:outline-none`}>
+                        <FontAwesomeIcon 
+                        icon={faThumbsUp}
+                        className={`${isCommentLike && 'text-blue-500'}`}
+                        />
                     </button>
 
                     <span className='text-[13px]'>{commentlikesCount}</span>
                     <button onClick={async () => await mutateAsync({ commentId: _id, type: "DISLIKE" })}
-                        className={`hover:text-red-500 p-2 ${isCommentDisLike ? 'text-black' : ''} border-none focus:outline-none`}>
-                        <FontAwesomeIcon icon={faThumbsDown} />
+                        className={`hover:text-red-500 p-2 
+                       bg-inherit border-none focus:outline-none`}>
+                        <FontAwesomeIcon 
+                        icon={faThumbsDown} 
+                        className={`${isCommentDisLike && 'text-red-500'} `}
+                        />
                     </button>
                     <span className='text-[13px]'>{commentDislikesCount}</span>
                 </div>
             </div>
             {isAuth &&
                 <div className='mr-3 '>
-                    <p className={`text-[2rem] text-black block cursor-pointer
+                    <p className={`text-[2rem] block cursor-pointer
                                  ${isDotOpen && "hidden"}`}
                         onClick={() => setIsDotOpen(true)}>
                         ...
@@ -111,13 +119,11 @@ function CommentCart({
                 </div>
             }
             {isDotOpen &&
-                <div ref={containerRef} className='duration-500 flex  items-center
-                            border rounded-lg mb-2'>
+                <div ref={containerRef} className='duration-150 flex  items-center
+                        absolute right-1 top-10 sm:right-3 rounded-lg '>
                     <Button
                         onClick={() => handleCommentDelete(_id)}
-                        className=' p-3 border-none'
-                        bgColor=' bg-black'
-                        textColor='text-white'>
+                        className='sm:p-3 p-2 focus:outline-none'>
                         <FontAwesomeIcon icon={faRemove} />
                         <span className='ml-2'>Delete</span>
                     </Button>

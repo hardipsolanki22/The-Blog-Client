@@ -14,6 +14,7 @@ import Like from '../Like/Like';
 import Comment from '../Comment/Comment';
 import deletePost from '../Api/PostApi/deletePost';
 import { useTheme } from '../Contexts/theme';
+import { Oval } from 'react-loader-spinner';
 
 function ProfilePostCart({
     _id,
@@ -27,7 +28,8 @@ function ProfilePostCart({
     createdAt
 }) {
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [isPostLikeLoading, setIsPostLikeLoading] = useState(false)
+    const [isPostDeleteLoading, setIsPostDeleteLoading] = useState(false)
     const [isLikeOpen, setIsLikeOpen] = useState(false)
     const [isCommentOpen, setIsCommentOpen] = useState(false)
     const [isDotOpen, setIsDotOpen] = useState(false)
@@ -51,36 +53,40 @@ function ProfilePostCart({
         }
     }, [])
 
-    // PostLikeHandler
+    // Post Like Handler
     const hanldePostLike = async (postId) => {
         try {
-            setIsLoading(true)
+            setIsPostLikeLoading(true)
             const response = await axiosInstance.post(`/like/create-like/${postId}`)
             queryClient.invalidateQueries(["posts", { owner }])
             if (response.data.data.like) {
-                useToast.successToast("Liked Successfully")
+                useToast.successToast("😘 Liked Successfully")
             } else {
-                useToast.successToast("Unliked Successfully")
+                useToast.successToast("😒 Unliked Successfully")
             }
         } catch (error) {
-            useToast.errorToast(error.message)
+            console.error(error.message);
+
 
         } finally {
-            setIsLoading(false)
+            setIsPostLikeLoading(false)
         }
     }
 
     // Post Delete Handler
     const handlePostDelete = async (postId) => {
         try {
+            setIsPostDeleteLoading(true)
             const respose = await deletePost(postId)
             if (respose) {
                 queryClient.invalidateQueries(["posts", { owner }]);
                 setIsDotOpen(false)
-                useToast.successToast("Post delete successfully")
+                useToast.successToast("😒 Post delete successfully")
             }
         } catch (error) {
-            useToast.errorToast(error.message)
+            console.error(error.message);
+        } finally {
+            setIsPostDeleteLoading(false)
         }
     }
 
@@ -94,33 +100,51 @@ function ProfilePostCart({
         setIsCommentOpen(data)
     }
 
-    const {themeMode} = useTheme()
+    const { themeMode } = useTheme()
 
     return (
-        <div className=' h-auto flex-col justify-center items-center p-8 border-t border-slate-600 '>
+        <div className='h-auto flex-col justify-center items-center p-8 border-t border-slate-600 '>
             {isAuth && <div className='flex justify-end items-center mr-4'>
                 <p className={`text-[2rem] ${themeMode ? 'text-white' : 'text-slate-800'} block cursor-pointer
                                        ${isDotOpen && "hidden"}`}
                     onClick={() => setIsDotOpen(true)}>
-                    ...
+                    &hellip;
                 </p>
                 {isDotOpen &&
-                    <div ref={containerRef} 
-                    className={`flex flex-col justify-center items-center gap-5 ${themeMode ? 'dark' : 'light'}
+                    <div ref={containerRef}
+                        className={`flex flex-col justify-center items-center gap-5 ${themeMode ? 'dark' : 'light'}
                                 top-3 border relative rounded-lg border-violet-600 p-5 mb-2`}
                     >
                         <Button
-                           onClick={() => navigate(`/edit-posts/${_id}`)}
-                            className='p-2'
+                            onClick={() => navigate(`/edit-posts/${_id}`)}
+                            className='p-2 focus:outline-none'
                         >
                             <FontAwesomeIcon icon={faEdit} />
                             <span className='ml-2'>Edit</span>
                         </Button>
                         <Button
                             onClick={() => handlePostDelete(_id)}
-                            className='p-2'>
-                            <FontAwesomeIcon icon={faRemove} />
-                            <span className='ml-2'>Delete</span>
+                            className='p-2 focus:outline-none'
+                            disabled={isPostDeleteLoading}
+                        >
+                            {!isPostDeleteLoading &&
+                                <FontAwesomeIcon icon={faRemove}
+                                    className='mr-2'
+                                />}
+                            {
+                                isPostDeleteLoading ?
+                                    <Oval
+                                        height={23}
+                                        width={23}
+                                        color='black'
+                                        secondaryColor='white'
+                                        strokeWidth={5}
+                                        strokeWidthSecondary={5}
+                                    />
+
+                                    :
+                                    "Delete"
+                            }
                         </Button>
                     </div>
                 }
@@ -140,10 +164,8 @@ function ProfilePostCart({
             <div className='flex items-center gap-2 mt-3 ml-2'>
                 <Button onClick={() => hanldePostLike(_id)}
                     className={` ${isLiked ? "bg-red-500 text-white" : "bg-white text-black"}
-              border-none p-1 rounded-full focus:outline-none`}
-                    bgColor=""
-                    textColor=''
-                    disabled={isLoading}
+                    border-none p-1 rounded-full focus:outline-none`}
+                    disabled={isPostLikeLoading}
                 >
                     <FontAwesomeIcon
                         icon={faHeart}
@@ -164,12 +186,14 @@ function ProfilePostCart({
                 </span>
             </div>
             {isLikeOpen &&
-                <div className='flex justify-center items-center transition duration-700'>
+                <div className='fixed sm:static top-0 left-0 right-0 bottom-0 flex justify-center
+       items-center bg-black bg-opacity-75 sm:bg-opacity-0 z-10 '>
                     <Like likeState={handleLikeState} postId={_id} />
                 </div>
             }
             {isCommentOpen &&
-                <div className='flex justify-center items-center transition ease-in delay-75 duration-500'>
+                <div className='fixed sm:static top-0 left-0 right-0 bottom-0 flex justify-center
+       items-center bg-black bg-opacity-75 sm:bg-opacity-0 z-10 '>
                     <Comment commentState={handleCommentSate} postId={_id} />
                 </div>
             }

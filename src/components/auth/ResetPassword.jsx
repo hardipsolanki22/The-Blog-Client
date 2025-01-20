@@ -9,6 +9,7 @@ import Button from '../Atoms/Button'
 import { useToast } from '../../Helpers/toast'
 import resetPassword from '../Api/AuthApi/resetPassword'
 import { Oval } from 'react-loader-spinner'
+import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
 
 function ResetPassword() {
 
@@ -17,20 +18,17 @@ function ResetPassword() {
   const queryParams = new URLSearchParams(locaiton.search)
   const token = queryParams.get("token")
 
-  console.log(`location: ${JSON.stringify(locaiton)}`);
-  console.log(`queryParams: ${JSON.stringify(queryParams)}`);
-
-
   const { register, handleSubmit } = useForm()
 
+  // reset password 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: resetPassword,
     onSuccess: () => {
-      useToast.successToast("Password reset successfully")
+      useToast.successToast("😊 Password reset successfully")
       navigate("/login")
     },
     onError: (error) => {
-      useToast.errorToast(error.message)
+      useToast.errorToast(parseErrorMesaage(error.response.data))
     }
   })
 
@@ -70,6 +68,7 @@ function ResetPassword() {
           <div className='flex m-2 justify-center items-center'>
             <Button
               disabled={isPending}
+              className='focus:outline-none'
             >
               {isPending ?
                 <Oval

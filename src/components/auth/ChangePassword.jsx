@@ -8,20 +8,22 @@ import Button from '../Atoms/Button'
 import changePassword from '../Api/AuthApi/changePassword'
 import { useToast } from '../../Helpers/toast'
 import { Oval } from 'react-loader-spinner'
+import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
 
 function ChangePassword() {
 
     const { register, handleSubmit } = useForm()
     const navigate = useNavigate()
 
+    // chnage password 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: changePassword,
         onSuccess: () => {
-            useToast.successToast("Update password successfully")
+            useToast.successToast("😊 Update password successfully")
             navigate("/")
         },
         onError: (error) => {
-            useToast.errorToast(error.message)
+            useToast.errorToast(parseErrorMesaage(error.response.data))
         }
     })
 
@@ -31,8 +33,8 @@ function ChangePassword() {
 
     return (
         <div className='flex flex-col items-center justify-center 
-            sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
-         border-y'>
+            sm:col-span-11 md:col-span-6 h-screen sm:h-[92vh] sm:overflow-y-auto gap-4
+         border-t border-slate-600'>
             <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
         min-w-[70%]  h-auto border border-violet-600 rounded-md p-10'>
                 <p className='text-2xl'>Reset Password</p>
@@ -59,7 +61,7 @@ function ChangePassword() {
                     />
                     <div className='flex m-2 justify-center items-center'>
                         <Button
-                            className=''
+                            className='focus:outline-none'
                             disabled={isPending}
                         >
                             {isPending ?

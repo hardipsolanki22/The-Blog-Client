@@ -7,18 +7,20 @@ import Input from '../Atoms/Input'
 import { useToast } from '../../Helpers/toast'
 import forgetPassword from '../Api/AuthApi/forgetPassword'
 import { Oval } from 'react-loader-spinner'
+import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
 
 function ForgetPassword() {
 
   const { register, handleSubmit } = useForm()
 
+  // send mail
   const { mutateAsync, isPending } = useMutation({
     mutationFn: forgetPassword,
     onSuccess: () => {
-      useToast.successToast("Email send successfully")
+      useToast.successToast("👍 Email send successfully")
     },
     onError: (error) => {
-      useToast.errorToast(error.message)
+      useToast.errorToast(parseErrorMesaage(error.response.data))
     }
   })
 
@@ -45,7 +47,7 @@ function ForgetPassword() {
           />
           <div className='flex m-2 justify-center items-center'>
             <Button
-              className=''
+              className='focus:outline-none'
               disabled={isPending}
             >
               {isPending ?

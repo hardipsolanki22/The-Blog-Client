@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
+import { DNA } from 'react-loader-spinner'
 
 
 function Protected({ children, authentication = true }) {
@@ -18,7 +19,10 @@ function Protected({ children, authentication = true }) {
         setLoading(false)
     }, [authStatus, navigate, authentication])
 
-    return !loading ? (children) : <><h1>Loading...</h1></>
+    return !loading ? (children) : (<div className='h-screen w-full flex flex-col justify-center items-center'>
+        <DNA />
+        <p className='text-2xl font-semibold text-white'>The Blog is waiting</p>
+    </div>)
 }
 
 export default Protected

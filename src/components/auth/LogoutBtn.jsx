@@ -11,30 +11,28 @@ import logOutUser from '../Api/AuthApi/logOut'
 import { useToast } from '../../Helpers/toast'
 import { logout } from '../../featured/authSlice'
 import { useTheme } from '../Contexts/theme'
+import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
 
 function LogoutBtn() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
 
+  // logout handlers
   const { mutateAsync } = useMutation({
     mutationFn: logOutUser,
     onSuccess: () => {
       queryClient.clear()
       dispatch(logout())
-      useToast.successToast("Logout successfully")
       navigate("/login")
+      useToast.successToast("😒 Logout successfully")
     },
 
     onError: (error) => {
-      useToast.errorToast(error.message)
+      useToast.errorToast(parseErrorMesaage(error.response.data))
     }
 
   })
-
-  // const logOutHandler = async () => {
-  //   await mutateAsync()
-  // }
 
   const { themeMode } = useTheme()
 

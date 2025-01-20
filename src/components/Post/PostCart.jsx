@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { axiosInstance } from '../../Helpers/axiosService';
 
 import { Link } from 'react-router-dom'
 import Button from '../Atoms/Button'
 import Comment from '../Comment/Comment'
 import Like from '../Like/Like'
 import { useToast } from '../../Helpers/toast';
-import { axiosInstance } from '../../Helpers/axiosService';
 import { formateRelative } from '../../Helpers/formatRelative';
 
 function PostCart({
@@ -35,7 +34,7 @@ function PostCart({
     setTotalLike(likesCount)
   }, [isLike])
 
-  // PostLikeHandler
+  // PostLike Handler
   const hanldePostLike = async (postId) => {
     try {
       setIsLoading(true)
@@ -43,10 +42,10 @@ function PostCart({
       setIsPostLike(response.data.data.like)
       if (response.data.data.like) {
         setTotalLike((prevLike) => prevLike + 1)
-        useToast.successToast("Liked Successfully")
+        useToast.successToast("😍 Liked Successfully")
       } else {
         setTotalLike((prevLike) => prevLike - 1)
-        useToast.successToast("Unliked Successfully")
+        useToast.successToast("😒 Unliked Successfully")
       }
     } catch (error) {
       useToast.errorToast(error.message)
@@ -70,7 +69,7 @@ function PostCart({
   return (
     <div className='flex-col justify-center items-center'>
       <div className='flex items-center '>
-        <Link  to={`/profile/${owner.username}`}
+        <Link  to={`/${owner.username}`}
         className=' mx-2 flex justify-center items-center'>
           <img src={owner.avatar}
             alt="hardip"
@@ -93,41 +92,38 @@ function PostCart({
         </div>
       </div>
       <div className='flex items-center gap-2 mt-3 ml-2'>
-        <Button onClick={() => hanldePostLike(_id)}
-          className={` ${isPostLike ? "bg-red-500 text-white" : "bg-white text-black"}
-            border-none p-1 rounded-full focus:outline-none`}
-          bgColor=""
-          textColor=''
+        <button onClick={() => hanldePostLike(_id)}
+         className={`bg-inherit border-none p-1 rounded-full focus:outline-none 
+           ${ isPostLike && 'text-pink-600'}  transition-all duration-200 hover:text-pink-600`}
           disabled={isLoading}
         >
           <FontAwesomeIcon
             icon={faHeart}
-            className={`text-lg hover:text-red-500 transition-all duration-200 `}
+            className='text-lg'
           />
-        </Button>
-
+        </button>
         <span onClick={() => setIsLikeOpen(!isLikeOpen)}
-          className='text-[13px] cursor-pointer'
+          className={`text-[13px] cursor-pointer ${isPostLike && 'text-pink-600'} `}
         >
           {totalLike}
         </span>
-        <Button onClick={() => setIsCommentOpen(!isCommentOpen)}
-          className='p-1 border-none'>
+        <button onClick={() => setIsCommentOpen(!isCommentOpen)}
+          className='p-1 border-none bg-inherit focus:outline-none'>
           <FontAwesomeIcon icon={faComment} />
-        </Button>
+        </button>
         <span className='text-[13px]' >
           {commentsCount}
         </span>
       </div>
       {isLikeOpen &&
-        <div className='fixed sm:sticky top-0 left-0 right-0 bottom-0 flex justify-center
-       items-center bg-black bg-opacity-75 z-10 '>
+        <div className='fixed sm:static top-0 left-0 right-0 bottom-0 flex justify-center
+       items-center bg-black bg-opacity-75 sm:bg-opacity-0 z-10 '>
           <Like likeState={handleLikeState} postId={_id} />
         </div>
       }
       {isCommentOpen &&
-        <div className='fixed sm:sticky top-0 left-0 right-0 bottom-0 flex justify-center
-       items-center bg-black bg-opacity-75 z-10 '>
+        <div className='fixed sm:static top-0 left-0 right-0 bottom-0 flex justify-center
+       items-center bg-black bg-opacity-75 sm:bg-opacity-0 z-10 '>
           <Comment commentState={handleCommentSate} postId={_id} />
         </div>
       }

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faExchange, faUserPlus, faSignIn, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { faHome, faExchange, faUserPlus, faSignIn, faSignOut, faUser, faRetweet, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useRef } from 'react'
 
-import Button from '../Atoms/Button'
 import LogoutBtn from '../auth/LogoutBtn'
 import { useTheme } from '../Contexts/theme'
+import nonProfileImage from '../../assets/blank-profile-picture-973460_1280.webp'
+import OURLogo from '../../assets/3D cinema style text TB with a blue background.png'
+import ThemeBtn from '../Atoms/ThemeBtn'
 
 function Header() {
     const authStatus = useSelector((state) => state.auth.status)
@@ -26,7 +28,7 @@ function Header() {
         },
         {
             name: "Profile",
-            slug: `/profile/${userData?.username}`,
+            slug: `/${userData?.username}`,
             icon: <FontAwesomeIcon icon={faUser} />,
             active: authStatus
         },
@@ -36,22 +38,20 @@ function Header() {
             icon: <FontAwesomeIcon icon={faSignIn} />,
             active: !authStatus
         },
-
         {
-            name: "Signip",
+            name: "Signup",
             slug: "/signup",
             icon: <FontAwesomeIcon icon={faUserPlus} />,
             active: !authStatus
         },
-
     ]
-
     const handleClickOutSide = () => {
         if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
             setIsOpen(false)
         }
     }
 
+    // close aside menu free useEffect
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutSide)
         return () => {
@@ -63,27 +63,30 @@ function Header() {
     const { themeMode } = useTheme()
 
     return (
-        <div className={`${themeMode ? 'dark' : 'light'}`}>
-            <header >
-                <div className='w-full h-14 sm:hidden bg-blackz-10 
-                flex items-center justify-around border-b border-slate-600'>
+        <div className={`sm:border-none ${themeMode ? 'dark' : 'light'}`}>
+            <header>
+                <div className='w-full h-14 sm:hidden 
+                flex items-center justify-around'>
                     <div className='sm:hidden' onClick={() => setIsOpen((isOpen) => !isOpen)}>
                         <img
-                            src={userData?.avatar}
+                            src={userData?.avatar ? userData?.avatar : nonProfileImage}
                             alt={userData?.username}
                             className='w-10 h-10 rounded-full'
                         />
                     </div>
-                    <div>
-                        <p>The Blog</p>
-                    </div>
+                    <Link to={"/"}>
+                        <img
+                            src={OURLogo}
+                            alt="our-logo"
+                            className='w-10 h-10 rounded-full'
+                        />
+                    </Link>
                 </div>
             </header>
             {isOpen ? (
-                <aside ref={sidebarRef} className={`transition duration-500 border
-                fixed z-10 top-0 bottom-14 flex w-72 flex-col gap-6 ${themeMode ? 'dark border-slate-400'
-                    : 'light border-slate-600'}
-                 p-4`}>
+                <aside ref={sidebarRef} className={` border fixed z-10 top-0 bottom-14 
+                    flex w-72 flex-col gap-6 ${themeMode ? 'dark border-slate-400'
+                        : 'light border-slate-600'} p-4`} id='aside' >
                     {authStatus &&
                         <div className='flex items-center justify-center'>
                             <div className='flex flex-col items-center'>
@@ -108,7 +111,7 @@ function Header() {
                                             className={({ isActive }) => `  
                                             border rounded-lg focus:outline-none font-normal p-2 text-center
                                             ${themeMode ? 'hover:bg-purple-500 text-white hover:text-white border-slate-400'
-                                            :'hover:bg-blue-500 hover:text-white text-black border-slate-600'}
+                                                    : 'hover:bg-blue-500 hover:text-white text-black border-slate-600'}
                                             ${isActive && themeMode && "text-white bg-purple-500 "}
                                             ${isActive && !themeMode && " text-white bg-blue-500"}`}
                                         >
@@ -119,12 +122,13 @@ function Header() {
                                 ) : null
                             ))}
                         {authStatus && (
-                            <li>
+                            <li key='logout'>
                                 <LogoutBtn />
                             </li>
-                        )
-
-                        }
+                        )}
+                        <li key='mode'>
+                            <ThemeBtn />
+                        </li>
                     </ul>
                 </aside>) : null
             }

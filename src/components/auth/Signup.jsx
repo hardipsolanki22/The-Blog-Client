@@ -11,22 +11,23 @@ import registerUser from '../Api/AuthApi/signUp'
 import { Oval } from 'react-loader-spinner'
 
 function Signup() {
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit,formState: {errors} } = useForm()
     const navigate = useNavigate()
 
     const queryClient = useQueryClient()
 
+    // signup handler
     const { mutateAsync, isPending } = useMutation({
-
         mutationFn: registerUser,
 
         onSuccess: () => {
-            useToast.successToast("Signup successfully")
+            useToast.successToast("😊 Signup successfully")
+            // fetch all users
             queryClient.invalidateQueries(["users"])
             navigate("/login")
         },
         onError: (error) => {
-            useToast.errorToast(error.message)
+            useToast.errorToast(parseErrorMesaage(error.response.data))
         }
     })
 
@@ -52,15 +53,17 @@ function Signup() {
     return (
         <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
-        border-y'>
-            <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
-        w-auto h-auto border border-violet-600 rounded-md p-5'>
+        border-b'>
+            <div className={`gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
+         sm:min-w-[70%] h-auto border border-violet-600 rounded-md p-5 sm:m-4`}>
                 <h1>Signup</h1>
                 <div>
                     <p>Signup to create your account</p>
                     <p>
-                        Do you have an account ?
-                        <Link to={"/login"}>
+                        Do you have an account&#63;
+                        <Link to={"/login"}
+                        className='text-blue-500'
+                        >
                             Login
                         </Link>
                     </p>
@@ -93,9 +96,14 @@ function Signup() {
                         className="border text-base w-full px-2 py-2 focus:outline-none
                         transition duration-200 focus:border-gray-600  text-black"
                         {...register("email", {
-                            required: true
+                            required: true,
+                            validate: {
+                                matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)
+                                 ||  "Email address must be a valid address.",
+                            }
                         })}
                     />
+                      {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                     <Input
                         type="password"
                         label="Password: "
@@ -103,16 +111,22 @@ function Signup() {
                         className="border text-base w-full px-2 py-2 focus:outline-none
                         transition duration-200 focus:border-gray-600  text-black"
                         {...register("password", {
-                            required: true
+                            required: true,
+                            validate: {
+                                matchPatern: (value) => /^(?=.{8,})/gm.test(value) 
+                                ||  "Password must be at least 8 characters long.",
+                            }
                         })}
                     />
+                      {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                     <Input
                         type="file"
                         label="Avatar: "
                         {...register("avatar", {
-                            required: true
+                            required: "Avatar is required."
                         })}
                     />
+                      {errors.avatar && <p className='text-red-500'>{errors.avatar.message}</p>}
                     <Input
                         type="file"
                         label="Cover Image: "
@@ -122,6 +136,7 @@ function Signup() {
                         <Button
                             type='submit'
                             disabled={isPending}
+                            className='focus:outline-none'
                         >
                             {isPending ?
                                 <Oval

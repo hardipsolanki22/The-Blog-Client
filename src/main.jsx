@@ -8,7 +8,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import './index.css'
 import App from './App.jsx'
 import Home from './pages/Home.jsx'
-import Protected from './components/Auth/AuthLayout.jsx'
+import AuthLayout from './components/Auth/AuthLayout.jsx'
 import Search from './components/Search/Search.jsx'
 import Profile from './components/Profile/Profile.jsx'
 import Signup from './components/Auth/Signup.jsx'
@@ -38,105 +38,105 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: (
-          <Protected authentication={false}>
+          <AuthLayout authentication={false}>
             <Signup />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/login",
         element: (
-          <Protected authentication={false}>
+          <AuthLayout authentication={false}>
             <Login />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/forget-password",
         element: (
-          <Protected authentication={false}>
+          <AuthLayout authentication={false}>
             <ForgetPassword />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/reset-password",
         element: (
-          <Protected authentication={false}>
+          <AuthLayout authentication={false}>
             <ResetPassword />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/change-password",
         element: (
-          <Protected authentication>
+          <AuthLayout authentication>
             <ChangePassword />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/search-user",
         element: (
-          <Protected authentication>
+          <AuthLayout authentication>
             <Search />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/:username",
         element: (
-          <Protected authentication>
+          <AuthLayout authentication>
             <Profile />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/edit-profile",
         element: (
-          <Protected authentication>
+          <AuthLayout authentication>
             <EditProfile />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/:username/:userId/followers",
         element: (
-          <Protected authentication>
+          <AuthLayout authentication>
             <Followers />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/:username/:userId/following",
         element: (
-          <Protected authentication>
+          <AuthLayout authentication>
             <Following />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/add-post",
         element: (
-          <Protected authentication>
+          <AuthLayout authentication>
             <PostForm />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/edit-posts/:postId",
         element: (
-          <Protected authentication>
+          <AuthLayout authentication>
             <EditPost />
-          </Protected>
+          </AuthLayout>
         )
       },
       {
         path: "/tweets",
         element: (
-          <Protected authentication>
+          <AuthLayout authentication>
             <AllTweets />
-          </Protected>
+          </AuthLayout>
         )
       },
       {

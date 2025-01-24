@@ -19,11 +19,6 @@ function EditPost() {
     console.log(`Error: ${isError.message}`);
     
   }
-
-  console.log(`pagePost: ${JSON.stringify(post)}`);
-  console.log(`postId: ${postId}`);
-
-
   return !isLoading ? (
     <PostForm post={post.data} />
   ) : (<div className='flex flex-col items-center justify-center 

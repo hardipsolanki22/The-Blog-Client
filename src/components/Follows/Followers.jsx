@@ -88,6 +88,7 @@ function Followers() {
                 <div>
                   <img src={user.followDetails.avatar}
                     alt="avatar"
+                    loading='lazy'
                     className='w-14 h-12 rounded-full'
                   />
                 </div>
@@ -97,9 +98,7 @@ function Followers() {
             <div className='flex justify-center items-center'>
               {userData._id !== user.followDetails._id &&
                 <Button onClick={() => handleFollowUnfollow(user.followDetails._id)}
-                  bgColor='bg-sky-700'
-                  textColor='text-white'
-                  className='px-4 py-2 rounded-full'
+                  className='px-4 py-2 rounded-full focus:outline-none'
                   disabled={isFollowedLoading}
                 >
                   {user.followDetails.isFollowed ? "Unfollow" : "Follow"}

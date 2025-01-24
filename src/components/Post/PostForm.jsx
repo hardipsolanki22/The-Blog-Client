@@ -108,14 +108,15 @@ function PostForm({ post }) {
                         <img
                             src={post.image}
                             alt="post"
+                            loading='lazy'
                             className='rounded-md border border-slate-600 max-h-56 w-[80%] object-cover'
                         />
                     </div>
                     }
                     {!post && <Input
                         type="file"
+                        accept="image/png, image.gpeg image/jpg image/gif"
                         label="Post: "
-                        classNam=''
                         {...register("post", {
                             required: "Image is required."
                         })}
@@ -126,9 +127,7 @@ function PostForm({ post }) {
                         label={"Status: "}
                         options={["active", "inactive"]}
                         className='text-black focus:outline-none w-[90%]'
-                        {...register("status", {
-                            required: "Status is required"
-                        })}
+                        {...register("status")}
                     />
                     {errors.status && <p className='text-red-500'>{errors.status.message}</p>}
                     <div className='flex m-4 justify-end gap-2 items-center'>

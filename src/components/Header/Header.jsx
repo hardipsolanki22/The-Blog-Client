@@ -8,7 +8,7 @@ import { useRef } from 'react'
 import LogoutBtn from '../auth/LogoutBtn'
 import { useTheme } from '../Contexts/theme'
 import nonProfileImage from '../../assets/blank-profile-picture-973460_1280.webp'
-import OURLogo from '../../assets/3D cinema style text TB with a blue background.png'
+import Logo from '../../assets/3D cinema style text TB with a blue background.png'
 import ThemeBtn from '../Atoms/ThemeBtn'
 
 function Header() {
@@ -45,6 +45,7 @@ function Header() {
             active: !authStatus
         },
     ]
+    
     const handleClickOutSide = () => {
         if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
             setIsOpen(false)
@@ -76,7 +77,7 @@ function Header() {
                     </div>
                     <Link to={"/"}>
                         <img
-                            src={OURLogo}
+                            src={Logo}
                             alt="our-logo"
                             className='w-10 h-10 rounded-full'
                         />
@@ -84,7 +85,7 @@ function Header() {
                 </div>
             </header>
             {isOpen ? (
-                <aside ref={sidebarRef} className={` border fixed z-10 top-0 bottom-14 
+                <aside ref={sidebarRef} className={` border fixed z-10 top-0 ${authStatus ? 'bottom-14' : 'bottom-0'} 
                     flex w-72 flex-col gap-6 ${themeMode ? 'dark border-slate-400'
                         : 'light border-slate-600'} p-4`} id='aside' >
                     {authStatus &&
@@ -93,6 +94,7 @@ function Header() {
                                 <div>
                                     <img src={userData?.avatar}
                                         className='w-20 h-20 rounded-full'
+                                        loading='lazy'
                                         alt="Profile" />
                                 </div>
                                 <div className='flex justify-between items-center'>
@@ -109,7 +111,7 @@ function Header() {
                                         <NavLink to={item.slug}
                                             onClick={() => navigate(item.slug)}
                                             className={({ isActive }) => `  
-                                            border rounded-lg focus:outline-none font-normal p-2 text-center
+                                            border rounded-lg focus:outline-none font-semibold p-2 text-center
                                             ${themeMode ? 'hover:bg-purple-500 text-white hover:text-white border-slate-400'
                                                     : 'hover:bg-blue-500 hover:text-white text-black border-slate-600'}
                                             ${isActive && themeMode && "text-white bg-purple-500 "}

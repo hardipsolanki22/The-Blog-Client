@@ -2,14 +2,15 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import nonProfileImage from '../../assets/blank-profile-picture-973460_1280.webp'
-import OURLogo from '../../assets/3D cinema style text TB with a blue background.png'
-import ForYouFeed from './ForYouFeed'
-import FollowingFeed from './FollowingFeed'
-import { useTheme } from '../Contexts/theme'
+import nonProfileImage from '../assets/blank-profile-picture-973460_1280.webp'
+import Logo from '../assets/3D cinema style text TB with a blue background.png'
+import ForYouFeed from '../components/Home/ForYouFeed'
+import FollowingFeed from '../components/Home/FollowingFeed'
+import { useTheme } from '../components/Contexts/theme'
+
 function Home() {
 
-    const userData = useSelector(state => state.auth.userData)    
+    const userData = useSelector(state => state.auth.userData)
     const [feed, setFeed] = useState("ForYou")
     const { themeMode } = useTheme()
 
@@ -20,12 +21,13 @@ function Home() {
                     <img
                         src={userData?.avatar ? userData?.avatar : nonProfileImage}
                         alt={userData?.username}
+                        loading='lazy'
                         className='w-10 h-10 rounded-full'
                     />
                 </div>
                 <Link to={"/"}>
                     <img
-                        src={OURLogo}
+                        src={Logo}
                         alt="our-logo"
                         className='w-10 h-10 rounded-full'
                     />

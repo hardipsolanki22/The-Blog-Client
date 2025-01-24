@@ -42,7 +42,7 @@ function FollowingFeed() {
      sm:overflow-y-auto sm:no-scrollbar ${themeMode ? 'dark' : 'light'}`}>
     {posts?.pages.map((page) => (
       page.data.length ? (page.data?.map((post) => (
-        <div key={post.title}
+        <div key={post._id}
           className='flex flex-col justify-center border-b  border-slate-600 p-5 h-auto '>
           <PostCart {...post} />
         </div>

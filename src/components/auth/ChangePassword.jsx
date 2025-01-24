@@ -40,7 +40,7 @@ function ChangePassword() {
                 <p className='text-2xl'>Reset Password</p>
                 <form onSubmit={handleSubmit(changePasswordHandler)} className='w-full'>
                     <Input
-                        type="password"
+                        type="text"
                         label="Old Password: "
                         placeholder="Enter old password"
                         className="border text-base w-full px-2 py-2 focus:outline-none
@@ -50,7 +50,7 @@ function ChangePassword() {
                         })}
                     />
                     <Input
-                        type="password"
+                        type="text"
                         label="New Password: "
                         placeholder="Enter new password"
                         className="border text-base w-full px-2 py-2 focus:outline-none

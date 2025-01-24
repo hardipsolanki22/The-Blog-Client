@@ -52,7 +52,7 @@ function Signup() {
 
     return (
         <div className='flex flex-col items-center justify-center 
-            sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
+            sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen overflow-y-auto gap-4
         border-b'>
             <div className={`gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
          sm:min-w-[70%] h-auto border border-violet-600 rounded-md p-5 sm:m-4`}>
@@ -105,7 +105,7 @@ function Signup() {
                     />
                       {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                     <Input
-                        type="password"
+                        type="text"
                         label="Password: "
                         placeholder="Enter your password"
                         className="border text-base w-full px-2 py-2 focus:outline-none

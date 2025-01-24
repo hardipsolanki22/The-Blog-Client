@@ -55,6 +55,7 @@ function Users() {
                             <div className=''>
                                 <img src={user.avatar}
                                     alt="avatar"
+                                    loading='lazy'
                                     className='w-9 h-9 rounded-full'
                                 />
                             </div>

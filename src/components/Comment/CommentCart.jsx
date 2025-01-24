@@ -74,6 +74,7 @@ function CommentCart({
                 className=" mt-1 mr-4  no-underline">
                 <img src={owner.avatar}
                     alt="Avatar"
+                    loading='lazy'
                     className='w-10 h-10 rounded-full'
                 />
             </Link>

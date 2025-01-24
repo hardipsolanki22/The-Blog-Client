@@ -85,9 +85,6 @@ function AllTweets() {
                         />
                         <div className='flex m-2 justify-center items-center'>
                             <Button
-                                className=''
-                                bgColor='bg-black'
-                                textColor='text-white'
                                 disabled={isPending}
                             >
                                 {isPending ?

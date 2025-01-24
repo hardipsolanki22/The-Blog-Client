@@ -73,6 +73,7 @@ function PostCart({
         className=' mx-2 flex justify-center items-center'>
           <img src={owner.avatar}
             alt="hardip"
+            loading='lazy'
             className='rounded-full w-10 h-10'
           />
         </Link>
@@ -84,6 +85,7 @@ function PostCart({
           <img
             src={image}
             className='rounded-md'
+            loading='lazy'
             alt="post" />
         </div>
         <div className='flex flex-col w-full h-auto gap-4 mt-2 ml-4 overflow-hidden'>

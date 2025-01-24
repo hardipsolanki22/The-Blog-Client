@@ -118,6 +118,7 @@ function PersonalDetailsCart() {
                         <img
                             src={coverImage ? URL.createObjectURL(coverImage) : userData.coverImage}
                             alt={userData.username}
+                            loading='lazy'
                             className={`border-2 border-violet-700 
                                 ${!userData.coverImage && 'bg-slate-800'} rounded-md w-full h-36`}
                         />
@@ -129,6 +130,7 @@ function PersonalDetailsCart() {
                             <img
                                 src={avatar ? URL.createObjectURL(avatar) : userData.avatar}
                                 alt={userData.username}
+                                loading='lazy'
                                 className='rounded-full w-32 h-32 border-2 border-violet-700 '
                             />
                         </div>
@@ -140,21 +142,24 @@ function PersonalDetailsCart() {
                         type="text"
                         label="Name: "
                         placeholder="Enter your name"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        text-black focus:border-gray-600"
                         {...register("name")}
                     />
                     <Input
                         type="text"
                         label="Username: "
                         placeholder="Enter your username"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none 
+                        text-black focus:border-gray-600"
                         {...register("username")}
                     />
                     <Input
                         type="email"
                         label="Email: "
                         placeholder="Enter your email"
-                        className="border text-base w-full px-2 py-2 focus:outline-none focus:border-gray-600"
+                        className="border text-base w-full px-2 py-2 focus:outline-none
+                        text-black focus:border-gray-600"
                         {...register("email")}
                     />
                     <input

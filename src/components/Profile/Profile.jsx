@@ -97,11 +97,13 @@ function Profile() {
                 <img
                     src={user.data?.coverImage}
                     alt="coverImage"
+                    loading='lazy'
                     className='w-full sm:h-48 h-40 object-cover bg-slate-700'
                 />
                 <img
                     src={user.data?.avatar}
                     alt="avatar"
+                    loading='lazy'
                     className='sm:w-36 sm:h-36 h-28 w-28 rounded-full absolute left-8 bottom-0 
                     transform translate-y-1/2 border border-black'
                 />
@@ -160,9 +162,6 @@ function Profile() {
                     />
                 }
             </div>
-            {/* <div className='flex justify-center items-center w-full p-6'>
-                   <p>No Posts</p>
-               </div> */}
         </div>) : (<div className='sm:col-span-11 md:col-span-6 sm:no-scrollbar
              sm:max-h-screen sm:overflow-y-auto'>
             <ProfileSkeleton cards={3} />

@@ -1,7 +1,7 @@
 import React, { useId } from 'react'
 
 function Input({
-    type = "text",
+    type,
     label,
     className = "",
     ...props

@@ -25,7 +25,6 @@ function ProfilePostCart({
     likesCount,
     commentsCount,
     isLiked,
-    createdAt
 }) {
 
     const [isPostLikeLoading, setIsPostLikeLoading] = useState(false)
@@ -103,7 +102,7 @@ function ProfilePostCart({
     const { themeMode } = useTheme()
 
     return (
-        <div className='h-auto flex-col justify-center items-center p-8 border-t border-slate-600 '>
+        <div className='h-auto flex-col justify-center items-center p-8 mb-4 border-t border-slate-600 '>
             {isAuth && <div className='flex justify-end items-center mr-4'>
                 <p className={`text-[2rem] ${themeMode ? 'text-white' : 'text-slate-800'} block cursor-pointer
                                        ${isDotOpen && "hidden"}`}
@@ -154,6 +153,7 @@ function ProfilePostCart({
                     <img
                         src={image}
                         className='rounded-md'
+                        loading='lazy'
                         alt="post" />
                 </div>
                 <div className='flex flex-col w-full h-auto gap-4 mt-2 ml-4 overflow-hidden'>
@@ -161,26 +161,28 @@ function ProfilePostCart({
                     <p className='break-words'>{content}</p>
                 </div>
             </div>
-            <div className='flex items-center gap-2 mt-3 ml-2'>
-                <Button onClick={() => hanldePostLike(_id)}
-                    className={` ${isLiked ? "bg-red-500 text-white" : "bg-white text-black"}
-                    border-none p-1 rounded-full focus:outline-none`}
+            <div className='flex items-center gap-2 mt-3 mb-4 ml-2'>
+                <button
+                    onClick={() => hanldePostLike(_id)}
+                    className={`${isLiked && 'text-pink-600'} transition-all duration-200
+                 hover:text-pink-600 border-none p-1 rounded-full focus:outline-none
+                 bg-inherit`}
                     disabled={isPostLikeLoading}
                 >
                     <FontAwesomeIcon
                         icon={faHeart}
                     />
-                </Button>
+                </button>
 
                 <span onClick={() => setIsLikeOpen(!isLikeOpen)}
-                    className='text-[13px] cursor-pointer'
+                    className={`text-[13px] cursor-pointer ${isLiked && 'text-pink-600'} `}
                 >
                     {likesCount}
                 </span>
-                <Button onClick={() => setIsCommentOpen(!isCommentOpen)}
-                    className='p-1 border-none'>
+                <button onClick={() => setIsCommentOpen(!isCommentOpen)}
+                    className='p-1 bg-inherit focus:outline-none'>
                     <FontAwesomeIcon icon={faComment} />
-                </Button>
+                </button>
                 <span className='text-[13px]' >
                     {commentsCount}
                 </span>

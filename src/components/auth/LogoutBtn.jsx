@@ -37,17 +37,18 @@ function LogoutBtn() {
   const { themeMode } = useTheme()
 
   return (
-    <div>
       <button className={`md:px-4 md:py-2 sm:px-2 sm:py-1 rounded-lg border text-center
                 transition flex duration-150 focus:outline-none md:text-xl md:font-semibold
                  ${themeMode ? 'hover:bg-purple-500 bg-inherit text-white hover:text-white border-slate-400'
                 :' hover:bg-blue-500 hover:text-white text-black border-slate-600'}           
            `}
         onClick={async () => await mutateAsync()}>
-        <FontAwesomeIcon icon={faSignOut} />
+        <FontAwesomeIcon 
+        icon={faSignOut}
+        className='mt-1'
+         />
         <span className='md:block sm:hidden ml-2'>Logout</span>
       </button>
-    </div >
   )
 }
 

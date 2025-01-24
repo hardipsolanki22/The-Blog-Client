@@ -87,6 +87,7 @@ function Like({ likeState, postId }) {
                 className='mr-2'>
                 <img src={like.likedBy.avatar}
                   alt="avatar"
+                  loading='lazy'
                   className='w-14 h-12 rounded-full'
                 />
               </Link>

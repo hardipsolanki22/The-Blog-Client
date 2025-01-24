@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-import PersonalDetailsCart from './PersonalDetailsCart'
-import ChangePassword from '../Auth/ChangePassword'
-import Button from '../Atoms/Button'
-import { useTheme } from '../Contexts/theme'
+import PersonalDetailsCart from '../components/Profile/PersonalDetailsCart'
+import ChangePassword from '../components/Auth/ChangePassword'
+import Button from '../components/Atoms/Button'
+import { useTheme } from '../components/Contexts/theme'
 
 function EditProfile() {
 

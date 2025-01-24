@@ -1,7 +1,7 @@
 import React, { useId, forwardRef } from 'react'
 
 function Select({
-  options,
+  options = [],
   label,
   className = "",
   ...props
@@ -15,13 +15,14 @@ function Select({
           {label}
         </label>
       }
-      <select 
-      ref={ref}
-       id={id}
+      <select
+        className={`${className} py-2 px-3 rounded-md`}
+        ref={ref}
+        id={id}
         {...props}
-        className={`${className} py-2 px-3 rounded-md`}>
+      >
         {options?.map((option) => (
-          <option  key={option} value={option}>
+          <option key={option} value={option}>
             {option}
           </option>
         ))

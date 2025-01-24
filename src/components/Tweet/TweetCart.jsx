@@ -77,6 +77,7 @@ function TweetCart({
                     className=' mx-2 flex justify-center items-center'>
                     <img src={owner.avatar}
                         alt="hardip"
+                        loading='lazy'
                         className='rounded-full w-10 h-10'
                     />
                 </Link>

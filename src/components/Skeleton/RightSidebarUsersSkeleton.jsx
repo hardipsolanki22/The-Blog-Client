@@ -10,10 +10,15 @@ function RightSidebarUsersSkeleton({ cards }) {
                 <div className='w-[90%] h-auto m-4 '>
                     <div className='flex flex-col justify-center gap-2 items-center '>
                         <div>
-                            <Skeleton circle className='w-12 h-12' />
+                            <Skeleton
+                                height={40}
+                                width={40}
+                                circle />
                         </div>
-                        <div className='w-full'>
-                            <Skeleton />
+                        <div className='w-[75%]'>
+                            <Skeleton
+                                className='h-6'
+                            />
                         </div>
                     </div>
                 </div>

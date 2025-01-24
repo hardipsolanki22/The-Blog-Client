@@ -7,13 +7,18 @@ function UsersSkeleton({ cards }) {
         .map((_, index) => (
             <div key={index}
                 className='flex flex-col justify-center items-center w-full h-auto'>
-                <div className='w-[90%] h-auto m-4 '>
-                    <div className='flex justify-center gap-2 items-center '>
+                <div className='w-[90%] h-auto m-4'>
+                    <div className='flex gap-2 items-center '>
                         <div>
-                            <Skeleton circle className='w-12 h-12' />
+                            <Skeleton 
+                            height={40}
+                            width={40}
+                            circle />
                         </div>
-                        <div className='w-full'>
-                            <Skeleton className=' w-[60%]' />
+                        <div className='w-[60%]'>
+                            <Skeleton
+                            className='h-6'
+                            />
                         </div>
                     </div>
                 </div>

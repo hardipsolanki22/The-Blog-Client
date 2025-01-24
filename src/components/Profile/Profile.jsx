@@ -105,7 +105,7 @@ function Profile() {
                     alt="avatar"
                     loading='lazy'
                     className='sm:w-36 sm:h-36 h-28 w-28 rounded-full absolute left-8 bottom-0 
-                    transform translate-y-1/2 border border-black'
+                    transform translate-y-1/2 border border-slate-600'
                 />
             </div>
             {isAuth ? (<div className='flex justify-end p-4'>

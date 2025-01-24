@@ -49,7 +49,7 @@ function Like({ likeState, postId }) {
   const handleFollowUnfollow = async (userId) => {
     try {
       setIsFollowedLoading(true)
-      const response = await axiosInstance.post(`/subcriptions/${userId}/following`)
+      const response = await axiosInstance.post(`/follows/${userId}/following`)
       if (response.data.data.following) {
         useToast.successToast("😍 Follow Successfully")
       } else {
@@ -72,7 +72,8 @@ function Like({ likeState, postId }) {
       sm:bg-inherit sm:border sm:border-violet-500 ${themeMode
         ? "bg-black text-white" : "bg-slate-200 text-black"}
       sm:no-scrollbar overflow-y-auto rounded-md border-x border-slate-400 sm:mt-4 p-2 duration-300`}>
-      <Button className='p-1 font-bold' onClick={() => likeState(false)}>
+      <Button className='p-1 font-bold focus:outline-none' 
+      onClick={() => likeState(false)}>
         <FontAwesomeIcon icon={faClose} />
       </Button>
       <div className='flex justify-center items-center'>
@@ -96,9 +97,7 @@ function Like({ likeState, postId }) {
             <div className='flex justify-center items-center'>
               {userData._id !== like.likedBy._id &&
                 <Button onClick={() => handleFollowUnfollow(like.likedBy._id)}
-                  bgColor='bg-sky-700'
-                  textColor='text-white'
-                  className='px-4 py-2 rounded-full'
+                  className='px-4 py-2 rounded-full focus:outline-none'
                   disabled={isFollowedLoading}
                 >
                   {

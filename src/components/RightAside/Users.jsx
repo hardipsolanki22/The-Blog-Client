@@ -25,7 +25,7 @@ function Users() {
     const handleFollowUnfollow = async (userId) => {
         try {
             setIsFollowedLoading(true)
-            const response = await axiosInstance.post(`/subcriptions/${userId}/following`)
+            const response = await axiosInstance.post(`/follows/${userId}/following`)
             if (response.data.data.following) {
                 queryClient.invalidateQueries(["users"])
                 useToast.successToast("Follow successfully")

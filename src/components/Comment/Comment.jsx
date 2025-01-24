@@ -75,7 +75,8 @@ function Comment({ commentState, postId }) {
      ${themeMode ? "bg-black text-white" : "bg-slate-200 text-black"}
       sm:border sm:border-violet-500 sm:bg-inherit  border-slate-400 
     sm:no-scrollbar mt-4 rounded-md flex-col justify-center p-4 border-x`}>
-    <Button className='p-1 font-bold' onClick={() => commentState(false)}>
+    <Button className='p-1 font-bold focus:outline-none'
+     onClick={() => commentState(false)}>
       <FontAwesomeIcon icon={faClose} />
     </Button>
     <div className='flex justify-center items-center mb-6'>
@@ -96,7 +97,7 @@ function Comment({ commentState, postId }) {
           className="border rounded-lg text-base w-full px-3 py-2 focus:outline-none
            focus:border-gray-600 transition duration-200"
           {...register("content", {
-            required: true
+            required: "true"
           })}
         />
         <div className='flex justify-end mt-2'>

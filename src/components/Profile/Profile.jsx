@@ -63,7 +63,7 @@ function Profile() {
     const handleFollowUnfollow = async (userId) => {
         try {
             setIsFollowedLoading(true)
-            const response = await axiosInstance.post(`/subcriptions/${userId}/following`)
+            const response = await axiosInstance.post(`/follows/${userId}/following`)
             if (response.data.data.following) {
                 useToast.successToast("😍 Follow successfully")
             } else {

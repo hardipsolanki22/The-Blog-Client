@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { DNA } from 'react-loader-spinner'
 
 
-function Protected({ children, authentication = true }) {
+function AuthLayout({ children, authentication = true }) {
 
     const authStatus = useSelector(state => state.auth.status)
     const navigate = useNavigate()
@@ -25,4 +25,4 @@ function Protected({ children, authentication = true }) {
     </div>)
 }
 
-export default Protected
+export default AuthLayout

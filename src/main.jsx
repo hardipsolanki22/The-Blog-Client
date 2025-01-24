@@ -5,8 +5,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 
 
-import App from './App.jsx'
 import './index.css'
+import App from './App.jsx'
 import Home from './pages/Home.jsx'
 import Protected from './components/Auth/AuthLayout.jsx'
 import Search from './components/Search/Search.jsx'

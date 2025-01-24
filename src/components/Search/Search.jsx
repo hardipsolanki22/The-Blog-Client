@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 
 
@@ -42,7 +41,7 @@ function Search() {
       sm:no-scrollbar sm:overflow-y-auto gap-4 sm:border-y border-slate-600'>
       <div className='flex justify-center items-center'>
         <form>
-          <input
+          <Input
             type="text"
             className="border md:w-[40vw] w-[75vw] rounded-3xl text-base px-2 py-2
              text-black focus:outline-none transition-all duration-100 focus:border-gray-600"

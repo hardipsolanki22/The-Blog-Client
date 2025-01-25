@@ -7,8 +7,8 @@ import { useRef } from 'react'
 
 import LogoutBtn from '../auth/LogoutBtn'
 import { useTheme } from '../Contexts/theme'
-import nonProfileImage from '../../assets/blank-profile-picture-973460_1280.webp'
-import Logo from '../../assets/3D cinema style text TB with a blue background.png'
+import nonProfileImage from '../../assets/userDeafultAavtar.png'
+import Logo from '../../assets/Logo.png'
 import ThemeBtn from '../Atoms/ThemeBtn'
 
 function Header() {

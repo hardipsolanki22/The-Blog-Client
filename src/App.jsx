@@ -118,7 +118,7 @@ function App() {
         console.log('user: ', JSON.stringify(user));
         
         console.log('ture;');
-        if (user) {
+        if (user.data.success) {
           dispatch(login({userData: user.data}))
         } else {
           dispatch(logout())

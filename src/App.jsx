@@ -14,23 +14,26 @@ import RightAside from './components/RightAside/RightAside';
 import getCurrentUser from './components/Api/UserApi/getCurrentUser';
 import { login, logout } from './featured/authSlice';
 import { ThemeProvider } from './components/Contexts/theme';
+import { parseErrorMesaage } from './Helpers/parseErrMsg';
 
 function App() {
   const [themeMode, setThemeMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(true)
   const dispatch = useDispatch();
 
-  const { data: user, isLoading } = useQuery({
-    queryKey: ["current-user"],
-    queryFn: getCurrentUser,
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
+    useEffect(() => {
+      getCurrentUser()
+      .then((user) => {
+        if (user) {
+          dispatch(login({userData: user.data}))
+        } else {
+          dispatch(logout())
+        }
+      })
+      .finally(() => setIsLoading(false))
+    }, [])
 
-    if (user) {
-      dispatch(login({ userData: user.data }));
-    } else {
-      dispatch(logout());
-    }
+    
 
   // Toggle dark mode and light mode 
   const toggleMode = () => {

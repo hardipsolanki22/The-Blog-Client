@@ -1,16 +1,17 @@
 const parseErrorMesaage = (stringDocument) => {
 
-  const parseErrorMessage = stringDocument
+  const message = stringDocument
     .split('/')[2]
     .split('<')[2]
     .replace("pre>Error:", "")
     .trim()
 
-    if (parseErrorMessage) {
-      return parseErrorMessage
+    if (message) {
+      return message
+    } else {
+      return "☹ Something want to wrong"
     }
 
-    return "Something want to wrong"
 
 }
 

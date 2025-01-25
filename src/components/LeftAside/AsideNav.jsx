@@ -13,10 +13,7 @@ import { useTheme } from '../Contexts/theme'
 function AsideNav() {
     const authStatus = useSelector((state) => state.auth.status)
     const userData = useSelector(state => state.auth.userData)
-    const navigate = useNavigate()
-
-    console.log(`authstatus: `, authStatus);
-    
+    const navigate = useNavigate()    
 
     const navItems = [
         {

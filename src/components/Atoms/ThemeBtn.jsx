@@ -8,7 +8,6 @@ function ThemeBtn() {
   const { themeMode, toggleMode } = useTheme()
 
   const onChangeBtn = (e) => {
-    console.log(`click`);
     toggleMode()
   }
 

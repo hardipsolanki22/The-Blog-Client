@@ -11,7 +11,7 @@ import registerUser from '../Api/AuthApi/signUp'
 import { Oval } from 'react-loader-spinner'
 
 function Signup() {
-    const { register, handleSubmit,formState: {errors} } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
     const navigate = useNavigate()
 
     const queryClient = useQueryClient()
@@ -34,7 +34,9 @@ function Signup() {
     const signup = async (data) => {
         const formData = new FormData()
         for (const key in data) {
-            formData.append(key, data[key])
+            if (key === "name" || "username" || "email" || "password") {
+                formData.append(key, data[key])
+            }
         }
 
         formData.append("avatar", data.avatar[0])
@@ -42,8 +44,6 @@ function Signup() {
         if (data.coverImage) {
             formData.append("coverImage", data.coverImage[0])
         }
-
-        console.log(`formData: ${JSON.stringify(formData)}`);
 
         await mutateAsync(formData)
 
@@ -62,7 +62,7 @@ function Signup() {
                     <p>
                         Do you have an account&#63;
                         <Link to={"/login"}
-                        className='text-blue-500'
+                            className='text-blue-500'
                         >
                             Login
                         </Link>
@@ -99,11 +99,11 @@ function Signup() {
                             required: true,
                             validate: {
                                 matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)
-                                 ||  "Email address must be a valid address.",
+                                    || "Email address must be a valid address.",
                             }
                         })}
                     />
-                      {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
+                    {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                     <Input
                         type="text"
                         label="Password: "
@@ -113,12 +113,12 @@ function Signup() {
                         {...register("password", {
                             required: true,
                             validate: {
-                                matchPatern: (value) => /^(?=.{8,})/gm.test(value) 
-                                ||  "Password must be at least 8 characters long.",
+                                matchPatern: (value) => /^(?=.{8,})/gm.test(value)
+                                    || "Password must be at least 8 characters long.",
                             }
                         })}
                     />
-                      {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+                    {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                     <Input
                         type="file"
                         label="Avatar: "
@@ -126,7 +126,7 @@ function Signup() {
                             required: "Avatar is required."
                         })}
                     />
-                      {errors.avatar && <p className='text-red-500'>{errors.avatar.message}</p>}
+                    {errors.avatar && <p className='text-red-500'>{errors.avatar.message}</p>}
                     <Input
                         type="file"
                         label="Cover Image: "

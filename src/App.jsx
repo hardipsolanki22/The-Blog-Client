@@ -26,14 +26,12 @@ function App() {
     refetchOnWindowFocus: false,
   });
 
-  useEffect(() => {
     if (user) {
       dispatch(login({ userData: user.data }));
     } else {
       dispatch(logout());
     }
 
-  }, [user])
   // Toggle dark mode and light mode 
   const toggleMode = () => {
     setThemeMode(!themeMode);

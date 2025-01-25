@@ -15,6 +15,9 @@ function AsideNav() {
     const userData = useSelector(state => state.auth.userData)
     const navigate = useNavigate()
 
+    console.log(`authstatus: `, authStatus);
+    
+
     const navItems = [
         {
             name: "Home",

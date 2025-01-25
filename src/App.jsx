@@ -24,6 +24,9 @@ function App() {
     useEffect(() => {
       getCurrentUser()
       .then((user) => {
+        console.log('user: ', JSON.stringify(user));
+        
+        console.log('ture;');
         if (user) {
           dispatch(login({userData: user.data}))
         } else {

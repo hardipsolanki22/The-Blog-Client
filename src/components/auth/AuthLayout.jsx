@@ -5,7 +5,6 @@ import { DNA } from 'react-loader-spinner'
 
 
 function AuthLayout({ children, authentication = true }) {
-
     const authStatus = useSelector(state => state.auth.status)
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
@@ -26,3 +25,4 @@ function AuthLayout({ children, authentication = true }) {
 }
 
 export default AuthLayout
+

@@ -24,7 +24,7 @@ function Header() {
             name: "Home",
             slug: "/",
             icon: <FontAwesomeIcon icon={faHome} />,
-            active: true
+            active: authStatus
         },
         {
             name: "Profile",

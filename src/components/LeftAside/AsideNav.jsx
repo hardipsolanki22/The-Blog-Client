@@ -20,7 +20,7 @@ function AsideNav() {
             name: "Home",
             slug: "/",
             icon: <FontAwesomeIcon icon={faHome} />,
-            active: true
+            active: authStatus
         },
         {
             name: "AddPost",

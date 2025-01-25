@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { axiosInstance } from '../../Helpers/axiosService';
 
 import { Link } from 'react-router-dom'
-import Button from '../Atoms/Button'
 import Comment from '../Comment/Comment'
 import Like from '../Like/Like'
 import { useToast } from '../../Helpers/toast';

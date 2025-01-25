@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import PersonalDetailsCart from '../components/Profile/PersonalDetailsCart'
-import ChangePassword from '../components/Auth/ChangePassword'
+import ChangePassword from '../components/auth/ChangePassword'
 import Button from '../components/Atoms/Button'
 import { useTheme } from '../components/Contexts/theme'
 

@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
+import { Oval } from 'react-loader-spinner';
 
 import Button from '../Atoms/Button.jsx';
 import fetchFollowing from '../Api/Follows/getFollowing.js';
@@ -11,7 +12,6 @@ import { useToast } from '../../Helpers/toast.js';
 import { axiosInstance } from '../../Helpers/axiosService.js';
 import { useSelector } from 'react-redux';
 import FollowingFollowersSkeleton from '../Skeleton/FollowingFollowersSkeleton.jsx';
-import { Oval } from 'react-loader-spinner';
 import { useTheme } from '../Contexts/theme.js';
 
 function following() {

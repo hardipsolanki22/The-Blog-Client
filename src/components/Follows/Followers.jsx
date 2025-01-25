@@ -5,13 +5,13 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import { useSelector } from 'react-redux';
+import { Oval } from 'react-loader-spinner';
 
 import fetchFollowers from "../Api/Follows/getFollowers.js";
 import Button from '../Atoms/Button.jsx';
 import { axiosInstance } from '../../Helpers/axiosService.js';
 import { useToast } from '../../Helpers/toast.js';
 import FollowingFollowersSkeleton from '../Skeleton/FollowingFollowersSkeleton.jsx';
-import { Oval } from 'react-loader-spinner';
 import { useTheme } from '../Contexts/theme.js';
 
 function Followers() {

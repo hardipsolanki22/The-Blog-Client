@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useQuery, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer'
+import { Oval } from 'react-loader-spinner';
 
 import Button from '../Atoms/Button'
 import { useToast } from '../../Helpers/toast';
@@ -13,7 +14,6 @@ import fetchUserPosts from '../Api/PostApi/fetchUserPosts';
 import { axiosInstance } from '../../Helpers/axiosService';
 import ProfilePostCart from '../Post/ProfilePostCart';
 import { formateRelative } from '../../Helpers/formatRelative';
-import { Oval } from 'react-loader-spinner';
 import ProfileSkeleton from '../Skeleton/ProfileSkeleton';
 import { useTheme } from '../Contexts/theme';
 

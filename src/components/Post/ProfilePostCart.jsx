@@ -6,6 +6,7 @@ import { faRemove } from '@fortawesome/free-solid-svg-icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
+import { Oval } from 'react-loader-spinner';
 
 import { axiosInstance } from '../../Helpers/axiosService'
 import { useToast } from '../../Helpers/toast'
@@ -14,7 +15,6 @@ import Like from '../Like/Like';
 import Comment from '../Comment/Comment';
 import deletePost from '../Api/PostApi/deletePost';
 import { useTheme } from '../Contexts/theme';
-import { Oval } from 'react-loader-spinner';
 
 function ProfilePostCart({
     _id,

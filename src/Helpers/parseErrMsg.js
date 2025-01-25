@@ -1,10 +1,10 @@
 const parseErrorMesaage = (stringDocument) => {
 
   const message = stringDocument
-    .split('/')[2]
-    .split('<')[2]
-    .replace("pre>Error:", "")
-    .trim()
+    .split('/')?.[2]
+    .split('<')?.[2]
+    ?.replace("pre>Error:", "")
+    ?.trim()
 
     if (message) {
       return message

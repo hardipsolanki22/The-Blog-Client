@@ -23,7 +23,7 @@ function Login() {
     const dispatch = useDispatch()
 
     // signIn handler
-    const { mutateAsync, isPending } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: signInUser,
 
         onSuccess: async () => {
@@ -34,12 +34,14 @@ function Login() {
         },
 
         onError: (error) => {
-            useToast.errorToast(parseErrorMesaage(error.response.data))
+            console.log(`erorr: `, JSON.stringify(error));
+             useToast.errorToast(parseErrorMesaage(error.response.data))
+            
         }
     })
 
-    const signin = async (data) => {
-        await mutateAsync(data)
+    const signin = (data) => {
+         mutate(data)
     }
 
     const handleHideShowPassword = () => {

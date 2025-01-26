@@ -82,7 +82,8 @@ function Comment({ commentState, postId }) {
     <div className='flex justify-center items-center mb-6'>
       <p className='text-3xl'>Comments</p>
     </div>
-    <div className='flex gap-4'>
+    <div className='flex gap-4'>.
+
       <div className=''>
         <img src={userData.avatar}
           alt="logo"
@@ -95,7 +96,7 @@ function Comment({ commentState, postId }) {
           type="text"
           placeholder='Add a comment...'
           className="border rounded-lg text-base w-full px-3 py-2 focus:outline-none
-           focus:border-gray-600 transition duration-200"
+           focus:border-gray-600 transition duration-200 text-black"
           {...register("content", {
             required: "true"
           })}

@@ -91,7 +91,7 @@ function PersonalDetailsCart() {
     if (isSuccess && !isLoading) {
         queryClient.invalidateQueries(["current-user"])
         useToast.successToast("😊 Profile update successfully")
-        navigate(`/profile/${user.username}`)
+        navigate(`/${user.username}`)
     }
 
 
@@ -185,6 +185,7 @@ function PersonalDetailsCart() {
                             Cancle
                         </Link>
                         <Button
+                        className='focus:outline-none'
                             disabled={isPending || isLoading}
                         >
                             {isLoading || isPending ?

@@ -23,7 +23,7 @@ function App() {
     useEffect(() => {
       getCurrentUser()
       .then((user) => {
-        if (user.data?.success) {
+        if (user.data._id) {
           dispatch(login({userData: user.data}))
         } else {
           dispatch(logout())

@@ -16,7 +16,7 @@ function EditPost() {
   })
 
   if (isError) {
-    console.log(`Error: ${isError.message}`);
+    console.log(`Error: ${isError}`);
     
   }
   return !isLoading ? (

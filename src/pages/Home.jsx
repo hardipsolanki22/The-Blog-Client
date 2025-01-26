@@ -25,13 +25,13 @@ function Home() {
                         className='w-10 h-10 rounded-full'
                     />
                 </div>
-                <Link to={"/"}>
+                <div>
                     <img
                         src={Logo}
-                        alt="our-logo"
+                        alt="logo"
                         className='w-10 h-10 rounded-full'
                     />
-                </Link>
+                </div>
             </div>
             <div className='w-full flex justify-around items-center h-full border-b border-slate-600 '>
                 <button

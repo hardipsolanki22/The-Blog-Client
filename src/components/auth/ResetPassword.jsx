@@ -40,7 +40,7 @@ function ResetPassword() {
   return (
     <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-screen sm:max-h-screen sm:overflow-y-auto gap-4
-         border-y'>
+         border-y border-slate-600'>
       <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
         min-w-[60%] h-auto border border-violet-600 rounded-md p-10'>
         <p className='text-2xl'>Reset Password</p>

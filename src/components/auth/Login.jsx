@@ -49,6 +49,7 @@ function Login() {
 
     const signin = async (data) => {
         try {
+            setIsLoading(true)
             const response = await axiosInstance.post('/user/login', data, {
                 headers: {
                     "Content-Type": "application/json"
@@ -151,9 +152,9 @@ function Login() {
                     <div className='flex m-2 justify-center items-center'>
                         <Button
                             className='focus:outline-none'
-                            disabled={isPending}
+                            disabled={isLoading}
                         >
-                            {isPending ?
+                            {isLoading ?
                                 <Oval
                                     height={23}
                                     width={23}

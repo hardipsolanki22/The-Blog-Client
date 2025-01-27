@@ -23,7 +23,7 @@ function Login() {
     const dispatch = useDispatch()
 
     // signIn handler
-    const { mutateAsync, isPending } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: signInUser,
 
         onSuccess: (data) => {
@@ -47,8 +47,8 @@ function Login() {
         }
     })
 
-    const signin = async (data) => {
-         await mutateAsync(data)
+    const signin =  (data) => {
+          mutateAsync(data)
     }
 
     const handleHideShowPassword = () => {

@@ -34,7 +34,6 @@ function Login() {
         },
 
         onError: (error) => {
-            console.log(`erorr: `, JSON.stringify(error));
              useToast.errorToast(parseErrorMesaage(error.response.data))
             
         }

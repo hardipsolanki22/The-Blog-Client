@@ -48,7 +48,7 @@ function Login() {
     })
 
     const signin =  (data) => {
-          mutateAsync(data)
+          mutate(data)
     }
 
     const handleHideShowPassword = () => {

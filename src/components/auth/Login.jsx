@@ -26,10 +26,13 @@ function Login() {
     const { mutateAsync, isPending } = useMutation({
         mutationFn: signInUser,
 
-        onSuccess: async () => {
-            const currentUser = await getCurrentUser()
-            dispatch(login({ userData: currentUser.data }))
-            useToast.successToast("😍 Login successfully")
+        onSuccess: () => {
+           getCurrentUser().then((user) => {
+            if (user) {
+                dispatch(login({ userData: user.data }))
+                useToast.successToast("😍 Login successfully")
+            }
+           })
             navigate("/")
         },
 

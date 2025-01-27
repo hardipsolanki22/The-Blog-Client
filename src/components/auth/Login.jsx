@@ -14,6 +14,7 @@ import signInUser from '../Api/AuthApi/signIn'
 import getCurrentUser from '../Api/UserApi/getCurrentUser'
 import { Oval } from 'react-loader-spinner'
 import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
+import { axiosInstance } from '../../Helpers/axiosService'
 
 function Login() {
 
@@ -21,35 +22,57 @@ function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    // const [isLoading, setIsLoading] = useState(false)
 
     // signIn handler
-    const { mutate, isPending } = useMutation({
+    const { mutateAsync, isPending } = useMutation({
         mutationFn: signInUser,
 
-        onSuccess: (data) => {
-          if (data) {
-            getCurrentUser().then((user) => {
-                if (user) {
-                    console.log('data: ', JSON.stringify(data));
-                    console.log('user: ', JSON.stringify(user));
-                    
-                    dispatch(login({ userData: user.data }))
-                    useToast.successToast("😍 Login successfully")
-                    navigate("/")
-                }
-               })
-          }
+        onSuccess: async () => {
+            const currentUser = await getCurrentUser()
+            dispatch(login({ userData: currentUser.data }))
+            useToast.successToast("😍 Login successfully")
+            navigate("/")
         },
 
         onError: (error) => {
+            console.log(`erorr: `, JSON.stringify(error));
              useToast.errorToast(parseErrorMesaage(error.response.data))
-            
+
         }
     })
 
-    const signin =  (data) => {
-          mutate(data)
+    const signin = async (data) => {
+         await mutateAsync(data)
     }
+
+
+    // const signin = async (data) => {
+    //     try {
+    //         const response = await axiosInstance.post('/user/login', data, {
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             }
+    //         })
+
+    //         console.log('responde: ', JSON.stringify(response));
+            
+
+    //         if (response.data.data) {
+    //             const userData = await getCurrentUser()
+    //             if (userData.data) {
+    //                 dispatch(login({userData: userData.data}))
+    //                 useToast.successToast("Login successfully")
+    //                 navigate("/")
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.log('eror: ', error);
+            
+    //     }finally {
+    //         setIsLoading(false)
+    //     }
+    // }
 
     const handleHideShowPassword = () => {
         setIsEyeOpen(!isEyeOpen)
@@ -68,7 +91,7 @@ function Login() {
                     <p>
                         Do you have no account&#63;
                         <Link to={"/signup"}
-                        className='text-blue-500'
+                            className='text-blue-500'
                         >
                             Signup
                         </Link>
@@ -82,10 +105,10 @@ function Login() {
                         className="border text-base w-full px-2 py-2 focus:outline-none
                         transition duration-200 focus:border-gray-600 text-black"
                         {...register("email", {
-                           required: true,
+                            required: true,
                             validate: {
                                 matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)
-                                 || "Email address must be a valid address.",
+                                    || "Email address must be a valid address.",
                             }
                         })}
                     />
@@ -99,8 +122,8 @@ function Login() {
                         {...register("password", {
                             required: true,
                             validate: {
-                                matchPatern: (value) =>  /^(?=.{8,})/gm.test(value)
-                                 || "Password must be at least 8 characters long.",
+                                matchPatern: (value) => /^(?=.{8,})/gm.test(value)
+                                    || "Password must be at least 8 characters long.",
                             }
                         })}
                     />

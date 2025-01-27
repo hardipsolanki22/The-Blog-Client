@@ -22,8 +22,7 @@ function Signup() {
 
         onSuccess: () => {
             useToast.successToast("😊 Signup successfully")
-            // fetch all users
-            queryClient.invalidateQueries(["users"])
+            queryClient.invalidateQueries(["users"])  // fetch all users
             navigate("/login")
         },
         onError: (error) => {

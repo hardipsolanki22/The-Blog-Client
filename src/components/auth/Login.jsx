@@ -22,58 +22,58 @@ function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
 
     // signIn handler
-    // const { mutateAsync, isPending } = useMutation({
-    //     mutationFn: signInUser,
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: signInUser,
 
-    //     onSuccess: async () => {
-    //         const currentUser = await getCurrentUser()
-    //         dispatch(login({ userData: currentUser.data }))
-    //         useToast.successToast("😍 Login successfully")
-    //         navigate("/")
-    //     },
+        onSuccess: async () => {
+            const currentUser = await getCurrentUser()
+            dispatch(login({ userData: currentUser.data }))
+            useToast.successToast("😍 Login successfully")
+            navigate("/")
+        },
 
-    //     onError: (error) => {
-    //         console.log(`erorr: `, JSON.stringify(error));
-    //          useToast.errorToast(parseErrorMesaage(error.response.data))
+        onError: (error) => {
+            console.log(`erorr: `, JSON.stringify(error));
+             useToast.errorToast(parseErrorMesaage(error.response.data))
 
-    //     }
-    // })
+        }
+    })
+
+    const signin = (data) => {
+          mutateAsync(data)
+    }
+
 
     // const signin = async (data) => {
-    //      await mutateAsync(data)
+    //     try {
+    //         setIsLoading(true)
+    //         const response = await axiosInstance.post('/user/login', data, {
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             }
+    //         })
+
+    //         console.log('responde: ', JSON.stringify(response));
+            
+
+    //         if (response.data.data) {
+    //             const userData = await getCurrentUser()
+    //             if (userData.data) {
+    //                 dispatch(login({userData: userData.data}))
+    //                 useToast.successToast("Login successfully")
+    //                 navigate("/")
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.log('eror: ', error);
+            
+    //     }finally {
+    //         setIsLoading(false)
+    //     }
     // }
-
-
-    const signin = async (data) => {
-        try {
-            setIsLoading(true)
-            const response = await axiosInstance.post('/user/login', data, {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-
-            console.log('responde: ', JSON.stringify(response));
-            
-
-            if (response.data.data) {
-                const userData = await getCurrentUser()
-                if (userData.data) {
-                    dispatch(login({userData: userData.data}))
-                    useToast.successToast("Login successfully")
-                    navigate("/")
-                }
-            }
-        } catch (error) {
-            console.log('eror: ', error);
-            
-        }finally {
-            setIsLoading(false)
-        }
-    }
 
     const handleHideShowPassword = () => {
         setIsEyeOpen(!isEyeOpen)
@@ -152,9 +152,9 @@ function Login() {
                     <div className='flex m-2 justify-center items-center'>
                         <Button
                             className='focus:outline-none'
-                            disabled={isLoading}
+                            disabled={isPending}
                         >
-                            {isLoading ?
+                            {isPending ?
                                 <Oval
                                     height={23}
                                     width={23}

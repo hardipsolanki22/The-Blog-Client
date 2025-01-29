@@ -52,13 +52,13 @@ function following() {
       setIsFollowedLoading(true)
       const response = await axiosInstance.post(`/follows/${userId}/following`)
       if (response.data.data.following) {
-        useToast.successToast("😍 Follow Successfully")
+        useToast.successToast("😍 " + response.data.message)
       } else {
-        useToast.successToast("😒 Unfollow Successfully")
+        useToast.successToast("😒 " + response.data.message)
       }
       queryClient.invalidateQueries(["following"])
     } catch (error) {
-      throw console.error(error.message)
+       console.error(error.message)
     } finally {
       setIsFollowedLoading(false)
     }

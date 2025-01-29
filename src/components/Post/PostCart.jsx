@@ -41,13 +41,13 @@ function PostCart({
       setIsPostLike(response.data.data.like)
       if (response.data.data.like) {
         setTotalLike((prevLike) => prevLike + 1)
-        useToast.successToast("😍 Liked Successfully")
+        useToast.successToast("😍 " + response.data.message)
       } else {
         setTotalLike((prevLike) => prevLike - 1)
-        useToast.successToast("😒 Unliked Successfully")
+        useToast.successToast("😒 " + response.data.message)
       }
     } catch (error) {
-      useToast.errorToast(error.message)
+      console.error(error.message);
 
     } finally {
       setIsLoading(false)
@@ -66,7 +66,7 @@ function PostCart({
   }
 
   return (
-    <div className='flex-col justify-center items-center'>
+    <div className='flex flex-col justify-center h-auto max-w-[85vw] p-3'>
       <div className='flex items-center '>
         <Link  to={`/${owner.username}`}
         className=' mx-2 flex justify-center items-center'>
@@ -79,20 +79,20 @@ function PostCart({
         <p className='mr-2'>{owner.username}</p>
         <p className='text-gray-500 text-[13px]'>{formateRelative(createdAt)}</p>
       </div>
-      <div className='flex flex-col justify-center items-center'>
-        <div className='p-2'>
+      <div className='flex flex-col justify-center ml-4'>
+        <div className='mt-2 flex flex-col justify-center '>
           <img
             src={image}
             className='rounded-md'
             loading='lazy'
             alt="post" />
         </div>
-        <div className='flex flex-col w-full h-auto gap-4 mt-2 ml-4 overflow-hidden'>
+        <div className='flex flex-col justify-center gap-4 my-2'>
           <p className='break-words'>{title}</p>
           <p className='break-words'>{content}</p>
         </div>
       </div>
-      <div className='flex items-center gap-2 mt-3 ml-2'>
+      <div className='flex items-center ml-4'>
         <button onClick={() => hanldePostLike(_id)}
          className={`bg-inherit border-none p-1 rounded-full focus:outline-none 
            ${ isPostLike && 'text-pink-600'}  transition-all duration-200 hover:text-pink-600`}
@@ -109,7 +109,7 @@ function PostCart({
           {totalLike}
         </span>
         <button onClick={() => setIsCommentOpen(!isCommentOpen)}
-          className='p-1 border-none bg-inherit focus:outline-none'>
+          className='p-1 border-none bg-inherit focus:outline-none ml-3'>
           <FontAwesomeIcon icon={faComment} />
         </button>
         <span className='text-[13px]' >

@@ -20,13 +20,14 @@ function Signup() {
     const { mutateAsync, isPending } = useMutation({
         mutationFn: registerUser,
 
-        onSuccess: () => {
-            useToast.successToast("😊 Signup successfully")
+        onSuccess: (response) => {
+            useToast.successToast("😊 " + response.message)
             queryClient.invalidateQueries(["users"])  // fetch all users
             navigate("/login")
         },
         onError: (error) => {
-            useToast.errorToast(parseErrorMesaage(error.response.data))
+            const message = error.response.data.message || "Something want to wrong"
+            useToast.errorToast("😐 " + message)
         }
     })
 

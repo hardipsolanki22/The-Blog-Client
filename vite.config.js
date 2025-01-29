@@ -6,8 +6,9 @@ export default defineConfig({
   server: {
     proxy: {
      "/api": {
-        target: "https://blog-api-qy88.onrender.com",
+        target: "https://blog-api-d2uc.onrender.com",
         changeOrigin: true,
+        secure: true, 
      }
     }
   },

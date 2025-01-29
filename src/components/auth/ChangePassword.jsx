@@ -18,12 +18,13 @@ function ChangePassword() {
     // chnage password 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: changePassword,
-        onSuccess: () => {
-            useToast.successToast("😊 Update password successfully")
+        onSuccess: (response) => {
+            useToast.successToast("😊 " + response.message)
             navigate("/")
         },
         onError: (error) => {
-            useToast.errorToast(parseErrorMesaage(error.response.data))
+            const message = error.response.data.message || "Something want to wrong"
+            useToast.errorToast("😐 " + message)
         }
     })
 

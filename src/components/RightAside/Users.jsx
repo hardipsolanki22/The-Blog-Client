@@ -19,6 +19,8 @@ function Users() {
         queryKey: ["users"],
         queryFn: getAllUsers,
         refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        retry: false
     })
 
     // FollowUnfollow Handler
@@ -28,10 +30,10 @@ function Users() {
             const response = await axiosInstance.post(`/follows/${userId}/following`)
             if (response.data.data.following) {
                 queryClient.invalidateQueries(["users"])
-                useToast.successToast("Follow successfully")
+                useToast.successToast("😍 " + response.data.message)
             }
         } catch (error) {
-            throw console.error(error.message)
+             console.error(error.message)
         } finally {
             setIsFollowedLoading(false)
         }

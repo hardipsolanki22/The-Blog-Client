@@ -17,6 +17,8 @@ function ForYouFeed() {
       queryKey: ["for-you-posts"],
       queryFn: fetchAllPosts,
       staleTime: 3000,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,  
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.data.length === MAX_PAGE_POST ? allPages.length + 1 : undefined;
       },
@@ -42,7 +44,7 @@ function ForYouFeed() {
      sm:overflow-y-auto sm:no-scrollbar ${themeMode ? 'dark' : 'light'}`}>
       {posts?.pages.map((page) => (
         page.data?.map((post) => (<div key={post._id}
-          className='flex flex-col justify-center border-b  border-slate-600 p-5 h-full '>
+          className='flex flex-col justify-center border-b border-slate-600 p-5 h-auto'>
           <PostCart {...post} />
         </div>
         ))

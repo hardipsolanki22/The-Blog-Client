@@ -58,7 +58,7 @@ function Comment({ commentState, postId }) {
       })
       if (response.data) {
         queryClient.invalidateQueries(["comments"])
-        useToast.successToast("Comment successfully")
+        useToast.successToast("😄 " + response.data.message)
       }
     } catch (error) {
       console.error(error.message);

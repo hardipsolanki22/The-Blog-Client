@@ -51,12 +51,12 @@ function Followers() {
       const response = await axiosInstance.post(`/follows/${userId}/following`)
       if (response.data.data.following) {
         queryClient.invalidateQueries(["followers"])
-        useToast.successToast("😍 Follow Successfully")
+        useToast.successToast("😍 " + response.data.message)
       } else {
-        useToast.successToast("😒 Unfollow Successfully")
+        useToast.successToast("😒 " + response.data.message)
       }
     } catch (error) {
-      throw console.error(error.message)
+       console.error(error.message)
     } finally {
       setIsFollowedLoading(false)
     }
@@ -80,7 +80,8 @@ function Followers() {
       </div>
       {followers.pages?.map((page) => (
         page.data?.map((user) => (
-          <div className='my-6 flex justify-around items-center' key={user.followDetails._id}>
+          <div key={user.followDetails._id}
+            className='my-6 flex justify-around items-center'>
             <div className={`${userData._id === user.followDetails._id && 'mr-14'}
              flex justify-center items-center gap-3`}>
               <Link to={`/${user.followDetails.username}`}

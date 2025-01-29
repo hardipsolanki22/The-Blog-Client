@@ -34,17 +34,17 @@ function PostForm({ post }) {
         mutationFn: post ? updatePost : addPost,
         onSuccess: (postData) => {
             postData && post ? (
-                useToast.successToast("😊 Update post succefully"),
+                useToast.successToast("😊 " + postData.message),
                 navigate(`/${postData.data.owner.username}`)
             ) : (
                 queryClient.invalidateQueries(["for-you-posts"]),
                 queryClient.invalidateQueries(["following-posts"]),
-                useToast.successToast("😎 Post create succefully"),
+                useToast.successToast("😎 " + postData.message),
                 navigate("/")
             )
         },
         onError: (error) => {
-            useToast.errorToast(parseErrorMesaage(error.response.data))
+            console.error(error.message);
         }
     })
 
@@ -73,12 +73,11 @@ function PostForm({ post }) {
     return (
         <div className='flex flex-col items-center justify-center
             sm:col-span-11 md:col-span-6 h-auto sm:max-h-screen sm:no-scrollbar sm:overflow-y-auto gap-4
-         my-4'>
+         my-4 sm:my-0'>
             <div className={`flex flex-col justify-center items-center shadow-black shadow-lg
-         h-auto w-auto sm:max-w-[75%] min-w-[70%] border border-violet-600 rounded-md p-6`}>
+         h-auto sm:min-w-[65%] min-w-[85%] border border-violet-600 rounded-md p-4`}>
                 <h1>Post</h1>
-
-                <form onSubmit={handleSubmit(postHandler)} className='w-full h-auto'>
+                <form onSubmit={handleSubmit(postHandler)} className='w-full '>
                     <Input
                         type="text"
                         label="Title: "

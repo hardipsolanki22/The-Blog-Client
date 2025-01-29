@@ -46,23 +46,29 @@ function CommentCart({
     const isAuth = userData && owner ? userData._id === owner._id : false
 
     // Like-Dislike Comment
-    const { mutateAsync } = useMutation({
+    const { mutateAsync, isPending } = useMutation({
         mutationFn: likeDislikeComment,
         onSuccess: (response) => {
             queryClient.invalidateQueries(["comments"])
         },
         onError: (error) => {
-            useToast.errorToast(error.message)
+            console.error(error.message);
+            
         }
     })
 
     // Delete Comment
     const handleCommentDelete = async (commentId) => {
-        const response = await deleteComment(commentId)
-        if (response) {
-            setIsDotOpen(false)
-            queryClient.invalidateQueries(["comments"])
-            useToast.successToast("Delete comment successfully")
+        try {
+            const response = await deleteComment(commentId)
+            if (response) {
+                setIsDotOpen(false)
+                queryClient.invalidateQueries(["comments"])
+                useToast.successToast("😶 " + response.message)
+            }
+        } catch (error) {
+            console.error(error.message);
+
         }
     }
 
@@ -91,20 +97,24 @@ function CommentCart({
                 <div className="flex mt-[3px] items-center text-gray-500">
                     <button onClick={async () => await mutateAsync({ commentId: _id, type: "LIKE" })}
                         className={`hover:text-blue-500 p-2  
-                        bg-inherit border-none focus:outline-none`}>
-                        <FontAwesomeIcon 
-                        icon={faThumbsUp}
-                        className={`${isCommentLike && 'text-blue-500'}`}
+                        bg-inherit border-none focus:outline-none`}
+                        disabled={isPending}
+                    >
+                        <FontAwesomeIcon
+                            icon={faThumbsUp}
+                            className={`${isCommentLike && 'text-blue-500'}`}
                         />
                     </button>
 
                     <span className='text-[13px]'>{commentlikesCount}</span>
                     <button onClick={async () => await mutateAsync({ commentId: _id, type: "DISLIKE" })}
                         className={`hover:text-red-500 p-2 
-                       bg-inherit border-none focus:outline-none`}>
-                        <FontAwesomeIcon 
-                        icon={faThumbsDown} 
-                        className={`${isCommentDisLike && 'text-red-500'} `}
+                       bg-inherit border-none focus:outline-none`}
+                        disabled={isPending}
+                    >
+                        <FontAwesomeIcon
+                            icon={faThumbsDown}
+                            className={`${isCommentDisLike && 'text-red-500'} `}
                         />
                     </button>
                     <span className='text-[13px]'>{commentDislikesCount}</span>

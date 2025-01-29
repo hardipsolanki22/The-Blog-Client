@@ -59,9 +59,9 @@ function ProfilePostCart({
             const response = await axiosInstance.post(`/like/create-like/${postId}`)
             queryClient.invalidateQueries(["posts", { owner }])
             if (response.data.data.like) {
-                useToast.successToast("😘 Liked Successfully")
+                useToast.successToast("😘 " + response.data.message)
             } else {
-                useToast.successToast("😒 Unliked Successfully")
+                useToast.successToast("😒 " + response.data.message)
             }
         } catch (error) {
             console.error(error.message);
@@ -80,7 +80,7 @@ function ProfilePostCart({
             if (respose) {
                 queryClient.invalidateQueries(["posts", { owner }]);
                 setIsDotOpen(false)
-                useToast.successToast("😒 Post delete successfully")
+                useToast.successToast("😒 " + respose.data.message)
             }
         } catch (error) {
             console.error(error.message);
@@ -102,7 +102,7 @@ function ProfilePostCart({
     const { themeMode } = useTheme()
 
     return (
-        <div className='h-auto flex-col justify-center items-center p-8 mb-4 border-t border-slate-600 '>
+        <div className='h-auto flex flex-col justify-center mb-4 max-w-[85vw]'>
             {isAuth && <div className='flex justify-end items-center mr-4'>
                 <p className={`text-[2rem] ${themeMode ? 'text-white' : 'text-slate-800'} block cursor-pointer
                                        ${isDotOpen && "hidden"}`}
@@ -156,12 +156,12 @@ function ProfilePostCart({
                         loading='lazy'
                         alt="post" />
                 </div>
-                <div className='flex flex-col w-full h-auto gap-4 mt-2 ml-4 overflow-hidden'>
+                <div className='flex flex-col w-full h-auto gap-4 mt-2 ml-5 overflow-hidden'>
                     <p className='break-words'>{title}</p>
                     <p className='break-words'>{content}</p>
                 </div>
             </div>
-            <div className='flex items-center gap-2 mt-3 mb-4 ml-2'>
+            <div className='flex items-center mt-3 mb-4 ml-3'>
                 <button
                     onClick={() => hanldePostLike(_id)}
                     className={`${isLiked && 'text-pink-600'} transition-all duration-200
@@ -180,7 +180,7 @@ function ProfilePostCart({
                     {likesCount}
                 </span>
                 <button onClick={() => setIsCommentOpen(!isCommentOpen)}
-                    className='p-1 bg-inherit focus:outline-none'>
+                    className='p-1 bg-inherit focus:outline-none ml-3'>
                     <FontAwesomeIcon icon={faComment} />
                 </button>
                 <span className='text-[13px]' >

@@ -28,22 +28,22 @@ function Login() {
     const { mutateAsync, isPending } = useMutation({
         mutationFn: signInUser,
 
-        onSuccess: async () => {
+        onSuccess: async (response) => {
             const currentUser = await getCurrentUser()
             dispatch(login({ userData: currentUser.data }))
-            useToast.successToast("😍 Login successfully")
+            useToast.successToast("😍 " + response.message)
             navigate("/")
         },
 
-        onError: (error) => {
-            console.log(`erorr: `, JSON.stringify(error));
-             useToast.errorToast(parseErrorMesaage(error.response.data))
+        onError: (error) => {     
+            const message = error.response.data.message || "Something want to wrong"       
+             useToast.errorToast("😐 " + message)
 
         }
     })
 
-    const signin = (data) => {
-          mutateAsync(data)
+    const signin = async (data) => {
+         await mutateAsync(data)
     }
 
 

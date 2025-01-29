@@ -12,12 +12,13 @@ import { useToast } from '../../Helpers/toast'
 import { axiosInstance } from '../../Helpers/axiosService'
 import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
 import { useTheme } from '../Contexts/theme'
+import getCurrentUser from '../Api/UserApi/getCurrentUser'
 
 function PersonalDetailsCart() {
 
     const userData = useSelector(state => state.auth.userData)
     const [isLoading, setIsLoading] = useState(false)
-    const [user, setUser] = useState({})
+    const [response, setResponse] = useState({})
     const navigate = useNavigate()
     const queryClient = useQueryClient();
     const [coverImage, setCoverImage] = useState(null)
@@ -70,10 +71,12 @@ function PersonalDetailsCart() {
     const { mutateAsync, isPending, isSuccess } = useMutation({
         mutationFn: updateProfile,
         onSuccess: (response) => {
-            setUser(response.data)
+            queryClient.invalidateQueries(["current-user"])
+            setResponse(response)
         },
         onError: (error) => {
-            useToast.errorToast(parseErrorMesaage(error.response.data))
+            const message = error.response.data.message || "Something want to wrong"
+            useToast.errorToast("😐" + message)
         }
     })
 
@@ -89,9 +92,8 @@ function PersonalDetailsCart() {
     }
 
     if (isSuccess && !isLoading) {
-        queryClient.invalidateQueries(["current-user"])
-        useToast.successToast("😊 Profile update successfully")
-        navigate(`/${user.username}`)
+        useToast.successToast("😊 " + response.message )
+        navigate(`/${response.data.username}`)
     }
 
 
@@ -107,8 +109,8 @@ function PersonalDetailsCart() {
 
     return (
         <div className='flex flex-col items-center justify-center border-t border-slate-600 
-        h-screen  sm:h-[92vh]'>
-            <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
+        sm:h-[92vh]'>
+            <div className='mt-4 gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
         min-w-[75%] h-auto border border-violet-600 rounded-md p-6 sm:p-4'>
                 <p className='text-2xl'>Personal Details</p>
                 <div className='w-full flex flex-col justify-center items-center h-auto'>
@@ -137,7 +139,7 @@ function PersonalDetailsCart() {
                         <p className='ml'>{userData.username}</p>
                     </div>
                 </div>
-                <form onSubmit={handleSubmit(updateProfileHandler)} className='w-full'>
+                <form onSubmit={handleSubmit(updateProfileHandler)} className='w-full mb-7'>
                     <Input
                         type="text"
                         label="Name: "

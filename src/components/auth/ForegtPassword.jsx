@@ -11,18 +11,20 @@ import { parseErrorMesaage } from '../../Helpers/parseErrMsg'
 
 function ForgetPassword() {
 
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, formState: {errors} } = useForm()
 
   // send mail
   const { mutateAsync, isPending } = useMutation({
     mutationFn: forgetPassword,
-    onSuccess: () => {
-      useToast.successToast("👍 Email send successfully")
+    onSuccess: (response) => {
+      useToast.successToast("👍 " + response.message)
     },
     onError: (error) => {
-      useToast.errorToast(parseErrorMesaage(error.response.data))
+      const message = error.response.data.message || "Something want to wrong"
+      useToast.errorToast("😐 " + message)
     }
   })
+
 
   const sendEmailHandler = async (data) => {
     await mutateAsync(data)
@@ -42,9 +44,15 @@ function ForgetPassword() {
             className="border text-base w-full px-2 py-2 focus:outline-none
             transition duration-200 focus:border-gray-600 text-black"
             {...register("email", {
-              required: true
+              required: true,
+              validate: {
+                matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)
+                  || "Email address must be a valid address.",
+              }
             })}
           />
+          {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
+
           <div className='flex m-2 justify-center items-center'>
             <Button
               className='focus:outline-none'

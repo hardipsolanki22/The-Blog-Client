@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ToastContainer } from 'react-toastify';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { DNA } from 'react-loader-spinner'
 
 import Header from './components/Header/Header';
@@ -17,20 +17,23 @@ import { ThemeProvider } from './components/Contexts/theme';
 
 function App() {
   const [themeMode, setThemeMode] = useState(true);
-  const [isLoading, setIsLoading] = useState(true)
   const dispatch = useDispatch();  
 
+  const {isLoading, data: user} = useQuery({
+    queryKey: ["current-user"],
+    queryFn: getCurrentUser,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    retry: false
+  })  
+
     useEffect(() => {
-      getCurrentUser()
-      .then((user) => {
-        if (user.data._id) {
+        if (user && user.data) {          
           dispatch(login({userData: user.data}))
-        } else {
+        } else {          
           dispatch(logout())
         }
-      })
-      .finally(() => setIsLoading(false))
-    }, [])
+    },[user])
 
 
   // Toggle dark mode and light mode 

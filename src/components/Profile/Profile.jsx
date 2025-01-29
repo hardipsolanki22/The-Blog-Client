@@ -65,15 +65,15 @@ function Profile() {
             setIsFollowedLoading(true)
             const response = await axiosInstance.post(`/follows/${userId}/following`)
             if (response.data.data.following) {
-                useToast.successToast("😍 Follow successfully")
+                useToast.successToast("😍 " + response.data.message)
             } else {
-                useToast.successToast("😒 Unfollow successfully")
+                useToast.successToast("😒 " + response.data.message)
             }
             // fetch all users and users with this username
             queryClient.invalidateQueries(["users", { username }])
             queryClient.invalidateQueries(["users"])
         } catch (error) {
-            throw console.error(error.message)
+             console.error(error.message)
         } finally {
             setIsFollowedLoading(false)
         }
@@ -84,7 +84,7 @@ function Profile() {
     return (
         !isLoading ? (<div className='sm:col-span-11 md:col-span-6 h-auto 
            sm:no-scrollbar sm:max-h-screen sm:overflow-y-auto gap-4 sm:border-y border-slate-600'>
-            <div className='flex gap-4 ml-4 mt-4 mb-2'>
+            <div className='flex gap-4 ml-4 mt-4 mb-2 '>
                 <Link to={"/"}
                     className='text-white'>
                     <FontAwesomeIcon icon={faArrowLeft} />
@@ -139,14 +139,18 @@ function Profile() {
             </div>
             <div>
                 <div className='flex justify-center items-center m-4'>
-                    <Button>
+                    <Button
+                    className='focus:outline-none'
+                    >
                         Posts
                     </Button>
                 </div>
             </div>
             {posts?.pages.map((page) => (
                 page.data?.map((post) => (
-                    <div className=' h-auto' key={post._id}>
+                    <div key={post._id}
+                    className=' flex flex-col justify-center items-center border-b
+                     border-slate-600 p-5 h-auto'>
                         <ProfilePostCart {...post} />
                     </div>
                 ))

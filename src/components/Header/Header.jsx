@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faExchange, faUserPlus, faSignIn, faSignOut, faUser, faRetweet, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { faHome, faUserPlus, faSignIn, faUser, faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useRef } from 'react'
 
@@ -10,6 +10,7 @@ import { useTheme } from '../Contexts/theme'
 import nonProfileImage from '../../assets/userDeafultAavtar.png'
 import Logo from '../../assets/Logo.png'
 import ThemeBtn from '../Atoms/ThemeBtn'
+import Button from '../Atoms/Button'
 
 function Header() {
     const authStatus = useSelector((state) => state.auth.status)
@@ -45,7 +46,7 @@ function Header() {
             active: !authStatus
         },
     ]
-    
+
     const handleClickOutSide = () => {
         if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
             setIsOpen(false)
@@ -103,35 +104,45 @@ function Header() {
                             </div>
                         </div>
                     }
-                    <ul className='flex flex-col gap-8 h-auto'>
-                        {
-                            navItems.map((item) => (
-                                item.active ? (
-                                    <li key={item.name}>
-                                        <NavLink to={item.slug}
-                                            onClick={() => navigate(item.slug)}
-                                            className={({ isActive }) => `  
+                    <div className='h-full flex flex-col justify-between'>
+                        <ul className='flex flex-col gap-8 h-auto'>
+                            {
+                                navItems.map((item) => (
+                                    item.active ? (
+                                        <li key={item.name}>
+                                            <NavLink to={item.slug}
+                                                className={({ isActive }) => `  
                                             border rounded-lg focus:outline-none font-semibold p-2 text-center
                                             ${themeMode ? 'hover:bg-purple-500 text-white hover:text-white border-slate-400'
-                                                    : 'hover:bg-blue-500 hover:text-white text-black border-slate-600'}
+                                                        : 'hover:bg-blue-500 hover:text-white text-black border-slate-600'}
                                             ${isActive && themeMode && "text-white bg-purple-500 "}
                                             ${isActive && !themeMode && " text-white bg-blue-500"}`}
-                                        >
-                                            <span className='mr-2'>{item.icon}</span>
-                                            <span>{item.name}</span>
-                                        </NavLink>
-                                    </li>
-                                ) : null
-                            ))}
-                        {authStatus && (
-                            <li key='logout'>
-                                <LogoutBtn />
+                                            >
+                                                <span className='mr-2'>{item.icon}</span>
+                                                <span>{item.name}</span>
+                                            </NavLink>
+                                        </li>
+                                    ) : null
+                                ))}
+                            {authStatus && (
+                                <li key='logout'>
+                                    <LogoutBtn />
+                                </li>
+                            )}
+                            <li key='mode'>
+                                <ThemeBtn />
                             </li>
-                        )}
-                        <li key='mode'>
-                            <ThemeBtn />
-                        </li>
-                    </ul>
+                        </ul>
+                        {authStatus && <ul>
+                            <li>
+                                <Button onClick={() => navigate("/support")}
+                                    className='border border-slate-600 focus:outline-none'>
+                                    <FontAwesomeIcon icon={faQuestion} />
+                                    <span className='ml-2'> Support</span>
+                                </Button>
+                            </li>
+                        </ul>}
+                    </div>
                 </aside>) : null
             }
         </div>

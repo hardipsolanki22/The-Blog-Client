@@ -23,12 +23,13 @@ function ResetPassword() {
   // reset password 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: resetPassword,
-    onSuccess: () => {
-      useToast.successToast("😊 Password reset successfully")
+    onSuccess: (response) => {
+      useToast.successToast("😊 " + response.message)
       navigate("/login")
     },
     onError: (error) => {
-      useToast.errorToast(parseErrorMesaage(error.response.data))
+      const message = error.response.data.message || "Something want to wrong"
+      useToast.errorToast("😐 " + message)
     }
   })
 

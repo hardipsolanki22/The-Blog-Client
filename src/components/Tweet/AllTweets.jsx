@@ -47,9 +47,9 @@ function AllTweets() {
     // Create Tweet
     const { mutateAsync, isPending } = useMutation({
         mutationFn: createTweet,
-        onSuccess: () => {
+        onSuccess: (response) => {
             queryClient.invalidateQueries(["tweets"])
-            useToast.successToast("😊 Tweet create successfully")
+            useToast.successToast("😊 " + response.message)
         },
         onError: (error) => {
             useToast.errorToast(error.message)

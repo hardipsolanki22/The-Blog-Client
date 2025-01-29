@@ -24,6 +24,7 @@ import Following from './components/Follows/Following.jsx'
 import { store } from './store/store.js'
 import AllTweets from './components/Tweet/AllTweets.jsx'
 import Page404 from './components/Atoms/page404.jsx'
+import Support from './pages/Support.jsx'
 
 
 const router = createBrowserRouter([
@@ -140,6 +141,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication>
             <AllTweets />
+          </AuthLayout>
+        )
+      },
+      {
+        path: "/support",
+        element: (
+          <AuthLayout authentication>
+            <Support/>
           </AuthLayout>
         )
       },

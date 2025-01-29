@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useInView } from "react-intersection-observer";
 import { Oval } from 'react-loader-spinner';
 
-
 import PostCart from '../Post/PostCart'
 import { useInfiniteQuery } from '@tanstack/react-query';
 import fetchFollowingPost from '../Api/PostApi/fetchFollowingPosts';
@@ -43,7 +42,7 @@ function FollowingFeed() {
     {posts?.pages.map((page) => (
       page.data.length ? (page.data?.map((post) => (
         <div key={post._id}
-          className='flex flex-col justify-center border-b  border-slate-600 p-5 h-auto '>
+          className='flex flex-col justify-center border-b border-slate-600 p-5 h-auto'>
           <PostCart {...post} />
         </div>
       ))) : (<div className='flex justify-center items-center'>

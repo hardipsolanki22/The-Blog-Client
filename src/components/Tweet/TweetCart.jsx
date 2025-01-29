@@ -62,7 +62,7 @@ function TweetCart({
             if (response) {
                 setIsDotOpen(false)
                 queryClient.invalidateQueries(["tweets"])
-                useToast.successToast("😒 Delete tweet successfully")
+                useToast.successToast("😒 " + response.message)
             }
         } catch (error) {
             useToast.errorToast(error.message)

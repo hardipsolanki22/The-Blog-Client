@@ -110,7 +110,7 @@ function PersonalDetailsCart() {
     return (
         <div className='flex flex-col items-center justify-center border-t border-slate-600 
         sm:h-[92vh]'>
-            <div className='mt-4 gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
+            <div className='mt-4 gap-4 flex flex-col justify-center items-center
         min-w-[75%] h-auto border border-violet-600 rounded-md p-6 sm:p-4'>
                 <p className='text-2xl'>Personal Details</p>
                 <div className='w-full flex flex-col justify-center items-center h-auto'>

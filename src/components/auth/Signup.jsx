@@ -54,7 +54,7 @@ function Signup() {
         <div className='flex flex-col items-center justify-center 
             sm:col-span-11 md:col-span-6 h-auto sm:max-h-screen overflow-y-auto gap-4
        pt-2 sm:pt-0 border-t border-slate-600'>
-            <div className={`gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
+            <div className={`gap-4 flex flex-col justify-center items-center
          sm:min-w-[70%] h-auto border border-violet-600 rounded-md p-5 sm:m-4`}>
                 <h1>Signup</h1>
                 <div>

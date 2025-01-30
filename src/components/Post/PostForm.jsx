@@ -74,7 +74,7 @@ function PostForm({ post }) {
         <div className='flex flex-col items-center justify-center
             sm:col-span-11 md:col-span-6 h-auto sm:max-h-screen sm:no-scrollbar sm:overflow-y-auto gap-4
          my-4 sm:my-0'>
-            <div className={`flex flex-col justify-center items-center shadow-black shadow-lg
+            <div className={`flex flex-col justify-center items-center 
          h-auto sm:min-w-[65%] min-w-[85%] border border-violet-600 rounded-md p-4`}>
                 <h1>Post</h1>
                 <form onSubmit={handleSubmit(postHandler)} className='w-full '>

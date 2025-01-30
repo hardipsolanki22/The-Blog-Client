@@ -70,7 +70,7 @@ function AllTweets() {
             sm:no-scrollbar flex flex-col sm:overflow-y-auto border-y border-slate-600'>
             <div className='flex flex-col items-center'>
                 <p className='text-2xl'>Tweet</p>
-                <div className='gap-4 flex flex-col justify-center items-center shadow-black shadow-lg
+                <div className='gap-4 flex flex-col justify-center items-center
                  min-w-[70%] h-auto border border-violet-600 rounded-md p-7 my-2'>
                     <form onSubmit={handleSubmit(createTweetHnadler)} className='w-full'>
                         <TextArea

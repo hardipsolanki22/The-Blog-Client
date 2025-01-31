@@ -134,13 +134,13 @@ function Login() {
                         className={`absolute right-6 top-[7.9rem]  text-black text-lg
                         ${!isEyeOpen ? 'block' : 'hidden'} cursor-pointer`}
                     >
-                        <FontAwesomeIcon icon={faEyeLowVision} />
+                        <FontAwesomeIcon icon={faEye} />
                     </span>
                     <span onClick={handleHideShowPassword}
                         className={`absolute right-[1.7rem] top-[7.9rem] z-10 text-black text-lg
                             ${isEyeOpen ? 'block' : 'hidden'} cursor-pointer`}
                     >
-                        <FontAwesomeIcon icon={faEye} />
+                        <FontAwesomeIcon icon={faEyeLowVision} />
                     </span>
                     <div>
                         <Link to={"/forget-password"}

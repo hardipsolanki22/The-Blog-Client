@@ -17,8 +17,6 @@ function ForYouFeed() {
       queryKey: ["for-you-posts"],
       queryFn: fetchAllPosts,
       staleTime: 3000,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,  
       getNextPageParam: (lastPage, allPages) => {
         return lastPage.data.length === MAX_PAGE_POST ? allPages.length + 1 : undefined;
       },

@@ -113,7 +113,7 @@ function Like({ likeState, postId }) {
 
       }
       <div ref={ref}
-        className='flex justify-center items-center'>
+        className='flex justify-center items-center mt-5 sm:my-4'>
         {isFetchingNextPage &&
           <Oval
             height={'40'}
@@ -121,7 +121,7 @@ function Like({ likeState, postId }) {
             color={`${themeMode ? 'black' : 'white'}`}
             secondaryColor={`${themeMode ? 'white' : 'black'}`}
           />
-        }
+         } 
       </div>
     </div>) : (<div className={`sm:static w-full h-[87vh] sm:h-[50vh] overflow-y-auto rounded-md
     ${themeMode ? "bg-black text-white" : "bg-slate-200 text-black"}

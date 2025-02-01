@@ -83,7 +83,8 @@ function Profile() {
 
     return (
         !isLoading ? (<div className={`sm:col-span-11 md:col-span-6 h-auto 
-           sm:no-scrollbar sm:max-h-screen sm:overflow-y-auto gap-4 sm:border-y border-slate-600`}>
+           sm:no-scrollbar sm:max-h-screen sm:overflow-y-auto gap-4 sm:border-y border-slate-600`}
+           style={{border:  themeMode ? '1px solid #1a1a1a' : '1px solid #ffffff'}}>
             <div className='flex gap-4 ml-4 mt-4 mb-2 '>
                 <Link to={"/"}
                 style={{color: themeMode ? '#ffffff' : '#1a1a1a'}}>
@@ -156,7 +157,7 @@ function Profile() {
                 ))
             ))}
             <div ref={ref}
-                className='flex justify-center items-center'>
+                className='flex justify-center items-center mb-20 mt-5 sm:my-4'>
                 {isFetchingNextPage &&
                     <Oval
                         height={'40'}
@@ -164,7 +165,7 @@ function Profile() {
                         color={`${themeMode ? 'black' : 'white'}`}
                         secondaryColor={`${themeMode ? 'white' : 'black'}`}
                     />
-                }
+                 } 
             </div>
         </div>) : (<div className='sm:col-span-11 md:col-span-6 sm:no-scrollbar
              sm:max-h-screen sm:overflow-y-auto'>

@@ -132,7 +132,7 @@ function Comment({ commentState, postId }) {
       </>
     )}
     <div ref={ref}
-      className='flex justify-center items-center'>
+      className='flex justify-center items-center mb-4 mt-5 sm:my-4'>
       {isFetchingNextPage &&
         <Oval
           height={'40'}
@@ -140,7 +140,7 @@ function Comment({ commentState, postId }) {
           color={`${themeMode ? 'black' : 'white'}`}
           secondaryColor={`${themeMode ? 'white' : 'black'}`}
         />
-      }
+       }
     </div>
   </div>
 }

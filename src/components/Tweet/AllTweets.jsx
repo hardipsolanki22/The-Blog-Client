@@ -117,7 +117,7 @@ function AllTweets() {
             </>
             )}
             <div ref={ref}
-              className='flex justify-center items-center'>
+              className='flex justify-center items-center mb-20 mt-5 sm:my-4'>
               {isFetchingNextPage &&
               <Oval
                 height={'40'}

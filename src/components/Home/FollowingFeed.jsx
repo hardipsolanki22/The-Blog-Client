@@ -38,7 +38,8 @@ function FollowingFeed() {
 
 
   return !isLoading ? (<div className={`h-auto sm:max-h-[82.7vh] lg:[86.7vh] xl:max-h-[83.7vh]
-     sm:overflow-y-auto sm:no-scrollbar ${themeMode ? 'dark' : 'light'}`}>
+     sm:overflow-y-auto sm:no-scrollbar ${themeMode ? 'dark' : 'light'}`}
+     style={{border:  themeMode ? '1px solid #1a1a1a' : '1px solid #ffffff'}}>
     {posts?.pages.map((page) => (
       page.data.length ? (page.data?.map((post) => (
         <div key={post._id}
@@ -51,7 +52,7 @@ function FollowingFeed() {
 
     ))}
     <div ref={ref}
-      className='flex justify-center items-center mb-16 mt-4 sm:my-4'>
+      className='flex justify-center items-center mb-20 mt-5 sm:my-4'>
       {isFetchingNextPage ?
         <Oval
           height={'40'}
@@ -60,7 +61,7 @@ function FollowingFeed() {
           secondaryColor={`${themeMode ? 'white' : 'black'}`}
         /> :
         "No more posts"
-      }
+      } 
     </div>
 
   </div>) : (<div className={`h-auto sm:max-h-[83.7vh] lg:[86.7vh] xl:max-h-[83.7vh]  

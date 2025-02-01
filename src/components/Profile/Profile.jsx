@@ -82,15 +82,15 @@ function Profile() {
     const { themeMode } = useTheme()
 
     return (
-        !isLoading ? (<div className='sm:col-span-11 md:col-span-6 h-auto 
-           sm:no-scrollbar sm:max-h-screen sm:overflow-y-auto gap-4 sm:border-y border-slate-600'>
+        !isLoading ? (<div className={`sm:col-span-11 md:col-span-6 h-auto 
+           sm:no-scrollbar sm:max-h-screen sm:overflow-y-auto gap-4 sm:border-y border-slate-600`}>
             <div className='flex gap-4 ml-4 mt-4 mb-2 '>
                 <Link to={"/"}
-                    className='text-white'>
+                style={{color: themeMode ? '#ffffff' : '#1a1a1a'}}>
                     <FontAwesomeIcon icon={faArrowLeft} />
                 </Link>
                 <div className=''>
-                    <p className='text-white text-2xl'>@{user.data?.username}</p>
+                    <p className='text-2xl'>@{user.data?.username}</p>
                 </div>
             </div>
             <div className='relative'>

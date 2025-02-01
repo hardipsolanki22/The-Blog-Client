@@ -80,7 +80,7 @@ function ProfilePostCart({
             if (respose) {
                 queryClient.invalidateQueries(["posts", { owner }]);
                 setIsDotOpen(false)
-                useToast.successToast("😒 " + respose.data.message)
+                useToast.successToast("😒 " + respose.message)
             }
         } catch (error) {
             console.error(error.message);

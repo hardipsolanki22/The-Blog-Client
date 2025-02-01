@@ -71,7 +71,7 @@ function Comment({ commentState, postId }) {
 
   const { themeMode } = useTheme()
 
-  return <div className={`sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
+  return <div className={`w-full h-[87vh] sm:h-[50vh] overflow-y-auto
      ${themeMode ? "bg-black text-white" : "bg-slate-200 text-black"}
       sm:border sm:border-violet-500 sm:bg-inherit  border-slate-400 
     sm:no-scrollbar mt-4 rounded-md flex-col justify-center p-4 border-x`}>
@@ -120,7 +120,7 @@ function Comment({ commentState, postId }) {
           <CommentCart {...comment} />
         </div>
       ))) : (
-        <div className=' sm:sticky w-full h-[87vh] sm:h-[50vh] overflow-y-auto
+        <div className='w-full h-[87vh] sm:h-[50vh] overflow-y-auto
           sm:no-scrollbar mt-4 rounded-md flex-col justify-center items-center p-4'>
           <p className='text-2xl text-center'>No comments found</p>
         </div>)

@@ -18,7 +18,7 @@ function ResetPassword() {
   const queryParams = new URLSearchParams(locaiton.search)
   const token = queryParams.get("token")
 
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, formState: {errors} } = useForm()
 
   // reset password 
   const { mutateAsync, isPending } = useMutation({
@@ -63,9 +63,14 @@ function ResetPassword() {
             className="border text-base w-full px-2 py-2 focus:outline-none
               transition duration-200 text-black focus:border-gray-600"
             {...register("conformPassword", {
-              required: true
+              required: true,
+              validate: {
+                matchPatern: (value) => /^(?=.{8,})/gm.test(value)
+                  || "Password must be at least 8 characters long.",
+              }
             })}
           />
+          {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
           <div className='flex m-2 justify-center items-center'>
             <Button
               disabled={isPending}

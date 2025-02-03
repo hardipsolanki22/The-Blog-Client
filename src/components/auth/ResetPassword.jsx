@@ -18,7 +18,7 @@ function ResetPassword() {
   const queryParams = new URLSearchParams(locaiton.search)
   const token = queryParams.get("token")
 
-  const { register, handleSubmit, formState: {errors} } = useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm()
 
   // reset password 
   const { mutateAsync, isPending } = useMutation({
@@ -56,6 +56,7 @@ function ResetPassword() {
               required: true
             })}
           />
+          {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
           <Input
             type="password"
             label="Conform Password: "
@@ -70,7 +71,7 @@ function ResetPassword() {
               }
             })}
           />
-          {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+          {errors.conformPassword && <p className='text-red-500'>{errors.conformPassword.message}</p>}
           <div className='flex m-2 justify-center items-center'>
             <Button
               disabled={isPending}

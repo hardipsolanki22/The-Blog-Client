@@ -53,7 +53,11 @@ function ResetPassword() {
             className="border text-base w-full px-2 py-2 focus:outline-none
             transition duration-200 focus:border-gray-600 text-black"
             {...register("password", {
-              required: true
+              required: true,
+              validate: {
+                matchPatern: (value) => /^(?=.{8,})/gm.test(value)
+                  || "Password must be at least 8 characters long.",
+              }
             })}
           />
           {errors.password && <p className='text-red-500'>{errors.password.message}</p>}

@@ -4,7 +4,7 @@ const MAX_PAGE_COMMENTS = 5
 
 const getPostCommets = async ({pageParam = 1,}, postId) => {    
     const response = await axiosInstance
-                .get(`/comment/get-post-comments/${postId}?page=${pageParam}&limit=${MAX_PAGE_COMMENTS}`)
+                .get(`/comments/posts/${postId}?page=${pageParam}&limit=${MAX_PAGE_COMMENTS}`)
     return response.data
 }
 

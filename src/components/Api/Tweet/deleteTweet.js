@@ -1,7 +1,7 @@
 import { axiosInstance } from "../../../Helpers/axiosService";
 
 const deleteTweet = async (tweetId) => {
-    const response = await axiosInstance.delete(`/tweet/delete-tweets/${tweetId}`, {
+    const response = await axiosInstance.delete(`/tweets/${tweetId}`, {
         headers: {
             "Content-Type": "application/json"
         }

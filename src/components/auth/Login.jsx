@@ -50,7 +50,7 @@ function Login() {
     // const signin = async (data) => {
     //     try {
     //         setIsLoading(true)
-    //         const response = await axiosInstance.post('/user/login', data, {
+    //         const response = await axiosInstance.post('/users/login', data, {
     //             headers: {
     //                 "Content-Type": "application/json"
     //             }

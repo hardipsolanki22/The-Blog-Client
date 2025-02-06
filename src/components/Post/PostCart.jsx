@@ -37,7 +37,7 @@ function PostCart({
   const hanldePostLike = async (postId) => {
     try {
       setIsLoading(true)
-      const response = await axiosInstance.post(`/like/create-like/${postId}`)
+      const response = await axiosInstance.post(`/like/posts/${postId}`)
       setIsPostLike(response.data.data.like)
       if (response.data.data.like) {
         setTotalLike((prevLike) => prevLike + 1)

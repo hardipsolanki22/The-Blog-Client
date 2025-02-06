@@ -1,7 +1,7 @@
 import {axiosInstance} from '../../../Helpers/axiosService'
 
 const addPost = async (data) => {
-    const response = await axiosInstance.post('/post/add-post', data, {
+    const response = await axiosInstance.post('/posts/', data, {
         headers: {
             "Content-Type": "multipart/form-data"
         }

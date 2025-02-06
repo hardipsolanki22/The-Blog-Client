@@ -56,7 +56,7 @@ function ProfilePostCart({
     const hanldePostLike = async (postId) => {
         try {
             setIsPostLikeLoading(true)
-            const response = await axiosInstance.post(`/like/create-like/${postId}`)
+            const response = await axiosInstance.post(`/like/posts/${postId}`)
             queryClient.invalidateQueries(["posts", { owner }])
             if (response.data.data.like) {
                 useToast.successToast("😘 " + response.data.message)

@@ -6,7 +6,7 @@ const searchUser = async (username) => {
     const controller = new AbortController()
 
     try {
-        const response = await axiosInstance.get(`/user/search-user/?username=${username}`, {
+        const response = await axiosInstance.get(`/users/search-user/?username=${username}`, {
             signal: controller.signal,
             headers: {
                 "Content-Type": "application/json"

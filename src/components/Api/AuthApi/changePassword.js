@@ -1,7 +1,7 @@
 import { axiosInstance } from "../../../Helpers/axiosService"
 
 const changePassword = async (data) => {    
-    const response = await axiosInstance.patch('/user/change-password', data, {
+    const response = await axiosInstance.patch('/users/change-password', data, {
          headers: {
              "Content-Type": "application/json"
          }

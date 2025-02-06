@@ -63,7 +63,7 @@ function Profile() {
     const handleFollowUnfollow = async (userId) => {
         try {
             setIsFollowedLoading(true)
-            const response = await axiosInstance.post(`/follows/${userId}/following`)
+            const response = await axiosInstance.post(`/follow/${userId}`)
             if (response.data.data.following) {
                 useToast.successToast("😍 " + response.data.message)
             } else {
@@ -134,7 +134,7 @@ function Profile() {
                 </Link>
                 <Link to={`/${user.data.username}/${user.data._id}/following`}
                     className='text-gray-400 text-center'>
-                    <p className='font-bold cursor-pointer'>{user.data.followingsCount}</p>
+                    <p className='font-bold cursor-pointer'>{user.data.followingCount}</p>
                     <p className='text-gray-400'>Following</p>
                 </Link>
             </div>

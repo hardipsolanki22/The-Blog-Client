@@ -49,7 +49,7 @@ function Like({ likeState, postId }) {
   const handleFollowUnfollow = async (userId) => {
     try {
       setIsFollowedLoading(true)
-      const response = await axiosInstance.post(`/follows/${userId}/following`)
+      const response = await axiosInstance.post(`/follow/${userId}`)
       if (response.data.data.following) {
         useToast.successToast("😍 " + response.data.message)
       } else {

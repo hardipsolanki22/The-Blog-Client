@@ -51,7 +51,7 @@ function Comment({ commentState, postId }) {
   const commentHandler = async (data) => {
     try {
       setIsCommentLoading(true)
-      const response = await axiosInstance.post(`/comment/create-comment/${postId}`, data, {
+      const response = await axiosInstance.post(`/comments/posts/${postId}`, data, {
         headers: {
           "Content-Type": "application/json"
         }

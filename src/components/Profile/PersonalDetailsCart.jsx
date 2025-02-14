@@ -39,7 +39,7 @@ function PersonalDetailsCart() {
     const updateAvatar = async (data) => {
         try {
             setIsLoading(true)
-            const response = await axiosInstance.patch('/user/update-avatar', data, {
+            const response = await axiosInstance.patch('/users/update-avatar', data, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
@@ -55,7 +55,7 @@ function PersonalDetailsCart() {
     const updateCoverImage = async (data) => {
         try {
             setIsLoading(true)
-            const response = await axiosInstance.patch('/user/update-cover-image', data, {
+            const response = await axiosInstance.patch('/users/update-cover-image', data, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }

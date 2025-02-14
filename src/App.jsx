@@ -22,8 +22,6 @@ function App() {
   const {isLoading, data: user} = useQuery({
     queryKey: ["current-user"],
     queryFn: getCurrentUser,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
     retry: false
   })  
 

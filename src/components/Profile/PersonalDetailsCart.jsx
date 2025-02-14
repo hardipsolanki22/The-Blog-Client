@@ -71,7 +71,6 @@ function PersonalDetailsCart() {
     const { mutateAsync, isPending, isSuccess } = useMutation({
         mutationFn: updateProfile,
         onSuccess: (response) => {
-            queryClient.invalidateQueries(["current-user"])
             setResponse(response)
         },
         onError: (error) => {
@@ -93,6 +92,7 @@ function PersonalDetailsCart() {
 
     if (isSuccess && !isLoading) {
         useToast.successToast("😊 " + response.message )
+        queryClient.invalidateQueries(["current-user"]) 
         navigate(`/${response.data.username}`)
     }
 

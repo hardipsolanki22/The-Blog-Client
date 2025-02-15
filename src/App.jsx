@@ -22,9 +22,7 @@ function App() {
   const {isLoading, data: user} = useQuery({
     queryKey: ["current-user"],
     queryFn: getCurrentUser,
-    retryDelay: 0,
     retry: false
-    // retry: false
   })  
 
     useEffect(() => {

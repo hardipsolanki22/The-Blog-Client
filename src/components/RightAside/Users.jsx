@@ -19,7 +19,6 @@ function Users() {
         queryKey: ["users"],
         queryFn: getAllUsers,
         refetchOnWindowFocus: false,
-        refetchOnMount: false,
         retry: false
     })
 
@@ -33,7 +32,7 @@ function Users() {
                 useToast.successToast("😍 " + response.data.message)
             }
         } catch (error) {
-             console.error(error.message)
+            console.error(error.message)
         } finally {
             setIsFollowedLoading(false)
         }
@@ -41,38 +40,38 @@ function Users() {
 
     if (isError) {
         console.error(isError);
-        
+
     }
 
-    const {themeMode} = useTheme()
+    const { themeMode } = useTheme()
 
-    return ! isLoading ? (  <div className='p-3 duration-300 rounded-md border border-slate-600'>
+    return !isLoading ? (<div className='p-3 duration-300 rounded-md border border-slate-600'>
         <h2 className='text-2xl text-center'>Who to follow</h2>
-        { users?.data && users?.data?.map((user) => (
-                <div className='flex justify-around items-center my-4 ' key={user._id}>
-                    <Link to={`/${user.username}`}
-                     className={`${themeMode ? 'text-white' : 'text-black'}`}
-                    >
-                        <div className='flex flex-col items-center justify-center '>
-                            <div className=''>
-                                <img src={user.avatar}
-                                    alt="avatar"
-                                    loading='lazy'
-                                    className='w-9 h-9 rounded-full'
-                                />
-                            </div>
-                            <p>{user.name}</p>
+        {users?.data && users?.data?.map((user) => (
+            <div className='flex justify-around items-center my-4 ' key={user._id}>
+                <Link to={`/${user.username}`}
+                    className={`${themeMode ? 'text-white' : 'text-black'}`}
+                >
+                    <div className='flex flex-col items-center justify-center '>
+                        <div className=''>
+                            <img src={user.avatar}
+                                alt="avatar"
+                                loading='lazy'
+                                className='w-9 h-9 rounded-full'
+                            />
                         </div>
-                    </Link>
-                    <Button
-                        onClick={() => handleFollowUnfollow(user._id)}
-                        className='p-2 rounded-full focus:outline-none'
-                        disabled={isFollowedLoading}
-                    >
-                        Follow
-                    </Button>
-                </div>
-            ))
+                        <p>{user.name}</p>
+                    </div>
+                </Link>
+                <Button
+                    onClick={() => handleFollowUnfollow(user._id)}
+                    className='p-2 rounded-full focus:outline-none'
+                    disabled={isFollowedLoading}
+                >
+                    Follow
+                </Button>
+            </div>
+        ))
         }
     </div>) : (<div>
         <RightSidebarUsersSkeleton cards={3} />
